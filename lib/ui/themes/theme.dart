@@ -56,18 +56,22 @@ enum AppTheme { system, light, dark }
 
 final defaultTheme = {
   AppTheme.system: ThemeData(
-    appBarTheme: AppBarTheme(backgroundColor: Colors.red),
+    // appBarTheme: AppBarTheme(backgroundColor: Colors.white),
     brightness: Brightness.light,
     primaryColor: Colors.red,
   ),
   AppTheme.light: ThemeData(
-      brightness: Brightness.dark,
-      primaryColor: Colors.green,
-      appBarTheme: AppBarTheme(backgroundColor: Colors.green)),
+    brightness: Brightness.light,
+    primaryColor: Colors.green,
+    appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        titleTextStyle: TextStyle(color: Colors.black)),
+  ),
   AppTheme.dark: ThemeData(
-      brightness: Brightness.light,
-      primaryColor: Colors.blue,
-      appBarTheme: AppBarTheme(backgroundColor: Colors.blue))
+    brightness: Brightness.dark,
+    primaryColor: Colors.blue,
+  )
 }; 
 //  ThemeData(
 //   canvasColor: bACKGROUNDCOLOR,
