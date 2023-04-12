@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:tst_app2/bloc/theme_bloc.dart';
+import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/themes/theme.dart';
+import 'package:tst_app2/ui/widgets/card_item_widgets.dart';
 import 'package:tst_app2/ui/widgets/deals_bar_widget.dart';
 import 'package:tst_app2/ui/widgets/list_tile_widget.dart';
 import 'package:tst_app2/ui/widgets/side_bar.dart';
@@ -278,45 +280,668 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              TextButton(onPressed: () {}, child: const Text("All Categories")),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        (MaterialPageRoute(
+                            builder: (context) => AllCategoriesScreen())));
+                  },
+                  child: const Text("All Categories")),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
-                    Text("Popular"),
-                    Text("View more >"),
+                    Text(
+                      "Popular",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
                   ],
                 ),
-              )
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Flash Sales",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
 
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: categories.length,
-              //     // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //     //   crossAxisCount: 2,
-              //     //   crossAxisSpacing: 2,
-              //     //   mainAxisSpacing: 2,
-              //     // ),
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return CategoriesBarWidget(
-              //         categoryname: 'Ramadan',
-              //       );
-              //     },
-              //   ),
-              // ),
-              // CategoriesBarWidget(
-              //   categoryname: 'Ramadan',
-              // ),
-              // CategoriesBarWidget(
-              //   categoryname: 'Ramadan',
-              // ),
-              // CategoriesBarWidget(
-              //   categoryname: 'Ramadan',
-              // ),
-              // CategoriesBarWidget(
-              //   categoryname: 'Ramadan',
-              // ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Fresh Vegetables",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Biscuits",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Salt & Sugar",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Fresh Fruits",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Noodles",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Oil",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
