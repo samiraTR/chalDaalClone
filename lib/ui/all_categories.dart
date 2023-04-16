@@ -46,7 +46,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             )
           ],

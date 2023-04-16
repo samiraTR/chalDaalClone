@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List theme = ["System", "Light", "Dark"];
+  bool newValue = false;
   List categories = [
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
@@ -66,6 +66,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       )),
+      //===============================================================Drawer==========================
       drawer: Drawer(
         width: 300,
         child: ListView(
@@ -77,6 +78,37 @@ class _HomePageState extends State<HomePage> {
             TextButton(
               onPressed: () {},
               child: const Text("Login"),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.dark_mode,
+                    color: Colors.black,
+                  ),
+                  Switch(
+                      value: newValue,
+                      activeColor: Colors.amber,
+                      onChanged: (bool value) {
+                        setState(() {
+                          newValue = value;
+
+                          if (newValue) {
+                            BlocProvider.of<ThemeBloc>(context)
+                                .add(const ThemeChanged(theme: AppTheme.light));
+                          } else {
+                            BlocProvider.of<ThemeBloc>(context)
+                                .add(const ThemeChanged(theme: AppTheme.dark));
+                          }
+                        });
+                      }),
+                  Icon(
+                    Icons.wb_sunny,
+                    color: Colors.amber[400],
+                  ),
+                ],
+              ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -105,27 +137,28 @@ class _HomePageState extends State<HomePage> {
               image: "assets/icons/football-club.png",
               tileName: "Offers",
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              child: DropdownButtonFormField(
-                  isExpanded: true,
-                  items: theme
-                      .map<DropdownMenuItem<String>>(
-                          (e) => DropdownMenuItem(value: e, child: Text(e)))
-                      .toList(),
-                  onChanged: (String? value) {
-                    if (value == "System") {
-                      BlocProvider.of<ThemeBloc>(context)
-                          .add(const ThemeChanged(theme: AppTheme.system));
-                    } else if (value == "Light") {
-                      BlocProvider.of<ThemeBloc>(context)
-                          .add(const ThemeChanged(theme: AppTheme.light));
-                    } else {
-                      BlocProvider.of<ThemeBloc>(context)
-                          .add(const ThemeChanged(theme: AppTheme.dark));
-                    }
-                  }),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            //   child: DropdownButtonFormField(
+            //       isExpanded: true,
+            //       items: theme
+            //           .map<DropdownMenuItem<String>>(
+            //               (e) => DropdownMenuItem(value: e, child: Text(e)))
+            //           .toList(),
+            //       onChanged: (String? value) {
+            //         if (value == "System") {
+            //           BlocProvider.of<ThemeBloc>(context)
+            //               .add(const ThemeChanged(theme: AppTheme.system));
+            //         } else if (value == "Light") {
+            //           BlocProvider.of<ThemeBloc>(context)
+            //               .add(const ThemeChanged(theme: AppTheme.light));
+            //         } else {
+            //           BlocProvider.of<ThemeBloc>(context)
+            //               .add(const ThemeChanged(theme: AppTheme.dark));
+            //         }
+            //       }),
+            // ),
+
             const Divider(),
             ListTileWidget(
               icon: Icons.keyboard_arrow_right_rounded,
@@ -145,6 +178,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      // ==============================================BODY=========================
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
