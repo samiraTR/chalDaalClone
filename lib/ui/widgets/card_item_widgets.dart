@@ -1,5 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart' as badges;
 
 class CardItemWidget extends StatelessWidget {
   String price;
@@ -24,6 +24,25 @@ class CardItemWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Stack(
+            //   children: [
+            //     Positioned(
+            //       child: Expanded(
+            //         child: Image.asset(
+            //           imageName,
+            //           width: 110,
+            //           fit: BoxFit.scaleDown,
+            //         ),
+            //       ),
+            //     ),
+            //     Positioned(
+            //         child: badges.Badge(
+            //       badgeContent: Text("3"),
+            //       position:
+            //           badges.BadgePosition.bottomEnd(bottom: -10, end: -10),
+            //     ))
+            //   ],
+            // ),
             Expanded(
               child: Image.asset(
                 imageName,
@@ -37,6 +56,8 @@ class CardItemWidget extends StatelessWidget {
             ),
             Text(
               dealsname,
+              maxLines: 2,
+              textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(color: Colors.black, fontSize: 17),
             ),
@@ -49,7 +70,7 @@ class CardItemWidget extends StatelessWidget {
                 const Text("1kg"),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.flash_on_sharp,
                       size: 15,
                       color: Colors.grey,
