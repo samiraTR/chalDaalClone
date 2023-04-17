@@ -113,7 +113,7 @@ final defaultTheme = {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: cOLORPRIMARY,
-        elevation: 20,
+        // elevation: 20,
       ),
     ),
     cardTheme: const CardTheme(
@@ -191,12 +191,12 @@ final defaultTheme = {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: cOLORPRIMARY,
-        elevation: 20,
+        // elevation: 20,
       ),
     ),
     cardTheme: const CardTheme(
       color: Colors.transparent,
-      elevation: 8,
+      // elevation: 8,
       shadowColor: Colors.grey,
     ),
     dialogTheme: DialogTheme(

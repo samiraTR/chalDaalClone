@@ -1,5 +1,8 @@
-import 'package:badges/badges.dart' as badges;
+import 'dart:async';
+
+// import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:tst_app2/ui/themes/theme.dart';
 
 class CardItemWidget extends StatefulWidget {
   String price;
@@ -21,6 +24,7 @@ class CardItemWidget extends StatefulWidget {
 
 class _CardItemWidgetState extends State<CardItemWidget> {
   int itemQuantity = 0;
+  bool animation = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +32,17 @@ class _CardItemWidgetState extends State<CardItemWidget> {
     InputDecorationTheme inputDecoration =
         Theme.of(context).inputDecorationTheme;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+      padding: const EdgeInsets.fromLTRB(12, 0, 5, 0),
       child: Container(
-        height: 280,
+        height: 270,
         width: 140,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 18,
+            ),
             Stack(
               children: <Widget>[
                 Image.asset(
@@ -45,13 +52,24 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                 ),
                 Positioned(
                   bottom: 2,
-                  left: itemQuantity == 0 ? 65 : 0,
+                  left: animation == false
+                      ? itemQuantity == 0
+                          ? 65
+                          : 0
+                      : 65,
                   right: 0,
                   child: itemQuantity == 0
                       ? InkWell(
                           onTap: () {
                             setState(() {
                               itemQuantity++;
+                              Timer(Duration(seconds: 2), () {
+                                setState(() {
+                                  animation = true;
+
+                                  print(animation);
+                                });
+                              });
                             });
                           },
                           child: const Icon(
@@ -60,183 +78,74 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                             size: 36,
                           ),
                         )
-                      : Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.purple)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      itemQuantity--;
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.remove_circle,
-                                    color: Colors.purple,
-                                    size: 20,
-                                  )),
-                              Text(itemQuantity.toString()),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      itemQuantity++;
-                                    });
-                                  },
-                                  icon: const Icon(
-                                    Icons.add_circle,
-                                    color: Colors.purple,
-                                    size: 20,
-                                  )),
-                            ],
-                          ),
-                        ),
+                      : animation == false
+                          ? Container(
+                              height: 35,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(color: Colors.purple)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          itemQuantity--;
+                                          Timer(Duration(seconds: 2), () {
+                                            setState(() {
+                                              animation = true;
+
+                                              print(animation);
+                                            });
+                                          });
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.purple,
+                                        size: 20,
+                                      )),
+                                  Text(
+                                    itemQuantity.toString(),
+                                    style: textTheme.bodySmall
+                                        ?.copyWith(color: cOLORBlack),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          itemQuantity++;
+                                          Timer(Duration(seconds: 2), () {
+                                            setState(() {
+                                              animation = true;
+
+                                              print(animation);
+                                            });
+                                          });
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.add_circle,
+                                        color: Colors.purple,
+                                        size: 20,
+                                      )),
+                                ],
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                setState(() {
+                                  animation = false;
+                                });
+                              },
+                              child: CircleAvatar(
+                                  backgroundColor: Colors.purple,
+                                  child: Text(itemQuantity.toString()))),
                 ),
               ],
             ), // Expanded(
-            //   child: itemQuantity == 0
-            //       ? badges.Badge(
-            //           badgeContent: GestureDetector(
-            //             onTap: () {
-            //               setState(() {
-            //                 print(itemQuantity);
-            //                 itemQuantity++;
-            //               });
-            //             },
-            //             child: const Icon(
-            //               Icons.add_circle_outline_sharp,
-            //               color: Colors.purple,
-            //               size: 36,
-            //             ),
-            //           ),
-            //           // : Container(
-            //           //     height: 35,
-            //           //     width: 100,
-            //           //     decoration: BoxDecoration(
-            //           //         color: Colors.white,
-            //           //         borderRadius: BorderRadius.circular(15),
-            //           //         border: Border.all(color: Colors.purple)),
-            //           //     child: Row(
-            //           //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //           //       children: [
-            //           //         Expanded(
-            //           //           flex: 3,
-            //           //           child: IconButton(
-            //           //               onPressed: () {
-            //           //                 setState(() {
-            //           //                   itemQuantity--;
-            //           //                 });
-            //           //                 print(itemQuantity);
-            //           //               },
-            //           //               icon: const Icon(
-            //           //                 Icons.remove_circle,
-            //           //                 color: Colors.purple,
-            //           //               )),
-            //           //         ),
-            //           //         const SizedBox(
-            //           //           width: 2,
-            //           //         ),
-            //           //         Text(itemQuantity.toString()),
-            //           //         const SizedBox(
-            //           //           width: 2,
-            //           //         ),
-            //           //         IconButton(
-            //           //             onPressed: () {
-            //           //               setState(() {
-            //           //                 itemQuantity++;
-            //           //               });
-            //           //             },
-            //           //             icon: Icon(Icons.add)),
-            //           //       ],
-            //           //     ),
-            //           // ),
-            //           badgeStyle: const badges.BadgeStyle(
-            //             badgeColor: Colors.white,
-            //           ),
-            //           position: itemQuantity == 0
-            //               ? badges.BadgePosition.bottomEnd(bottom: -8, end: -10)
-            //               : badges.BadgePosition.bottomEnd(
-            //                   bottom: -25, end: -5),
-            //           child: Image.asset(
-            //             widget.imageName,
-            //             width: 110,
-            //             fit: BoxFit.scaleDown,
-            //           ),
-            //         )
-            //       : badges.Badge(
-            //           // badgeContent: GestureDetector(
-            //           //         onTap: () {
-            //           //           setState(() {
-            //           //             print(itemQuantity);
-            //           //             itemQuantity++;
-            //           //           });
-            //           //         },
-            //           //         child: const Icon(
-            //           //           Icons.add_circle_outline_sharp,
-            //           //           color: Colors.purple,
-            //           //           size: 36,
-            //           //         ),
-            //           //       ),
-            //           //     // :
-            //           badgeContent: Container(
-            //             height: 35,
-            //             width: 100,
-            //             decoration: BoxDecoration(
-            //                 color: Colors.white,
-            //                 borderRadius: BorderRadius.circular(15),
-            //                 border: Border.all(color: Colors.purple)),
-            //             child: Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //               children: [
-            //                 Expanded(
-            //                   flex: 3,
-            //                   child: IconButton(
-            //                       onPressed: () {
-            //                         setState(() {
-            //                           itemQuantity--;
-            //                         });
-            //                         print(itemQuantity);
-            //                       },
-            //                       icon: const Icon(
-            //                         Icons.remove_circle,
-            //                         color: Colors.purple,
-            //                       )),
-            //                 ),
-            //                 const SizedBox(
-            //                   width: 2,
-            //                 ),
-            //                 Text(itemQuantity.toString()),
-            //                 const SizedBox(
-            //                   width: 2,
-            //                 ),
-            //                 IconButton(
-            //                     onPressed: () {
-            //                       setState(() {
-            //                         itemQuantity++;
-            //                       });
-            //                     },
-            //                     icon: Icon(Icons.add)),
-            //               ],
-            //             ),
-            //           ),
-            //           badgeStyle: const badges.BadgeStyle(
-            //             badgeColor: Colors.white,
-            //           ),
-            //           position: itemQuantity == 0
-            //               ? badges.BadgePosition.bottomEnd(bottom: -8, end: -10)
-            //               : badges.BadgePosition.bottomEnd(
-            //                   bottom: -25, end: -5),
-            //           child: Image.asset(
-            //             widget.imageName,
-            //             width: 110,
-            //             fit: BoxFit.scaleDown,
-            //           ),
-            //         ),
-            // ),
+
             const SizedBox(
               height: 18,
             ),
@@ -254,7 +163,7 @@ class _CardItemWidgetState extends State<CardItemWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.quantity),
+                widget.quantity != "" ? Text(widget.quantity) : Text("1kg"),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(
@@ -269,4 +178,18 @@ class _CardItemWidgetState extends State<CardItemWidget> {
       ),
     );
   }
+
+  Widget animatedContainer(context) {
+    return Text(itemQuantity.toString());
+  }
+//   class animatedContainer extends StatelessWidget {
+//   const animatedContainer({
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Text(itemQuantity.toString());
+//   }
+// }
 }
