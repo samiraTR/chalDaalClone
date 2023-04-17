@@ -15,6 +15,9 @@ class CardItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    InputDecorationTheme inputDecoration =
+        Theme.of(context).inputDecorationTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       child: Container(
@@ -35,11 +38,10 @@ class CardItemWidget extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            Text(
-              dealsname,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: Colors.black, fontSize: 17),
-            ),
+            Text(dealsname,
+                overflow: TextOverflow.ellipsis, style: textTheme.bodyMedium
+                // const TextStyle(color: Colors.black, fontSize: 17),
+                ),
             const SizedBox(
               height: 25,
             ),
@@ -49,7 +51,7 @@ class CardItemWidget extends StatelessWidget {
                 const Text("1kg"),
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.flash_on_sharp,
                       size: 15,
                       color: Colors.grey,

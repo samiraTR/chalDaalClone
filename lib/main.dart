@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: state.themeData,
-              home: HomePage());
+              home: const HomePage());
         },
       ),
     );

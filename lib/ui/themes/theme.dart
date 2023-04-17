@@ -62,15 +62,161 @@ final defaultTheme = {
   ),
   AppTheme.light: ThemeData(
     brightness: Brightness.light,
-    primaryColor: Colors.green,
+    primaryColor: const Color(0xFF6A75EB),
     appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
         titleTextStyle: TextStyle(color: Colors.black)),
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        color: cOLORBlack,
+      ),
+      displayMedium: TextStyle(
+        color: cOLORBlack,
+      ),
+      displaySmall: TextStyle(
+        color: cOLORBlack,
+      ),
+      headlineMedium: TextStyle(
+        color: cOLORBlack,
+      ),
+      headlineSmall: TextStyle(
+        color: cOLORBlack,
+      ),
+      titleLarge: TextStyle(
+        color: cOLORBlack,
+      ),
+      titleMedium: TextStyle(
+        color: cOLORBlack,
+      ),
+      titleSmall: TextStyle(
+        color: cOLORBlack,
+      ),
+      bodySmall: TextStyle(
+        color: cOLORBlack,
+      ),
+      bodyMedium: TextStyle(
+        color: cOLORBlack,
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: cOLORBlack,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      contentPadding: const EdgeInsets.all(10),
+    ),
+    listTileTheme: const ListTileThemeData(
+      tileColor: cOLORWhite,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: cOLORPRIMARY,
+        elevation: 20,
+      ),
+    ),
+    cardTheme: const CardTheme(
+      color: Colors.transparent,
+      // elevation: 8,
+      shadowColor: Colors.grey,
+    ),
+    dialogTheme: DialogTheme(
+      backgroundColor: cOLORSECONDARY,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: cOLORWhite, width: 3),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      titleTextStyle: textSTYLEHeadline5,
+    ),
+    timePickerTheme: const TimePickerThemeData(
+      backgroundColor: bACKGROUNDCOLOR,
+      dialTextColor: cOLORWhite,
+      hourMinuteTextColor: cOLORWhite,
+    ),
+    colorScheme: const ColorScheme.light(
+      primary: cOLORPRIMARY,
+      surface: cOLORGrey2,
+    ).copyWith(background: bACKGROUNDCOLOR),
+    bottomAppBarTheme: const BottomAppBarTheme(color: cOLORSECONDARY),
   ),
   AppTheme.dark: ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Colors.blue,
+    primaryColor: const Color(0xFF6A75EB),
+    primarySwatch: Colors.blueGrey,
+    appBarTheme: AppBarTheme(
+        backgroundColor: Colors.black.withOpacity(.5),
+        iconTheme: const IconThemeData(color: Colors.white),
+        titleTextStyle: const TextStyle(color: Colors.white)),
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        color: cOLORWhite,
+      ),
+      displayMedium: TextStyle(
+        color: cOLORWhite,
+      ),
+      displaySmall: TextStyle(
+        color: cOLORWhite,
+      ),
+      headlineMedium: TextStyle(
+        color: cOLORWhite,
+      ),
+      headlineSmall: TextStyle(
+        color: cOLORWhite,
+      ),
+      titleLarge: TextStyle(
+        color: cOLORWhite,
+      ),
+      titleMedium: TextStyle(
+        color: cOLORWhite,
+      ),
+      titleSmall: TextStyle(
+        color: cOLORWhite,
+      ),
+      bodySmall: TextStyle(
+        color: cOLORWhite,
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: cOLORBlack,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      contentPadding: const EdgeInsets.all(10),
+    ),
+    listTileTheme: const ListTileThemeData(
+      tileColor: Colors.transparent,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: cOLORPRIMARY,
+        elevation: 20,
+      ),
+    ),
+    cardTheme: const CardTheme(
+      color: Colors.transparent,
+      elevation: 8,
+      shadowColor: Colors.grey,
+    ),
+    dialogTheme: DialogTheme(
+      backgroundColor: cOLORSECONDARY,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: cOLORWhite, width: 3),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      titleTextStyle: textSTYLEHeadline5,
+    ),
+    timePickerTheme: const TimePickerThemeData(
+      backgroundColor: bACKGROUNDCOLOR,
+      dialTextColor: cOLORWhite,
+      hourMinuteTextColor: cOLORWhite,
+    ),
+    colorScheme: const ColorScheme.dark(
+      primary: cOLORPRIMARY,
+      surface: cOLORGrey2,
+    ).copyWith(background: bACKGROUNDCOLOR),
+    bottomAppBarTheme: const BottomAppBarTheme(color: cOLORSECONDARY),
   )
 }; 
 //  ThemeData(
