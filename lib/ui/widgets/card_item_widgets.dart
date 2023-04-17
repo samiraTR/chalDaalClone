@@ -28,82 +28,213 @@ class _CardItemWidgetState extends State<CardItemWidget> {
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       child: Container(
         height: 280,
-        width: 130,
+        width: 140,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: badges.Badge(
-                badgeContent: itemQuantity == 0
-                    ? GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            print(itemQuantity);
-                            itemQuantity++;
-                          });
-                        },
-                        child: const Icon(
-                          Icons.add_circle_outline_sharp,
-                          color: Colors.purple,
-                          size: 36,
-                        ),
-                      )
-                    : Container(
-                        height: 35,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(color: Colors.purple)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      itemQuantity--;
-                                    });
-                                    print(itemQuantity);
-                                  },
-                                  icon: const Icon(
-                                    Icons.remove_circle,
-                                    color: Colors.purple,
-                                  )),
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            Text(itemQuantity.toString()),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    itemQuantity++;
-                                  });
-                                },
-                                icon: Icon(Icons.add)),
-                          ],
-                        ),
-                      ),
-                badgeStyle: const badges.BadgeStyle(
-                  badgeColor: Colors.white,
-                ),
-                position: itemQuantity == 0
-                    ? badges.BadgePosition.bottomEnd(bottom: -8, end: -10)
-                    : badges.BadgePosition.bottomEnd(bottom: -25, end: -5),
-                child: Image.asset(
+            Stack(
+              children: <Widget>[
+                Image.asset(
                   widget.imageName,
                   width: 110,
                   fit: BoxFit.scaleDown,
                 ),
-              ),
-            ),
-            SizedBox(
+                Positioned(
+                  bottom: 2,
+                  left: itemQuantity == 0 ? 65 : 0,
+                  right: 0,
+                  child: itemQuantity == 0
+                      ? InkWell(
+                          onTap: () {
+                            setState(() {
+                              itemQuantity++;
+                            });
+                          },
+                          child: const Icon(
+                            Icons.add_circle,
+                            color: Colors.purple,
+                            size: 36,
+                          ),
+                        )
+                      : Container(
+                          height: 35,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: Colors.purple)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      itemQuantity--;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.remove_circle,
+                                    color: Colors.purple,
+                                    size: 20,
+                                  )),
+                              Text(itemQuantity.toString()),
+                              IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      itemQuantity++;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                    Icons.add_circle,
+                                    color: Colors.purple,
+                                    size: 20,
+                                  )),
+                            ],
+                          ),
+                        ),
+                ),
+              ],
+            ), // Expanded(
+            //   child: itemQuantity == 0
+            //       ? badges.Badge(
+            //           badgeContent: GestureDetector(
+            //             onTap: () {
+            //               setState(() {
+            //                 print(itemQuantity);
+            //                 itemQuantity++;
+            //               });
+            //             },
+            //             child: const Icon(
+            //               Icons.add_circle_outline_sharp,
+            //               color: Colors.purple,
+            //               size: 36,
+            //             ),
+            //           ),
+            //           // : Container(
+            //           //     height: 35,
+            //           //     width: 100,
+            //           //     decoration: BoxDecoration(
+            //           //         color: Colors.white,
+            //           //         borderRadius: BorderRadius.circular(15),
+            //           //         border: Border.all(color: Colors.purple)),
+            //           //     child: Row(
+            //           //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //           //       children: [
+            //           //         Expanded(
+            //           //           flex: 3,
+            //           //           child: IconButton(
+            //           //               onPressed: () {
+            //           //                 setState(() {
+            //           //                   itemQuantity--;
+            //           //                 });
+            //           //                 print(itemQuantity);
+            //           //               },
+            //           //               icon: const Icon(
+            //           //                 Icons.remove_circle,
+            //           //                 color: Colors.purple,
+            //           //               )),
+            //           //         ),
+            //           //         const SizedBox(
+            //           //           width: 2,
+            //           //         ),
+            //           //         Text(itemQuantity.toString()),
+            //           //         const SizedBox(
+            //           //           width: 2,
+            //           //         ),
+            //           //         IconButton(
+            //           //             onPressed: () {
+            //           //               setState(() {
+            //           //                 itemQuantity++;
+            //           //               });
+            //           //             },
+            //           //             icon: Icon(Icons.add)),
+            //           //       ],
+            //           //     ),
+            //           // ),
+            //           badgeStyle: const badges.BadgeStyle(
+            //             badgeColor: Colors.white,
+            //           ),
+            //           position: itemQuantity == 0
+            //               ? badges.BadgePosition.bottomEnd(bottom: -8, end: -10)
+            //               : badges.BadgePosition.bottomEnd(
+            //                   bottom: -25, end: -5),
+            //           child: Image.asset(
+            //             widget.imageName,
+            //             width: 110,
+            //             fit: BoxFit.scaleDown,
+            //           ),
+            //         )
+            //       : badges.Badge(
+            //           // badgeContent: GestureDetector(
+            //           //         onTap: () {
+            //           //           setState(() {
+            //           //             print(itemQuantity);
+            //           //             itemQuantity++;
+            //           //           });
+            //           //         },
+            //           //         child: const Icon(
+            //           //           Icons.add_circle_outline_sharp,
+            //           //           color: Colors.purple,
+            //           //           size: 36,
+            //           //         ),
+            //           //       ),
+            //           //     // :
+            //           badgeContent: Container(
+            //             height: 35,
+            //             width: 100,
+            //             decoration: BoxDecoration(
+            //                 color: Colors.white,
+            //                 borderRadius: BorderRadius.circular(15),
+            //                 border: Border.all(color: Colors.purple)),
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //               children: [
+            //                 Expanded(
+            //                   flex: 3,
+            //                   child: IconButton(
+            //                       onPressed: () {
+            //                         setState(() {
+            //                           itemQuantity--;
+            //                         });
+            //                         print(itemQuantity);
+            //                       },
+            //                       icon: const Icon(
+            //                         Icons.remove_circle,
+            //                         color: Colors.purple,
+            //                       )),
+            //                 ),
+            //                 const SizedBox(
+            //                   width: 2,
+            //                 ),
+            //                 Text(itemQuantity.toString()),
+            //                 const SizedBox(
+            //                   width: 2,
+            //                 ),
+            //                 IconButton(
+            //                     onPressed: () {
+            //                       setState(() {
+            //                         itemQuantity++;
+            //                       });
+            //                     },
+            //                     icon: Icon(Icons.add)),
+            //               ],
+            //             ),
+            //           ),
+            //           badgeStyle: const badges.BadgeStyle(
+            //             badgeColor: Colors.white,
+            //           ),
+            //           position: itemQuantity == 0
+            //               ? badges.BadgePosition.bottomEnd(bottom: -8, end: -10)
+            //               : badges.BadgePosition.bottomEnd(
+            //                   bottom: -25, end: -5),
+            //           child: Image.asset(
+            //             widget.imageName,
+            //             width: 110,
+            //             fit: BoxFit.scaleDown,
+            //           ),
+            //         ),
+            // ),
+            const SizedBox(
               height: 18,
             ),
             Text(widget.price),
