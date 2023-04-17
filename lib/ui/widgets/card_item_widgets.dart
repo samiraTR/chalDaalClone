@@ -24,6 +24,9 @@ class _CardItemWidgetState extends State<CardItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    InputDecorationTheme inputDecoration =
+        Theme.of(context).inputDecorationTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       child: Container(
@@ -241,13 +244,10 @@ class _CardItemWidgetState extends State<CardItemWidget> {
             const SizedBox(
               height: 5,
             ),
-            Text(
-              widget.dealsname,
-              maxLines: 2,
-              textAlign: TextAlign.left,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: Colors.black, fontSize: 17),
-            ),
+            Text(widget.dealsname,
+                overflow: TextOverflow.ellipsis, style: textTheme.bodyMedium
+                // const TextStyle(color: Colors.black, fontSize: 17),
+                ),
             const SizedBox(
               height: 25,
             ),

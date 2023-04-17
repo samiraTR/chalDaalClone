@@ -89,12 +89,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<ThemeBloc>(context)
+        .add(const ThemeChanged(theme: AppTheme.light));
   }
 
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
+    TextTheme textTheme = ThemeData().textTheme;
+    InputDecorationTheme inputDecoration =
+        Theme.of(context).inputDecorationTheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -324,12 +329,15 @@ class _HomePageState extends State<HomePage> {
                                               255, 149, 172, 184),
                                           width: 1),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: const Center(
+                                  child: Center(
                                     child: Text(
                                       "10H:57M:32S",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18),
+                                      style: textTheme.bodyMedium!
+                                          .copyWith(fontSize: 18),
+
+                                      // TextStyle(
+                                      //     fontWeight: FontWeight.w500,
+                                      //     fontSize: 18),
                                     ),
                                   )),
                             ],
@@ -562,21 +570,21 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "Fresh Vegetables",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
                           color: Colors.purple),
                     ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
+                    Text("View more >", style: textTheme.displayMedium
+
+                        // TextStyle(
+                        //     fontWeight: FontWeight.w500,
+                        //     fontSize: 18,
+                        //     color: Colors.purple),
+                        ),
                   ],
                 ),
               ),

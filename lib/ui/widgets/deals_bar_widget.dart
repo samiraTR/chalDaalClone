@@ -13,11 +13,14 @@ class DealSHorizontalBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InputDecorationTheme inputDecoration =
+        Theme.of(context).inputDecorationTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 7, 5, 7),
       child: Container(
         height: 280,
         width: 160,
+        // decoration: inputDecoration,
         decoration: BoxDecoration(
             color: color, borderRadius: BorderRadius.circular(15)),
         child: Column(
