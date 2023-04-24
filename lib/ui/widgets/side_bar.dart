@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tst_app2/ui/themes/theme.dart';
 
 class SideBarWidget extends StatelessWidget {
   String image;
@@ -11,10 +12,13 @@ class SideBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    InputDecorationTheme inputDecoration =
+        Theme.of(context).inputDecorationTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 10),
       child: Container(
-        height: 70,
+        height: 60,
         width: 140,
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 238, 232, 232),
@@ -44,7 +48,7 @@ class SideBarWidget extends StatelessWidget {
             ),
             Text(
               barName,
-              style: const TextStyle(fontWeight: FontWeight.w500),
+              style: textTheme.titleSmall?.copyWith(color: cOLORBlack),
             )
           ],
         ),

@@ -13,8 +13,13 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int quantity = 0;
+
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    InputDecorationTheme inputDecoration =
+        Theme.of(context).inputDecorationTheme;
+
     return Scaffold(
       appBar: AppBar(title: const Text("Product details")),
       body: SafeArea(
@@ -65,6 +70,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     children: [
                       ElevatedButton(
                         onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.purple),
                         child: const Text("Buy now"),
                       ),
                       quantity == 0
@@ -114,7 +121,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   const Divider(),
                   Text(
                     widget.productDetail["details"],
-                    style: TextStyle(fontSize: 17),
+                    style: const TextStyle(fontSize: 17),
                   ),
                   // const Spacer(),
                   const SizedBox(
@@ -127,7 +134,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           },
                           child: const Text(
                             "Close",
-                            style: TextStyle(fontSize: 22),
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.purple,
+                                fontWeight: FontWeight.w600),
                           )))
                 ],
               ),

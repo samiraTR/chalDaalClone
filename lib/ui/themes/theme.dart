@@ -64,7 +64,7 @@ final defaultTheme = {
     brightness: Brightness.light,
     primaryColor: const Color(0xFF6A75EB),
     appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
         iconTheme: IconThemeData(color: Colors.black),
         titleTextStyle: TextStyle(color: Colors.black)),
     textTheme: const TextTheme(
@@ -140,12 +140,15 @@ final defaultTheme = {
     ).copyWith(background: bACKGROUNDCOLOR),
     bottomAppBarTheme: const BottomAppBarTheme(color: cOLORSECONDARY),
   ),
+
+  //======================================================DARK THEME=======================================
+
   AppTheme.dark: ThemeData(
     brightness: Brightness.dark,
     primaryColor: const Color(0xFF6A75EB),
     primarySwatch: Colors.blueGrey,
     appBarTheme: AppBarTheme(
-        backgroundColor: Colors.black.withOpacity(.5),
+        backgroundColor: Color.fromARGB(255, 35, 42, 61).withOpacity(.5),
         iconTheme: const IconThemeData(color: Colors.white),
         titleTextStyle: const TextStyle(color: Colors.white)),
     textTheme: const TextTheme(
@@ -216,7 +219,7 @@ final defaultTheme = {
       primary: cOLORPRIMARY,
       surface: cOLORGrey2,
     ).copyWith(background: bACKGROUNDCOLOR),
-    bottomAppBarTheme: const BottomAppBarTheme(color: cOLORSECONDARY),
+    bottomAppBarTheme: const BottomAppBarTheme(color: cOLORBlack),
   )
 }; 
 //  ThemeData(

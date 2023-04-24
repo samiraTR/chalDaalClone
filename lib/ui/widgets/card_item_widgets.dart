@@ -1,6 +1,4 @@
 import 'dart:async';
-
-// import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:tst_app2/ui/themes/theme.dart';
 
@@ -63,7 +61,7 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                           onTap: () {
                             setState(() {
                               itemQuantity++;
-                              Timer(Duration(seconds: 2), () {
+                              Timer(const Duration(seconds: 2), () {
                                 setState(() {
                                   animation = true;
 
@@ -93,7 +91,7 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                                       onPressed: () {
                                         setState(() {
                                           itemQuantity--;
-                                          Timer(Duration(seconds: 2), () {
+                                          Timer(const Duration(seconds: 5), () {
                                             setState(() {
                                               animation = true;
 
@@ -113,23 +111,24 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                                         ?.copyWith(color: cOLORBlack),
                                   ),
                                   IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          itemQuantity++;
-                                          Timer(Duration(seconds: 2), () {
-                                            setState(() {
-                                              animation = true;
+                                    onPressed: () {
+                                      setState(() {
+                                        itemQuantity++;
+                                        Timer(const Duration(seconds: 5), () {
+                                          setState(() {
+                                            animation = true;
 
-                                              print(animation);
-                                            });
+                                            print(animation);
                                           });
                                         });
-                                      },
-                                      icon: const Icon(
-                                        Icons.add_circle,
-                                        color: Colors.purple,
-                                        size: 20,
-                                      )),
+                                      });
+                                    },
+                                    icon: const Icon(
+                                      Icons.add_circle,
+                                      color: Colors.purple,
+                                      size: 20,
+                                    ),
+                                  ),
                                 ],
                               ),
                             )
@@ -140,8 +139,13 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                                 });
                               },
                               child: CircleAvatar(
-                                  backgroundColor: Colors.purple,
-                                  child: Text(itemQuantity.toString()))),
+                                backgroundColor: Colors.purple,
+                                child: Text(
+                                  itemQuantity.toString(),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
                 ),
               ],
             ), // Expanded(
@@ -163,7 +167,9 @@ class _CardItemWidgetState extends State<CardItemWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                widget.quantity != "" ? Text(widget.quantity) : Text("1kg"),
+                widget.quantity != ""
+                    ? Text(widget.quantity)
+                    : const Text("1kg"),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(

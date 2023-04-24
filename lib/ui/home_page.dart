@@ -7,6 +7,7 @@ import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/service/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/product_details.dart';
+import 'package:tst_app2/ui/search_product.dart';
 import 'package:tst_app2/ui/themes/theme.dart';
 import 'package:tst_app2/ui/widgets/card_item_widgets.dart';
 import 'package:tst_app2/ui/widgets/deals_bar_widget.dart';
@@ -23,93 +24,39 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List theme = ["System", "Light", "Dark"];
   bool newValue = true;
-  List categories = [
-    {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
-    {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
-    {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
-    {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
-  ];
 
-  List noodles = [
-    {
-      "price": "20BDT",
-      "name": "Cocola Egg Noodles",
-      "quantity": "130 gm",
-      "imageName": "assets/images/chaldal-premium-beef.webp",
-      "details":
-          "Protein, calcium, iodine and vitamin enriched egg noodles.Ingredients: Noodles: Spices, iodized salt, water. Masala: Iodized salt, tasting salt, corn starch, chicken powder, sugar, egg powder, chili powder, tapioca starch, citric acid. Nutrition: Minerals, fibre, calorie, protein, fat, carbohydrate, calcium, iron, carotene, vitamin B-1, vitamin B-2.",
-      "variant": "Masala blast",
-      "net-weight": "504 g",
-      "origin": "Bangladesh"
-    },
-    {
-      "price": "160BDT",
-      "name": "Nestle Maggie 2-Minute Masala Noodles",
-      "quantity": "8 pack",
-      "imageName": "assets/images/beef-kuruli-bone.jpg",
-      "details":
-          " MAGGI offers tasty and healthy snacks option for Bangladeshi families Fortified with Vitamin A, Iron and Iodine./n The tastemaker is comprised of known ingredients typically found in Bangladeshi households, such as turmeric, pepper, coriander, ginger and cardamom.To boost the goodness in your bowl, add colourful vegetables and lean protein such as chicken.Contains noodle cake & Tastemaker inside for a quick 2-minute preparation ",
-      "variant": "Masala",
-      "net-weight": "496g",
-      "origin": "Bangladesh"
-    },
-    {
-      "price": "20BDT",
-      "name": "Doodles Stick Noodles",
-      "quantity": "150 gm",
-      "imageName": "assets/images/beef-front-leg-bone.jpg",
-      "details":
-          "Doodles instant noodles gives your fussy eating kids something tasty to look forward to. Kids’ love the irresistible taste of Doodles instant noodles that kills their boredom and provides iron, iodine, calcium and many other nutrient",
-      "variant": "",
-      "net-weight": "",
-      "origin": "Bangladesh"
-    },
-    {
-      "price": "65BDT",
-      "name": "Sajib Coook Noodles Chicken Tandoori 8 Pcs",
-      "quantity": "300 gm",
-      "imageName": "assets/images/beef-kuruli-bone.jpg",
-      "details":
-          "MAGGI MASALA BLAST is Yummy and Spicy Noodles especially for the teenagers who love to have hot and spicy foods.Fortified with Vitamin A, Iron and Iodine.This unique tastemaker is comprised of the ingredients that consumers know and love such as red chilli, turmeric, black pepper, onion, ginger and cardamom sourced from both home and abroad.Contains noodle cake & Tastemaker inside for a quick preparation",
-      "variant": "Masala blast",
-      "net-weight": "504 g",
-      "origin": "Bangladesh"
-    },
-    {
-      "price": "180BDT",
-      "name": "Nestle Maggie Masala Blast Noodles",
-      "quantity": "8 pack",
-      "imageName": "assets/images/beef-kuruli-bone.jpg",
-      "details":
-          "MAGGI MASALA BLAST is Yummy and Spicy Noodles especially for the teenagers who love to have hot and spicy foods.Fortified with Vitamin A, Iron and Iodine.This unique tastemaker is comprised of the ingredients that consumers know and love such as red chilli, turmeric, black pepper, onion, ginger and cardamom sourced from both home and abroad.Contains noodle cake & Tastemaker inside for a quick preparation",
-      "variant": "Masala blast",
-      "net-weight": "504 g",
-      "origin": "Bangladesh"
-    },
-  ];
   double screenHeight = 0.0;
   double screenWidth = 0.0;
   @override
   void initState() {
     super.initState();
     homeColorNav = Colors.purple;
-    BlocProvider.of<ThemeBloc>(context)
-        .add(const ThemeChanged(theme: AppTheme.light));
   }
 
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
-    TextTheme textTheme = ThemeData().textTheme;
+    TextTheme textTheme = Theme.of(context).textTheme;
     InputDecorationTheme inputDecoration =
         Theme.of(context).inputDecorationTheme;
 
     return Scaffold(
-        appBar: AppBar(
-            title: Row(
+      appBar: AppBar(
+          title: InkWell(
+        onTap: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return const SizedBox(
+                  height: 180,
+                );
+              });
+        },
+        child: Row(
           children: [
             Container(
+              height: 40,
               decoration: const BoxDecoration(
                   color: Colors.purple, shape: BoxShape.circle),
               child: IconButton(
@@ -117,7 +64,15 @@ class _HomePageState extends State<HomePage> {
                   Icons.location_on_outlined,
                   color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return const SizedBox(
+                          height: 180,
+                        );
+                      });
+                },
               ),
             ),
             const SizedBox(
@@ -133,1026 +88,1122 @@ class _HomePageState extends State<HomePage> {
               ],
             )
           ],
-        )),
-        //===============================================================Drawer==========================
-        drawer: Drawer(
-          width: 300,
-          child: ListView(
-            // padding: EdgeInsets.fromLTRB(8, 20, 8, 8),
+        ),
+      )),
+      //===============================================================Drawer==========================
+      drawer: Drawer(
+        width: 300,
+        child: ListView(
+          // padding: EdgeInsets.fromLTRB(8, 20, 8, 8),
+          children: [
+            const CircleAvatar(
+              maxRadius: 40,
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text("Login"),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.dark_mode,
+                    color: Colors.black,
+                  ),
+                  Switch(
+                      value: newValue,
+                      activeColor: Colors.amber,
+                      onChanged: (bool value) {
+                        setState(() {
+                          newValue = value;
+
+                          if (newValue) {
+                            BlocProvider.of<ThemeBloc>(context)
+                                .add(const ThemeChanged(theme: AppTheme.light));
+                          } else {
+                            BlocProvider.of<ThemeBloc>(context)
+                                .add(const ThemeChanged(theme: AppTheme.dark));
+                          }
+                        });
+                      }),
+                  Icon(
+                    Icons.wb_sunny,
+                    color: Colors.amber[400],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(width: 0.5, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(15)),
+              child: ListTile(
+                leading: Image.asset(
+                  "assets/icons/football-club.png",
+                  height: 30,
+                  width: 30,
+                ),
+                trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                title: const Text(
+                  "Egg Club",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            ListTileWidget(
+              icon: Icons.keyboard_arrow_right_rounded,
+              image: "assets/icons/football-club.png",
+              tileName: "All Stores",
+            ),
+            ListTileWidget(
+              icon: Icons.keyboard_arrow_right_rounded,
+              image: "assets/icons/football-club.png",
+              tileName: "Offers",
+            ),
+            const Divider(),
+            ListTileWidget(
+              icon: Icons.keyboard_arrow_right_rounded,
+              image: "assets/icons/deal.png",
+              tileName: "Daily Deals",
+            ),
+            ListTileWidget(
+              icon: Icons.keyboard_arrow_right_rounded,
+              image: "assets/icons/football-club.png",
+              tileName: "Egg Club",
+            ),
+            ListTileWidget(
+              icon: Icons.keyboard_arrow_right_rounded,
+              image: "assets/icons/football-club.png",
+              tileName: "Egg Club",
+            ),
+          ],
+        ),
+      ),
+      // ==============================================BODY=========================
+
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              const CircleAvatar(
-                maxRadius: 40,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text("Login"),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+              // ==============================================slide bars of types of groceries=========================
+
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.dark_mode,
-                      color: Colors.black,
+                    SideBarWidget(
+                      barName: 'Grocery',
+                      image: "assets/icons/groceries.png",
                     ),
-                    Switch(
-                        value: newValue,
-                        activeColor: Colors.amber,
-                        onChanged: (bool value) {
-                          setState(() {
-                            newValue = value;
-
-                            if (newValue) {
-                              BlocProvider.of<ThemeBloc>(context).add(
-                                  const ThemeChanged(theme: AppTheme.light));
-                            } else {
-                              BlocProvider.of<ThemeBloc>(context).add(
-                                  const ThemeChanged(theme: AppTheme.dark));
-                            }
-                          });
-                        }),
-                    Icon(
-                      Icons.wb_sunny,
-                      color: Colors.amber[400],
+                    SideBarWidget(
+                      barName: 'Pharmacy',
+                      image: "assets/icons/capsules.png",
+                    ),
+                    SideBarWidget(
+                      barName: 'Cookups',
+                      image: "assets/icons/stir-fry.png",
                     ),
                   ],
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(width: 0.5, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(15)),
-                child: ListTile(
-                  leading: Image.asset(
-                    "assets/icons/football-club.png",
-                    height: 30,
-                    width: 30,
-                  ),
-                  trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                  title: const Text(
-                    "Egg Club",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+
+              // ==============================================slide bars of posters==========================
+
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    DealSHorizontalBarWidget(
+                      dealsname: 'Daily Deals',
+                      imageName: "assets/images/dim-offer.jpg",
+                      color: Colors.blueGrey,
+                    ),
+                    DealSHorizontalBarWidget(
+                      dealsname: 'Best Price',
+                      imageName: "assets/images/chaal-offer.jpg",
+                      color: const Color.fromARGB(255, 230, 209, 143),
+                    ),
+                    DealSHorizontalBarWidget(
+                      dealsname: 'Protein',
+                      imageName: "assets/images/Chaldal-Offer.jpg",
+                      color: const Color.fromARGB(255, 230, 215, 84),
+                    ),
+                    DealSHorizontalBarWidget(
+                      dealsname: 'Gogo Bangla',
+                      imageName: "assets/images/cooking.jpg",
+                      color: const Color.fromARGB(255, 9, 59, 100),
+                    ),
+                    DealSHorizontalBarWidget(
+                      dealsname: 'Toiletries',
+                      imageName: "assets/images/combo-offer-pack.jpg",
+                      color: const Color.fromARGB(255, 9, 100, 14),
+                    ),
+                  ],
                 ),
               ),
-              ListTileWidget(
-                icon: Icons.keyboard_arrow_right_rounded,
-                image: "assets/icons/football-club.png",
-                tileName: "All Stores",
-              ),
-              ListTileWidget(
-                icon: Icons.keyboard_arrow_right_rounded,
-                image: "assets/icons/football-club.png",
-                tileName: "Offers",
-              ),
-              const Divider(),
-              ListTileWidget(
-                icon: Icons.keyboard_arrow_right_rounded,
-                image: "assets/icons/deal.png",
-                tileName: "Daily Deals",
-              ),
-              ListTileWidget(
-                icon: Icons.keyboard_arrow_right_rounded,
-                image: "assets/icons/football-club.png",
-                tileName: "Egg Club",
-              ),
-              ListTileWidget(
-                icon: Icons.keyboard_arrow_right_rounded,
-                image: "assets/icons/football-club.png",
-                tileName: "Egg Club",
-              ),
-            ],
-          ),
-        ),
-        // ==============================================BODY=========================
 
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // ==============================================slide bars of types of groceries=========================
+              // ==============================================Daily deals limited stock==========================
 
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      SideBarWidget(
-                        barName: 'Grocery',
-                        image: "assets/icons/groceries.png",
-                      ),
-                      SideBarWidget(
-                        barName: 'Pharmacy',
-                        image: "assets/icons/capsules.png",
-                      ),
-                      SideBarWidget(
-                        barName: 'Cookups',
-                        image: "assets/icons/stir-fry.png",
-                      ),
-                    ],
-                  ),
-                ),
-
-                // ==============================================slide bars of posters==========================
-
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      DealSHorizontalBarWidget(
-                        dealsname: 'Daily Deals',
-                        imageName: "assets/images/dim-offer.jpg",
-                        color: Colors.blueGrey,
-                      ),
-                      DealSHorizontalBarWidget(
-                        dealsname: 'Best Price',
-                        imageName: "assets/images/chaal-offer.jpg",
-                        color: const Color.fromARGB(255, 230, 209, 143),
-                      ),
-                      DealSHorizontalBarWidget(
-                        dealsname: 'Protein',
-                        imageName: "assets/images/Chaldal-Offer.jpg",
-                        color: const Color.fromARGB(255, 230, 215, 84),
-                      ),
-                      DealSHorizontalBarWidget(
-                        dealsname: 'Gogo Bangla',
-                        imageName: "assets/images/cooking.jpg",
-                        color: const Color.fromARGB(255, 9, 59, 100),
-                      ),
-                      DealSHorizontalBarWidget(
-                        dealsname: 'Toiletries',
-                        imageName: "assets/images/combo-offer-pack.jpg",
-                        color: const Color.fromARGB(255, 9, 100, 14),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // ==============================================Daily deals limited stock==========================
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (builder) {
-                            return AlertDialog(
-                              content: SizedBox(
-                                height: 200,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (builder) {
+                          return AlertDialog(
+                            content: SizedBox(
+                              height: 200,
+                            ),
+                          );
+                        });
+                  },
+                  child: Container(
+                    height: screenHeight / 7.1,
+                    width: screenWidth / 0.8,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color.fromARGB(255, 127, 185, 233),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Daily Deals",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 18),
                               ),
-                            );
-                          });
-                    },
-                    child: Container(
-                      height: screenHeight / 7.1,
-                      width: screenWidth / 0.8,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: const Color.fromARGB(255, 127, 185, 233),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  "Daily Deals",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18),
-                                ),
-                                Container(
-                                    height: 30,
-                                    width: 140,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: const Color.fromARGB(
-                                                255, 149, 172, 184),
-                                            width: 1),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Center(
-                                      child: Text(
-                                        "10H:57M:32S",
-                                        style: textTheme.bodyMedium!
-                                            .copyWith(fontSize: 18),
+                              Container(
+                                  height: 30,
+                                  width: 140,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          color: const Color.fromARGB(
+                                              255, 149, 172, 184),
+                                          width: 1),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                    child: Text(
+                                      "10H:57M:32S",
+                                      style: textTheme.bodyMedium!.merge(
+                                          TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black)),
 
-                                        // TextStyle(
-                                        //     fontWeight: FontWeight.w500,
-                                        //     fontSize: 18),
-                                      ),
-                                    )),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text("Order over 99 to activate"),
-                            const Text("*Limited Stock")
-                          ],
-                        ),
+                                      // TextStyle(
+                                      //     fontWeight: FontWeight.w500,
+                                      //     fontSize: 18),
+                                    ),
+                                  )),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text("Order over 99 to activate"),
+                          const Text("*Limited Stock")
+                        ],
                       ),
                     ),
                   ),
                 ),
+              ),
 
-                // ==============================================Categories==========================
+              // ==============================================Categories==========================
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: categories.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 1.6),
-                    itemBuilder: (BuildContext context, int index) {
-                      return CategoriesBarWidget(
-                        categoryname: 'Ramadan',
-                      );
-                    },
-                  ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          (MaterialPageRoute(
-                              builder: (context) => AllCategoriesScreen())));
-                    },
-                    child: const Text("All Categories")),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Popular",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text(
-                        "View more >",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef',
-                        imageName: "assets/images/chaldal-premium-beef.webp",
-                        price: '819BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Front Leg Bone',
-                        imageName: "assets/images/beef-front-leg-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Flash Sales",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text(
-                        "View more >",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef',
-                        imageName: "assets/images/chaldal-premium-beef.webp",
-                        price: '819BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Front Leg Bone',
-                        imageName: "assets/images/beef-front-leg-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Fresh Vegetables",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text("View more >", style: textTheme.displayMedium
-
-                          // TextStyle(
-                          //     fontWeight: FontWeight.w500,
-                          //     fontSize: 18,
-                          //     color: Colors.purple),
-                          ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef',
-                        imageName: "assets/images/chaldal-premium-beef.webp",
-                        price: '819BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Front Leg Bone',
-                        imageName: "assets/images/beef-front-leg-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Biscuits",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text(
-                        "View more >",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef',
-                        imageName: "assets/images/chaldal-premium-beef.webp",
-                        price: '819BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Front Leg Bone',
-                        imageName: "assets/images/beef-front-leg-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Salt & Sugar",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text(
-                        "View more >",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef',
-                        imageName: "assets/images/chaldal-premium-beef.webp",
-                        price: '819BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Front Leg Bone',
-                        imageName: "assets/images/beef-front-leg-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Fresh Fruits",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text(
-                        "View more >",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef',
-                        imageName: "assets/images/chaldal-premium-beef.webp",
-                        price: '819BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Front Leg Bone',
-                        imageName: "assets/images/beef-front-leg-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Noodles",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text(
-                        "View more >",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 300,
-                  width: double.infinity,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: noodles.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ProductDetailsScreen(
-                                            productDetail: noodles[index],
-                                          )));
-                            },
-                            child: CardItemWidget(
-                              dealsname: noodles[index]["name"],
-                              imageName: noodles[index]["imageName"],
-                              price: noodles[index]["price"],
-                              quantity: noodles[index]["quantity"],
-                            ),
-                          ),
-                        );
-                      }),
-                ),
-
-                const SizedBox(
-                  height: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "Oil",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                      Text(
-                        "View more >",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            color: Colors.purple),
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef',
-                        imageName: "assets/images/chaldal-premium-beef.webp",
-                        price: '819BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Front Leg Bone',
-                        imageName: "assets/images/beef-front-leg-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                      CardItemWidget(
-                        dealsname: 'Chaldal Premium Beef Kuruli Bone',
-                        imageName: "assets/images/beef-kuruli-bone.jpg",
-                        price: '959BDT',
-                        quantity: '',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        bottomNavigationBar: ClipRRect(
-            child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-          child: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromARGB(0, 245, 243, 243),
-                Colors.white,
-              ],
-            )),
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () {
-                    setState(() {});
-                    homeNav = "assets/icons/house-black.png";
-                    categoryNav = "assets/icons/menu.png";
-                    menuColorNav = Colors.black;
-
-                    homeColorNav = Colors.purple;
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: categories.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 1.6),
+                  itemBuilder: (BuildContext context, int index) {
+                    return CategoriesBarWidget(
+                      categoryname: 'Ramadan',
+                    );
                   },
-                  child: Image.asset(
-                    homeNav,
-                    height: 30,
-                    width: 50,
-                    color: homeColorNav,
-                  ),
                 ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      categoryNav = "assets/icons/category.png";
-                      homeNav = "assets/icons/home.png";
-                      homeColorNav = Colors.black;
-                      menuColorNav = Colors.purple;
-                    });
-
+              ),
+              TextButton(
+                  onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => AllCategoriesScreen()));
+                        (MaterialPageRoute(
+                            builder: (context) => AllCategoriesScreen())));
                   },
-                  child: Image.asset(
-                    categoryNav,
-                    height: 30,
-                    width: 50,
-                    color: menuColorNav,
+                  child: const Text("All Categories")),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Popular",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Flash Sales",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Fresh Vegetables",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text("View more >",
+                        style: textTheme.titleMedium
+                            ?.merge(const TextStyle(color: Colors.purple))
+
+                        // Text("Company",
+// style:Theme.of(context).textTheme.bodyText1?.merge(TextStyle(color: Colors.red),
+// ),),
+                        // TextStyle(
+                        //     fontWeight: FontWeight.w500,
+                        //     fontSize: 18,
+                        //     color: Colors.purple),
+                        ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Biscuits",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Salt & Sugar",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Fresh Fruits",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Noodles",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: noodles.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProductDetailsScreen(
+                                          productDetail: noodles[index],
+                                        )));
+                          },
+                          child: CardItemWidget(
+                            dealsname: noodles[index]["name"],
+                            imageName: noodles[index]["imageName"],
+                            price: noodles[index]["price"],
+                            quantity: noodles[index]["quantity"],
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Oil",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                    Text(
+                      "View more >",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.purple),
+                    ),
+                  ],
+                ),
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef',
+                      imageName: "assets/images/chaldal-premium-beef.webp",
+                      price: '819BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Front Leg Bone',
+                      imageName: "assets/images/beef-front-leg-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                    CardItemWidget(
+                      dealsname: 'Chaldal Premium Beef Kuruli Bone',
+                      imageName: "assets/images/beef-kuruli-bone.jpg",
+                      price: '959BDT',
+                      quantity: '',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                height: 120,
+                color: newValue
+                    ? const Color.fromARGB(255, 235, 229, 229)
+                    : const Color.fromARGB(255, 116, 113, 113),
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 8, 8, 8),
+                        child: Text(
+                          "Need Help?",
+                          style: textTheme.headlineSmall,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          Chip(
+                            backgroundColor: Colors.white,
+                            elevation: 3,
+                            padding: EdgeInsets.all(13),
+                            avatar: Icon(
+                              Icons.message,
+                              size: 20,
+                              color: Colors.purple,
+                            ),
+                            label: Text(
+                              "Live Chat",
+                              style: TextStyle(color: Colors.purple),
+                            ),
+                          ),
+                          Chip(
+                            backgroundColor: Colors.white,
+                            // padding: EdgeInsets.fromLTRB(8, 5, 5, 5),
+                            padding: EdgeInsets.all(13),
+
+                            elevation: 3,
+                            avatar: Icon(
+                              Icons.call,
+                              size: 18,
+                              color: Colors.purple,
+                            ),
+                            label: Text(
+                              "Call",
+                              style: TextStyle(color: Colors.purple),
+                            ),
+                          ),
+                          Chip(
+                            backgroundColor: Colors.white,
+                            // padding: EdgeInsets.fromLTRB(8, 5, 5, 5),
+                            padding: EdgeInsets.all(13),
+
+                            elevation: 3,
+                            avatar: Icon(
+                              Icons.question_mark_sharp,
+                              size: 17,
+                              color: Colors.purple,
+                            ),
+                            label: Text(
+                              "FAQ",
+                              style: TextStyle(color: Colors.purple),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                Image.asset(
-                  "assets/icons/search.png",
-                  height: 30,
-                  width: 50,
-                ),
-              ],
-            ),
+              )
+            ],
           ),
-        )));
+        ),
+      ),
+      // bottomNavigationBar: BottomNavigationBar(
+
+      //     onTap: (value) {
+      //       setState(() {
+      //         _currentIndex = value;
+      //       });
+      //     },
+      //     items: [
+      //       BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+      //       BottomNavigationBarItem(
+      //           icon: Icon(Icons.category_outlined), label: "Categories"),
+      //       BottomNavigationBarItem(
+      //           icon: Icon(Icons.search), label: "Search"),
+      //     ])
+      // ClipRRect(
+      //   child: BackdropFilter(
+      //     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+      //     child: Container(
+      //       decoration: const BoxDecoration(
+      //         gradient: LinearGradient(
+      //           begin: Alignment.topCenter,
+      //           end: Alignment.bottomRight,
+      //           colors: [
+      //             Color.fromARGB(0, 247, 238, 238),
+      //             Colors.white,
+      //           ],
+      //         ),
+      //       ),
+      //       height: 50,
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //         children: [
+      //           InkWell(
+      //             onTap: () {
+      //               setState(() {});
+      //               homeNav = "assets/icons/house-black.png";
+      //               categoryNav = "assets/icons/menu.png";
+      //               menuColorNav = Colors.black;
+
+      //               homeColorNav = Colors.purple;
+      //             },
+      //             child: Image.asset(
+      //               homeNav,
+      //               height: 30,
+      //               width: 50,
+      //               color: homeColorNav,
+      //             ),
+      //           ),
+      //           InkWell(
+      //             onTap: () {
+      //               setState(() {
+      //                 categoryNav = "assets/icons/category.png";
+      //                 homeNav = "assets/icons/home.png";
+      //                 homeColorNav = Colors.black;
+      //                 menuColorNav = Colors.purple;
+      //               });
+
+      //               Navigator.push(
+      //                   context,
+      //                   MaterialPageRoute(
+      //                       builder: (context) => AllCategoriesScreen()));
+      //             },
+      //             child: Image.asset(
+      //               categoryNav,
+      //               height: 30,
+      //               width: 50,
+      //               color: menuColorNav,
+      //             ),
+      //           ),
+      //           Image.asset(
+      //             "assets/icons/search.png",
+      //             height: 30,
+      //             width: 50,
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+    );
   }
 }
 
@@ -1165,19 +1216,28 @@ class CategoriesBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    InputDecorationTheme inputDecoration =
+        Theme.of(context).inputDecorationTheme;
     return Container(
       height: 140,
       width: 200,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: const Color.fromARGB(255, 197, 217, 236),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          color: const Color.fromARGB(255, 197, 217, 236),
+          boxShadow: [
+            BoxShadow(
+                offset: Offset.fromDirection(1),
+                blurRadius: 2,
+                spreadRadius: 0.5,
+                color: Colors.grey)
+          ]),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
             categoryname,
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+            style: textTheme.bodyLarge?.copyWith(color: cOLORBlack),
           ),
           Align(
             alignment: Alignment.centerRight,
