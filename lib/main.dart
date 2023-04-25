@@ -21,7 +21,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
-  final navPage = [HomePage(), AllCategoriesScreen(), SearchproductScreen()];
+  final navPage = [
+    const HomePage(),
+    const AllCategoriesScreen(),
+    const SearchproductScreen()
+  ];
   PageController pageController = PageController();
 
   @override
@@ -94,11 +98,11 @@ class _MyAppState extends State<MyApp> {
                               setState(() {
                                 _currentIndex = value;
                                 pageController.animateToPage(_currentIndex,
-                                    duration: Duration(milliseconds: 100),
+                                    duration: const Duration(milliseconds: 100),
                                     curve: Curves.linear);
                               });
                             },
-                            items: [
+                            items: const [
                               BottomNavigationBarItem(
                                   icon: Icon(Icons.home), label: "Home"),
                               BottomNavigationBarItem(
