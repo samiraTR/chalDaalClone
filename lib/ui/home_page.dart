@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/service/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
+import 'package:tst_app2/ui/cash_image.dart';
 import 'package:tst_app2/ui/product_details.dart';
 import 'package:tst_app2/ui/search_product.dart';
 import 'package:tst_app2/ui/themes/theme.dart';
@@ -176,6 +177,13 @@ class _HomePageState extends State<HomePage> {
               icon: Icons.keyboard_arrow_right_rounded,
               image: "assets/icons/football-club.png",
               tileName: "Egg Club",
+            ),
+            ListTileWidget(
+              ontap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const CashImage())),
+              icon: Icons.keyboard_arrow_right_rounded,
+              image: "assets/icons/football-club.png",
+              tileName: "Cash Image",
             ),
           ],
         ),

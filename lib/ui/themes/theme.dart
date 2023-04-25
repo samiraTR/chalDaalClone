@@ -66,7 +66,7 @@ final defaultTheme = {
     appBarTheme: const AppBarTheme(
         backgroundColor: Color.fromRGBO(255, 255, 255, 1),
         iconTheme: IconThemeData(color: Colors.black),
-        titleTextStyle: TextStyle(color: Colors.black)),
+        titleTextStyle: TextStyle(color: Colors.black, fontSize: 18)),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
         color: cOLORBlack,

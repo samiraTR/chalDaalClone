@@ -4,12 +4,14 @@ class ListTileWidget extends StatelessWidget {
   String image;
   IconData icon;
   String tileName;
-  ListTileWidget({
-    Key? key,
-    this.image = " ",
-    required this.icon,
-    required this.tileName,
-  }) : super(key: key);
+  VoidCallback? ontap;
+  ListTileWidget(
+      {Key? key,
+      this.image = " ",
+      required this.icon,
+      required this.tileName,
+      this.ontap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class ListTileWidget extends StatelessWidget {
         width: 30,
       ),
       trailing: Icon(icon),
+      onTap: ontap,
       title: Text(
         tileName,
         style: const TextStyle(fontWeight: FontWeight.bold),
