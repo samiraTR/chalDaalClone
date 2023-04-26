@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
+import 'package:tst_app2/service/repositories.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/home_page.dart';
 import 'package:tst_app2/ui/search_product.dart';
 import 'package:tst_app2/ui/themes/theme.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox("imageList");
 
   runApp(const MyApp());
 }
@@ -21,12 +25,34 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
+  List unsplashData = [];
   final navPage = [
     const HomePage(),
     const AllCategoriesScreen(),
     const SearchproductScreen()
   ];
   PageController pageController = PageController();
+
+  // @override
+  // void initState() {
+  //   apicall();
+
+  //   super.initState();
+  // }
+
+  apicall() async {
+    int pageNumber = 1;
+
+    // for (int i = pageNumber; i < 50; i++) {
+    var x = await Repositories().getImageRepo(pageNumber);
+    for (var a in x) {
+      unsplashData.add(a);
+    }
+    // pageNumber++;
+    print("x $x $pageNumber");
+    print("x ${unsplashData.length} $pageNumber");
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
