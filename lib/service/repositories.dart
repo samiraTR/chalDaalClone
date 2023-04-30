@@ -13,7 +13,9 @@ class Repositories {
     try {
       final http.Response response =
           await DataProviders().getImageDP(pageNumber);
-      List<UnsplashModel> imageList = unsplashModelFromJson(response.body);
+      // List<UnsplashModel> imageList = unsplashModelFromJson(response.body);
+      List imageList = jsonDecode(response.body);
+
       print("imageList ${imageList.length}");
 
       return imageList;

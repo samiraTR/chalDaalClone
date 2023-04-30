@@ -25,7 +25,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
   List theme = ["System", "Light", "Dark"];
+  PageController pageController = PageController();
 
   double screenHeight = 0.0;
   double screenWidth = 0.0;
@@ -137,10 +139,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AllCities()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => AllCities()));
                         },
                         title: const Text(
                           "Change City",
@@ -1042,6 +1042,33 @@ class _HomePageState extends State<HomePage> {
       //     ),
       //   ),
       // ),
+
+      // bottomNavigationBar: BottomNavigationBar(
+      //     selectedItemColor: Colors.purple,
+      //     unselectedItemColor: Colors.grey,
+      //     selectedIconTheme: const IconThemeData(size: 32),
+      //     currentIndex: _currentIndex,
+      //     onTap: (value) {
+      //       print(value);
+      //       setState(() {
+      //         _currentIndex = value;
+      //         if (_currentIndex == 1) {
+      //           Navigator.push(
+      //               context,
+      //               (MaterialPageRoute(
+      //                   builder: (context) => AllCategoriesScreen())));
+      //         }
+      //         // pageController.animateToPage(_currentIndex,
+      //         //     duration: const Duration(milliseconds: 100),
+      //         //     curve: Curves.linear);
+      //       });
+      //     },
+      //     items: const [
+      //       BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+      //       BottomNavigationBarItem(
+      //           icon: Icon(Icons.category_outlined), label: "Categories"),
+      //       BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
+      //     ]),
     );
   }
 }

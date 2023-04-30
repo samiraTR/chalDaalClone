@@ -13,6 +13,25 @@ String unsplashModelToJson(List<UnsplashModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UnsplashModel {
+  final String id;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime promotedAt;
+  final int width;
+  final int height;
+  final String color;
+  final String blurHash;
+  final String description;
+  final String altDescription;
+  final Urls urls;
+  final UnsplashModelLinks links;
+  final int likes;
+  final bool likedByUser;
+  final List<dynamic> currentUserCollections;
+  final dynamic sponsorship;
+  final TopicSubmissions topicSubmissions;
+  final User user;
+
   UnsplashModel({
     required this.id,
     required this.createdAt,
@@ -34,30 +53,11 @@ class UnsplashModel {
     required this.user,
   });
 
-  final String id;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final dynamic promotedAt;
-  final int width;
-  final int height;
-  final String color;
-  final String blurHash;
-  final dynamic description;
-  final String altDescription;
-  final Urls urls;
-  final UnsplashModelLinks links;
-  final int likes;
-  final bool likedByUser;
-  final List<dynamic> currentUserCollections;
-  final Sponsorship sponsorship;
-  final TopicSubmissions topicSubmissions;
-  final User user;
-
   factory UnsplashModel.fromJson(Map<String, dynamic> json) => UnsplashModel(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        promotedAt: json["promoted_at"],
+        promotedAt: DateTime.parse(json["promoted_at"]),
         width: json["width"],
         height: json["height"],
         color: json["color"],
@@ -70,7 +70,7 @@ class UnsplashModel {
         likedByUser: json["liked_by_user"],
         currentUserCollections:
             List<dynamic>.from(json["current_user_collections"].map((x) => x)),
-        sponsorship: Sponsorship.fromJson(json["sponsorship"]),
+        sponsorship: json["sponsorship"],
         topicSubmissions: TopicSubmissions.fromJson(json["topic_submissions"]),
         user: User.fromJson(json["user"]),
       );
@@ -79,7 +79,7 @@ class UnsplashModel {
         "id": id,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
-        "promoted_at": promotedAt,
+        "promoted_at": promotedAt.toIso8601String(),
         "width": width,
         "height": height,
         "color": color,
@@ -92,24 +92,24 @@ class UnsplashModel {
         "liked_by_user": likedByUser,
         "current_user_collections":
             List<dynamic>.from(currentUserCollections.map((x) => x)),
-        "sponsorship": sponsorship.toJson(),
+        "sponsorship": sponsorship,
         "topic_submissions": topicSubmissions.toJson(),
         "user": user.toJson(),
       };
 }
 
 class UnsplashModelLinks {
+  final String self;
+  final String html;
+  final String download;
+  final String downloadLocation;
+
   UnsplashModelLinks({
     required this.self,
     required this.html,
     required this.download,
     required this.downloadLocation,
   });
-
-  final String self;
-  final String html;
-  final String download;
-  final String downloadLocation;
 
   factory UnsplashModelLinks.fromJson(Map<String, dynamic> json) =>
       UnsplashModelLinks(
@@ -127,36 +127,136 @@ class UnsplashModelLinks {
       };
 }
 
-class Sponsorship {
-  Sponsorship({
-    required this.impressionUrls,
-    required this.tagline,
-    required this.taglineUrl,
-    required this.sponsor,
+class TopicSubmissions {
+  final The3DRenders streetPhotography;
+  final The3DRenders greenerCities;
+  final The3DRenders wallpapers;
+  final The3DRenders the3DRenders;
+  final The3DRenders people;
+  final Travel travel;
+
+  TopicSubmissions({
+    required this.streetPhotography,
+    required this.greenerCities,
+    required this.wallpapers,
+    required this.the3DRenders,
+    required this.people,
+    required this.travel,
   });
 
-  final List<String> impressionUrls;
-  final String tagline;
-  final String taglineUrl;
-  final User sponsor;
-
-  factory Sponsorship.fromJson(Map<String, dynamic> json) => Sponsorship(
-        impressionUrls:
-            List<String>.from(json["impression_urls"].map((x) => x)),
-        tagline: json["tagline"],
-        taglineUrl: json["tagline_url"],
-        sponsor: User.fromJson(json["sponsor"]),
+  factory TopicSubmissions.fromJson(Map<String, dynamic> json) =>
+      TopicSubmissions(
+        streetPhotography: The3DRenders.fromJson(json["street-photography"]),
+        greenerCities: The3DRenders.fromJson(json["greener-cities"]),
+        wallpapers: The3DRenders.fromJson(json["wallpapers"]),
+        the3DRenders: The3DRenders.fromJson(json["3d-renders"]),
+        people: The3DRenders.fromJson(json["people"]),
+        travel: Travel.fromJson(json["travel"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "impression_urls": List<dynamic>.from(impressionUrls.map((x) => x)),
-        "tagline": tagline,
-        "tagline_url": taglineUrl,
-        "sponsor": sponsor.toJson(),
+        "street-photography": streetPhotography.toJson(),
+        "greener-cities": greenerCities.toJson(),
+        "wallpapers": wallpapers.toJson(),
+        "3d-renders": the3DRenders.toJson(),
+        "people": people.toJson(),
+        "travel": travel.toJson(),
+      };
+}
+
+class The3DRenders {
+  final String status;
+
+  The3DRenders({
+    required this.status,
+  });
+
+  factory The3DRenders.fromJson(Map<String, dynamic> json) => The3DRenders(
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+      };
+}
+
+class Travel {
+  final String status;
+  final DateTime approvedOn;
+
+  Travel({
+    required this.status,
+    required this.approvedOn,
+  });
+
+  factory Travel.fromJson(Map<String, dynamic> json) => Travel(
+        status: json["status"],
+        approvedOn: DateTime.parse(json["approved_on"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "approved_on": approvedOn.toIso8601String(),
+      };
+}
+
+class Urls {
+  final String raw;
+  final String full;
+  final String regular;
+  final String small;
+  final String thumb;
+  final String smallS3;
+
+  Urls({
+    required this.raw,
+    required this.full,
+    required this.regular,
+    required this.small,
+    required this.thumb,
+    required this.smallS3,
+  });
+
+  factory Urls.fromJson(Map<String, dynamic> json) => Urls(
+        raw: json["raw"],
+        full: json["full"],
+        regular: json["regular"],
+        small: json["small"],
+        thumb: json["thumb"],
+        smallS3: json["small_s3"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "raw": raw,
+        "full": full,
+        "regular": regular,
+        "small": small,
+        "thumb": thumb,
+        "small_s3": smallS3,
       };
 }
 
 class User {
+  final String id;
+  final DateTime updatedAt;
+  final String username;
+  final String name;
+  final String firstName;
+  final String lastName;
+  final String twitterUsername;
+  final String portfolioUrl;
+  final String bio;
+  final String location;
+  final UserLinks links;
+  final ProfileImage profileImage;
+  final String instagramUsername;
+  final int totalCollections;
+  final int totalLikes;
+  final int totalPhotos;
+  final bool acceptedTos;
+  final bool forHire;
+  final Social social;
+
   User({
     required this.id,
     required this.updatedAt,
@@ -178,26 +278,6 @@ class User {
     required this.forHire,
     required this.social,
   });
-
-  final String id;
-  final DateTime updatedAt;
-  final String username;
-  final String name;
-  final String firstName;
-  final String lastName;
-  final dynamic twitterUsername;
-  final String portfolioUrl;
-  final String bio;
-  final dynamic location;
-  final UserLinks links;
-  final ProfileImage profileImage;
-  final dynamic instagramUsername;
-  final int totalCollections;
-  final int totalLikes;
-  final int totalPhotos;
-  final bool acceptedTos;
-  final bool forHire;
-  final Social social;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -245,6 +325,14 @@ class User {
 }
 
 class UserLinks {
+  final String self;
+  final String html;
+  final String photos;
+  final String likes;
+  final String portfolio;
+  final String following;
+  final String followers;
+
   UserLinks({
     required this.self,
     required this.html,
@@ -254,14 +342,6 @@ class UserLinks {
     required this.following,
     required this.followers,
   });
-
-  final String self;
-  final String html;
-  final String photos;
-  final String likes;
-  final String portfolio;
-  final String following;
-  final String followers;
 
   factory UserLinks.fromJson(Map<String, dynamic> json) => UserLinks(
         self: json["self"],
@@ -285,15 +365,15 @@ class UserLinks {
 }
 
 class ProfileImage {
+  final String small;
+  final String medium;
+  final String large;
+
   ProfileImage({
     required this.small,
     required this.medium,
     required this.large,
   });
-
-  final String small;
-  final String medium;
-  final String large;
 
   factory ProfileImage.fromJson(Map<String, dynamic> json) => ProfileImage(
         small: json["small"],
@@ -309,17 +389,17 @@ class ProfileImage {
 }
 
 class Social {
+  final String instagramUsername;
+  final String portfolioUrl;
+  final String twitterUsername;
+  final dynamic paypalEmail;
+
   Social({
     required this.instagramUsername,
     required this.portfolioUrl,
     required this.twitterUsername,
     required this.paypalEmail,
   });
-
-  final dynamic instagramUsername;
-  final String portfolioUrl;
-  final dynamic twitterUsername;
-  final dynamic paypalEmail;
 
   factory Social.fromJson(Map<String, dynamic> json) => Social(
         instagramUsername: json["instagram_username"],
@@ -333,50 +413,5 @@ class Social {
         "portfolio_url": portfolioUrl,
         "twitter_username": twitterUsername,
         "paypal_email": paypalEmail,
-      };
-}
-
-class TopicSubmissions {
-  TopicSubmissions();
-
-  factory TopicSubmissions.fromJson(Map<String, dynamic> json) =>
-      TopicSubmissions();
-
-  Map<String, dynamic> toJson() => {};
-}
-
-class Urls {
-  Urls({
-    required this.raw,
-    required this.full,
-    required this.regular,
-    required this.small,
-    required this.thumb,
-    required this.smallS3,
-  });
-
-  final String raw;
-  final String full;
-  final String regular;
-  final String small;
-  final String thumb;
-  final String smallS3;
-
-  factory Urls.fromJson(Map<String, dynamic> json) => Urls(
-        raw: json["raw"],
-        full: json["full"],
-        regular: json["regular"],
-        small: json["small"],
-        thumb: json["thumb"],
-        smallS3: json["small_s3"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "raw": raw,
-        "full": full,
-        "regular": regular,
-        "small": small,
-        "thumb": thumb,
-        "small_s3": smallS3,
       };
 }

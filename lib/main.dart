@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
+import 'package:tst_app2/model/image_model.dart';
+import 'package:tst_app2/service/constants.dart';
 import 'package:tst_app2/service/repositories.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/home_page.dart';
@@ -33,29 +35,41 @@ class _MyAppState extends State<MyApp> {
   ];
   PageController pageController = PageController();
 
-  // @override
-  // void initState() {
-  //   apicall();
+  @override
+  void initState() {
+    // apicall();
 
-  //   super.initState();
-  // }
+    super.initState();
+  }
 
   apicall() async {
     int pageNumber = 1;
+    final box = await Hive.box("imageList");
+    // var a = box.get("imageData");
+    // for (var ele in a) {
+    //   unsplashData.add(ele);
+    // }
+    // print("x  ${unsplashData.length} $pageNumber");
+    // for (int i = pageNumber; i < 40; i++) {
+    //   List x = await Repositories().getImageRepo(pageNumber);
+    //   print(x);
+    //   for (var a in x) {
+    //     unsplashData.add(a);
+    //   }
 
-    // for (int i = pageNumber; i < 50; i++) {
-    var x = await Repositories().getImageRepo(pageNumber);
-    for (var a in x) {
-      unsplashData.add(a);
-    }
-    // pageNumber++;
-    print("x $x $pageNumber");
-    print("x ${unsplashData.length} $pageNumber");
+    //   box.put("imageData", unsplashData);
+
+    //   var a = box.get("imageData");
+    //   pageNumber++;
+    //   print("x $x $pageNumber");
+    //   print("a ${a} ");
+    //   print("x  ${unsplashData.length} $pageNumber");
     // }
   }
 
   @override
   Widget build(BuildContext context) {
+    apicall();
     return BlocProvider(
       create: (context) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -68,6 +82,12 @@ class _MyAppState extends State<MyApp> {
                   body: PageView(
                     controller: pageController,
                     onPageChanged: (value) {
+                      if (value == 2) {
+                        bottomNavRes = true;
+                      } else {
+                        bottomNavRes = false;
+                      }
+
                       print(value);
 
                       setState(() {
@@ -76,70 +96,76 @@ class _MyAppState extends State<MyApp> {
                     },
                     children: navPage,
                   ),
-                  bottomNavigationBar: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(7.0),
-                          child: Container(
-                            height: 55,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.purple),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const Text(
-                                  "Checkout",
-                                  style: textSTYLEHeadline16,
-                                ),
-                                Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    color:
-                                        const Color.fromARGB(255, 131, 7, 153),
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(10.0),
-                                      child: Text(
-                                        "400 BDT",
-                                        style: textSTYLEHeadline15,
+                  bottomNavigationBar: bottomNavRes == false
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(7.0),
+                                child: Container(
+                                  height: 55,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.purple),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      const Text(
+                                        "Checkout",
+                                        style: textSTYLEHeadline16,
                                       ),
-                                    ))
-                              ],
+                                      Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          color: const Color.fromARGB(
+                                              255, 131, 7, 153),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(10.0),
+                                            child: Text(
+                                              "400 BDT",
+                                              style: textSTYLEHeadline15,
+                                            ),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: BottomNavigationBar(
-                            selectedItemColor: Colors.purple,
-                            unselectedItemColor: Colors.grey,
-                            selectedIconTheme: const IconThemeData(size: 32),
-                            currentIndex: _currentIndex,
-                            onTap: (value) {
-                              print(value);
-
-                              setState(() {
-                                _currentIndex = value;
-                                pageController.animateToPage(_currentIndex,
-                                    duration: const Duration(milliseconds: 100),
-                                    curve: Curves.linear);
-                              });
-                            },
-                            items: const [
-                              BottomNavigationBarItem(
-                                  icon: Icon(Icons.home), label: "Home"),
-                              BottomNavigationBarItem(
-                                  icon: Icon(Icons.category_outlined),
-                                  label: "Categories"),
-                              BottomNavigationBarItem(
-                                  icon: Icon(Icons.search), label: "Search"),
-                            ]),
-                      ),
-                    ],
-                  )));
+                            Expanded(
+                              child: BottomNavigationBar(
+                                  selectedItemColor: Colors.purple,
+                                  unselectedItemColor: Colors.grey,
+                                  selectedIconTheme:
+                                      const IconThemeData(size: 32),
+                                  currentIndex: _currentIndex,
+                                  onTap: (value) {
+                                    print(value);
+                                    setState(() {
+                                      _currentIndex = value;
+                                      pageController.animateToPage(
+                                          _currentIndex,
+                                          duration:
+                                              const Duration(milliseconds: 100),
+                                          curve: Curves.linear);
+                                    });
+                                  },
+                                  items: const [
+                                    BottomNavigationBarItem(
+                                        icon: Icon(Icons.home), label: "Home"),
+                                    BottomNavigationBarItem(
+                                        icon: Icon(Icons.category_outlined),
+                                        label: "Categories"),
+                                    BottomNavigationBarItem(
+                                        icon: Icon(Icons.search),
+                                        label: "Search"),
+                                  ]),
+                            ),
+                          ],
+                        )
+                      : SizedBox()));
         },
       ),
     );

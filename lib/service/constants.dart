@@ -6,6 +6,7 @@ Color homeColorNav = Colors.black;
 Color menuColorNav = Colors.black;
 // bool themeColor = false;
 bool newValue = true;
+bool bottomNavRes = false;
 
 List categories = [
   {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
