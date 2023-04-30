@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                     showDialog(
                         context: context,
                         builder: (builder) {
-                          return AlertDialog(
+                          return const AlertDialog(
                             content: SizedBox(
                               height: 200,
                             ),
@@ -268,7 +268,7 @@ class _HomePageState extends State<HomePage> {
                         });
                   },
                   child: Container(
-                    height: screenHeight / 7.1,
+                    height: screenHeight / 6.5,
                     width: screenWidth / 0.8,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -301,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                                     child: Text(
                                       "10H:57M:32S",
                                       style: textTheme.bodyMedium!.merge(
-                                          TextStyle(
+                                          const TextStyle(
                                               fontSize: 18,
                                               color: Colors.black)),
 
@@ -348,7 +348,8 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                         context,
                         (MaterialPageRoute(
-                            builder: (context) => AllCategoriesScreen())));
+                            builder: (context) =>
+                                const AllCategoriesScreen())));
                   },
                   child: const Text("All Categories")),
               Padding(
