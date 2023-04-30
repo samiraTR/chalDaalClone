@@ -45,26 +45,20 @@ class _MyAppState extends State<MyApp> {
   apicall() async {
     int pageNumber = 1;
     final box = await Hive.box("imageList");
-    // var a = box.get("imageData");
-    // for (var ele in a) {
-    //   unsplashData.add(ele);
-    // }
-    // print("x  ${unsplashData.length} $pageNumber");
-    // for (int i = pageNumber; i < 40; i++) {
-    //   List x = await Repositories().getImageRepo(pageNumber);
-    //   print(x);
-    //   for (var a in x) {
-    //     unsplashData.add(a);
-    //   }
+    var a = box.get("imageData");
 
-    //   box.put("imageData", unsplashData);
+    print("x  ${unsplashData.length} $pageNumber");
+    for (int i = pageNumber; i < 20; i++) {
+      List x = await Repositories().getImageRepo(pageNumber);
 
-    //   var a = box.get("imageData");
-    //   pageNumber++;
-    //   print("x $x $pageNumber");
-    //   print("a ${a} ");
-    //   print("x  ${unsplashData.length} $pageNumber");
-    // }
+      for (var a in x) {
+        unsplashData.add(a);
+      }
+
+      box.put("imageData", unsplashData);
+
+      pageNumber++;
+    }
   }
 
   @override
