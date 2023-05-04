@@ -8,6 +8,7 @@ import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
+import 'package:tst_app2/ui/cash_image.dart';
 import 'package:tst_app2/ui/city_selection.dart';
 import 'package:tst_app2/ui/product_details.dart';
 import 'package:tst_app2/ui/search_product.dart';
