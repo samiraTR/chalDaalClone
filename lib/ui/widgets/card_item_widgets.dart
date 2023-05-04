@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:tst_app2/ui/themes/theme.dart';
 
 class CardItemWidget extends StatefulWidget {
-  String price;
-  String imageName;
-  String dealsname;
-  String quantity;
+  final String price;
+  final String imageName;
+  final String dealsname;
+  final String quantity;
 
-  CardItemWidget({
+  const CardItemWidget({
     Key? key,
     required this.price,
     required this.imageName,
