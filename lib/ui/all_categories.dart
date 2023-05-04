@@ -1,9 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:tst_app2/service/constants.dart';
 import 'package:tst_app2/ui/home_page.dart';
-import 'package:tst_app2/ui/themes/theme.dart';
 import 'package:tst_app2/ui/widgets/side_bar.dart';
 
 class AllCategoriesScreen extends StatefulWidget {
@@ -87,68 +83,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
           ),
         ),
       ),
-      // bottomNavigationBar: ClipRRect(
-      //   child: BackdropFilter(
-      //     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-      //     child: Container(
-      //       decoration: const BoxDecoration(
-      //           gradient: LinearGradient(
-      //         begin: Alignment.topCenter,
-      //         end: Alignment.bottomRight,
-      //         colors: [
-      //           Color.fromARGB(0, 245, 243, 243),
-      //           Colors.white,
-      //         ],
-      //       )),
-      //       height: 50,
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //         children: [
-      //           InkWell(
-      //             onTap: () {
-      //               setState(() {});
-      //               homeNav = "assets/icons/house-black.png";
-      //               categoryNav = "assets/icons/menu.png";
-      //               menuColorNav = Colors.black;
-
-      //               homeColorNav = Colors.purple;
-
-      //               Navigator.push(context,
-      //                   MaterialPageRoute(builder: (context) => HomePage()));
-      //             },
-      //             child: Image.asset(
-      //               homeNav,
-      //               height: 30,
-      //               width: 50,
-      //               color: homeColorNav,
-      //             ),
-      //           ),
-      //           InkWell(
-      //             onTap: () {
-      //               setState(() {
-      //                 categoryNav = "assets/icons/category.png";
-      //                 homeNav = "assets/icons/home.png";
-      //                 homeColorNav = Colors.black;
-      //                 menuColorNav = Colors.purple;
-      //               });
-      //             },
-      //             child: Image.asset(
-      //               categoryNav,
-      //               height: 30,
-      //               width: 50,
-      //               color: menuColorNav,
-      //             ),
-      //           ),
-      //           Image.asset(
-      //             "assets/icons/search.png",
-      //             height: 30,
-      //             width: 50,
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
