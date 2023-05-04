@@ -21,35 +21,50 @@ class _CashImageState extends State<CashImage> {
   }
 
   getImageSource() async {
-    imageData = await getImage();
+    List temp = [];
+    for (int i = 1; i < 95; i++) {
+      List a = [];
+      a = await getImage(i);
+      temp.add(a);
+    }
+
+    if (temp.isNotEmpty) {
+      for (List element in temp) {
+        element.forEach((element2) {
+          imageData.add(element2);
+        });
+      }
+    }
+    print('imageData length: ${imageData.length}');
+    // imageData = await getImage(5);
     setState(() {});
   }
 
-  Future<List> getImage() async {
+  Future<List> getImage(int pageNo) async {
     http.Response response;
-    List imageData = [];
+    List imageData2 = [];
     try {
       response = await http.get(
           Uri.parse(
-              'https://api.pexels.com/v1/search/?page=1&per_page=80&query=electronics'),
+              'https://api.pexels.com/v1/search/?page=$pageNo&per_page=80&query=electronics'),
           headers: {
             'Authorization':
                 'CiJrKvEoG0gTaH4b5BRpgMKD8Lsy7Uaefrxi41rNFDmXafwAVOFrdoBt'
           });
 
       var data = jsonDecode(response.body);
-      imageData = data['photos'];
+      imageData2 = data['photos'];
     } catch (e) {}
 
-    return imageData;
+    return imageData2;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cash Image'),
-      ),
+          title: const Text('Cash Image'),
+          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))]),
       body: imageData.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),

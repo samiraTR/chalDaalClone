@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
 
   apicall() async {
     int pageNumber = 1;
-    final box = await Hive.box("imageList");
+    final box = Hive.box("imageList");
     var a = box.get("imageData");
 
     print("x  ${unsplashData.length} $pageNumber");
@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    apicall();
+    // apicall();
     return BlocProvider(
       create: (context) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(
