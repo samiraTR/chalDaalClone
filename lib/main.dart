@@ -28,6 +28,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
   List unsplashData = [];
+  List<UnsplashModel> imageList = [];
   final navPage = [
     const HomePage(),
     const AllCategoriesScreen(),
@@ -37,28 +38,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // apicall();
+    apicall();
 
     super.initState();
   }
 
   apicall() async {
-    int pageNumber = 1;
-    final box = Hive.box("imageList");
-    var a = box.get("imageData");
+    imageList = await Repositories().getImageRepo(5);
+    // int pageNumber = 1;
+    // final box = Hive.box("imageList");
+    // var a = box.get("imageData");
 
-    print("x  ${unsplashData.length} $pageNumber");
-    for (int i = pageNumber; i < 20; i++) {
-      List x = await Repositories().getImageRepo(pageNumber);
+    // print("x  ${unsplashData.length} $pageNumber");
+    // for (int i = pageNumber; i < 20; i++) {
+    //   List x = await Repositories().getImageRepo(pageNumber);
 
-      for (var a in x) {
-        unsplashData.add(a);
-      }
+    //   for (var a in x) {
+    //     unsplashData.add(a);
+    //   }
 
-      box.put("imageData", unsplashData);
+    //   box.put("imageData", unsplashData);
 
-      pageNumber++;
-    }
+    //   pageNumber++;
+    // }
+    setState(() {});
   }
 
   @override
