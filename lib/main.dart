@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/model/image_model.dart';
-import 'package:tst_app2/service/constants.dart';
+import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/service/repositories.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/home_page.dart';
@@ -26,8 +26,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
   List unsplashData = [];
+  bool addToCart = false;
   final navPage = [
     const HomePage(),
     const AllCategoriesScreen(),
@@ -42,28 +43,33 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  apicall() async {
-    int pageNumber = 1;
-    final box = await Hive.box("imageList");
-    var a = box.get("imageData");
+  // apicall() async {
+  //   int pageNumber = 1;
+  //   final box = await Hive.box("imageList");
+  //   var a = box.get("imageData");
 
-    print("x  ${unsplashData.length} $pageNumber");
-    for (int i = pageNumber; i < 20; i++) {
-      List x = await Repositories().getImageRepo(pageNumber);
+  //   print("x  ${unsplashData.length} $pageNumber");
+  //   for (int i = pageNumber; i < 20; i++) {
+  //     List x = await Repositories().getImageRepo(pageNumber);
 
-      for (var a in x) {
-        unsplashData.add(a);
-      }
+  //     for (var a in x) {
+  //       unsplashData.add(a);
+  //     }
 
-      box.put("imageData", unsplashData);
+  //     box.put("imageData", unsplashData);
 
-      pageNumber++;
-    }
+  //     pageNumber++;
+  //   }
+  // }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    apicall();
     return BlocProvider(
       create: (context) => ThemeBloc(),
       child: BlocBuilder<ThemeBloc, ThemeState>(
@@ -76,16 +82,15 @@ class _MyAppState extends State<MyApp> {
                   body: PageView(
                     controller: pageController,
                     onPageChanged: (value) {
-                      if (value == 2) {
-                        bottomNavRes = true;
-                      } else {
-                        bottomNavRes = false;
-                      }
-
                       print(value);
 
                       setState(() {
-                        _currentIndex = value;
+                        currentIndex = value;
+                        if (value == 2) {
+                          bottomNavRes = true;
+                        } else {
+                          bottomNavRes = false;
+                        }
                       });
                     },
                     children: navPage,
@@ -94,53 +99,56 @@ class _MyAppState extends State<MyApp> {
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(7.0),
-                                child: Container(
-                                  height: 55,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.purple),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      const Text(
-                                        "Checkout",
-                                        style: textSTYLEHeadline16,
-                                      ),
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          color: const Color.fromARGB(
-                                              255, 131, 7, 153),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Text(
-                                              "400 BDT",
-                                              style: textSTYLEHeadline15,
+                            addToCart
+                                ? Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(7.0),
+                                      child: Container(
+                                        height: 55,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.purple),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            const Text(
+                                              "Checkout",
+                                              style: textSTYLEHeadline16,
                                             ),
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                                            Card(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                color: const Color.fromARGB(
+                                                    255, 131, 7, 153),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(10.0),
+                                                  child: Text(
+                                                    "400 BDT",
+                                                    style: textSTYLEHeadline15,
+                                                  ),
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox.shrink(),
                             Expanded(
                               child: BottomNavigationBar(
                                   selectedItemColor: Colors.purple,
                                   unselectedItemColor: Colors.grey,
                                   selectedIconTheme:
                                       const IconThemeData(size: 32),
-                                  currentIndex: _currentIndex,
+                                  currentIndex: currentIndex,
                                   onTap: (value) {
                                     print(value);
                                     setState(() {
-                                      _currentIndex = value;
-                                      pageController.animateToPage(
-                                          _currentIndex,
+                                      currentIndex = value;
+                                      pageController.animateToPage(currentIndex,
                                           duration:
                                               const Duration(milliseconds: 100),
                                           curve: Curves.linear);

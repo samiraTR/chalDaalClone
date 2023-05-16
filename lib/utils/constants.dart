@@ -4,6 +4,8 @@ String homeNav = "assets/icons/home.png";
 String categoryNav = "assets/icons/menu.png";
 Color homeColorNav = Colors.black;
 Color menuColorNav = Colors.black;
+int currentIndex = 0;
+
 // bool themeColor = false;
 bool newValue = true;
 bool bottomNavRes = false;

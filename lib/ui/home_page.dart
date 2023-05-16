@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/service/all_services.dart';
-import 'package:tst_app2/service/constants.dart';
+import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/cash_image.dart';
 import 'package:tst_app2/ui/city_selection.dart';
@@ -26,7 +26,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
   List theme = ["System", "Light", "Dark"];
   PageController pageController = PageController();
 
@@ -35,6 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     homeColorNav = Colors.purple;
   }
 

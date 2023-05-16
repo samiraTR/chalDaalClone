@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tst_app2/service/constants.dart';
+import 'package:tst_app2/main.dart';
+import 'package:tst_app2/utils/constants.dart';
+import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/home_page.dart';
 
 class SearchproductScreen extends StatefulWidget {
@@ -99,106 +101,118 @@ class _SearchproductScreenState extends State<SearchproductScreen> {
     InputDecorationTheme inputDecoration =
         Theme.of(context).inputDecorationTheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("Search"),
-      ),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-            child: ListView.builder(
-                itemCount: unsplashData.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl: unsplashData[index]["urls"]["small"],
-                        height: 120,
-                        width: 120,
-                        fit: BoxFit.cover,
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            // Text(unsplashData[index]["id"]),
-                            Text(
-                              unsplashData[index]["user"]["name"],
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: true,
-
-                              // textAlign: TextAlign.justify,
-                              style: textTheme.bodyMedium?.copyWith(
-                                  color: Colors.purple,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              unsplashData[index]["alt_description"] ??
-                                  "No Description",
-                            ),
-                          ],
+    return WillPopScope(
+      onWillPop: () async {
+        setState(() {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MyApp()));
+          bottomNavRes = false;
+        });
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text("Search"),
+        ),
+        body: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                  itemCount: unsplashData.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: unsplashData[index]["urls"]["small"],
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                    ],
-                  );
-                }),
-          )
-        ],
-      ),
-      bottomNavigationBar: bottomNavRes == true
-          ? Container(
-              width: 180,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        bottomNavRes = false;
-                        Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(
-                            builder: (context) => HomePage(),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              // Text(unsplashData[index]["id"]),
+                              Text(
+                                unsplashData[index]["user"]["name"],
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+
+                                // textAlign: TextAlign.justify,
+                                style: textTheme.bodyMedium?.copyWith(
+                                    color: Colors.purple,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                unsplashData[index]["alt_description"] ??
+                                    "No Description",
+                              ),
+                            ],
                           ),
-                        );
-
-                        // Navigator.of(context).pop();
-                      },
-                      icon: Icon(Icons.keyboard_backspace_rounded)),
-                  SizedBox(
-                    width: 300,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextField(
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          fillColor: Color.fromARGB(255, 235, 227, 227),
                         ),
-                        controller: searchController,
-                        onChanged: (value) {
+                        const SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    );
+                  }),
+            )
+          ],
+        ),
+        bottomNavigationBar: bottomNavRes == true
+            ? Container(
+                width: 180,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                        onPressed: () {
                           setState(() {
-                            runFilter(value);
+                            bottomNavRes = false;
                           });
+                          Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(
+                              builder: (context) => MyApp(),
+                            ),
+                          );
+
+                          // Navigator.of(context).pop();
                         },
+                        icon: Icon(Icons.keyboard_backspace_rounded)),
+                    SizedBox(
+                      width: 300,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: TextField(
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            fillColor: Color.fromARGB(255, 235, 227, 227),
+                          ),
+                          controller: searchController,
+                          onChanged: (value) {
+                            setState(() {
+                              runFilter(value);
+                            });
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          : SizedBox(),
+                  ],
+                ),
+              )
+            : SizedBox(),
+      ),
     );
   }
 }
