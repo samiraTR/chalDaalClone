@@ -13,6 +13,10 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int quantity = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 SizedBox(
                   height: 240,
                   width: double.infinity,
-                  child: Image.asset(widget.productDetail["imageName"]),
+                  child: Hero(
+                      tag: "aaaa",
+                      transitionOnUserGestures: true,
+                      child: Image.asset(widget.productDetail["imageName"])),
                 ),
                 const SizedBox(
                   height: 15,

@@ -4,6 +4,7 @@ import 'package:tst_app2/ui/themes/theme.dart';
 
 class CardItemWidget extends StatefulWidget {
   final String price;
+  final String id;
   final String imageName;
   final String dealsname;
   final String quantity;
@@ -14,6 +15,7 @@ class CardItemWidget extends StatefulWidget {
     required this.imageName,
     required this.dealsname,
     required this.quantity,
+    required this.id,
   }) : super(key: key);
 
   @override

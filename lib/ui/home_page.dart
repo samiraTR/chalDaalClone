@@ -278,8 +278,8 @@ class _HomePageState extends State<HomePage> {
               tileName: "Egg Club",
             ),
             ListTileWidget(
-              ontap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const CashImage())),
+              // ontap: () => Navigator.push(context,
+              //     MaterialPageRoute(builder: (_) => const CashImage())),
               icon: Icons.keyboard_arrow_right_rounded,
               image: "assets/icons/football-club.png",
               tileName: "Cash Image",
@@ -499,6 +499,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: saltNSugar[index]["imageName"],
                             price: saltNSugar[index]["price"],
                             quantity: saltNSugar[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );
@@ -555,6 +556,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: saltNSugar[index]["imageName"],
                             price: saltNSugar[index]["price"],
                             quantity: saltNSugar[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );
@@ -608,6 +610,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: saltNSugar[index]["imageName"],
                             price: saltNSugar[index]["price"],
                             quantity: saltNSugar[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );
@@ -664,6 +667,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: biscuits[index]["imageName"],
                             price: biscuits[index]["price"],
                             quantity: biscuits[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );
@@ -720,6 +724,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: saltNSugar[index]["imageName"],
                             price: saltNSugar[index]["price"],
                             quantity: saltNSugar[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );
@@ -776,6 +781,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: freshFruits[index]["imageName"],
                             price: freshFruits[index]["price"],
                             quantity: freshFruits[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );
@@ -830,6 +836,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: noodles[index]["imageName"],
                             price: noodles[index]["price"],
                             quantity: noodles[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );
@@ -887,6 +894,7 @@ class _HomePageState extends State<HomePage> {
                             imageName: oil[index]["imageName"],
                             price: oil[index]["price"],
                             quantity: oil[index]["quantity"],
+                            id: saltNSugar[index]["id"],
                           ),
                         ),
                       );

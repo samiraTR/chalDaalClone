@@ -27,7 +27,7 @@ List noodles = [
         "Protein, calcium, iodine and vitamin enriched egg noodles.Ingredients: Noodles: Spices, iodized salt, water. Masala: Iodized salt, tasting salt, corn starch, chicken powder, sugar, egg powder, chili powder, tapioca starch, citric acid. Nutrition: Minerals, fibre, calorie, protein, fat, carbohydrate, calcium, iron, carotene, vitamin B-1, vitamin B-2.",
     "variant": "Masala blast",
     "net-weight": "504 g",
-    "origin": "Bangladesh"
+    "origin": "Bangladesh",
   },
   {
     "price": "160BDT",
@@ -193,6 +193,7 @@ List oil = [
 
 List saltNSugar = [
   {
+    "id": "0",
     "price": "120 BDT",
     "name": "Loose White Sugar",
     "quantity": "1 kg",
@@ -204,6 +205,7 @@ List saltNSugar = [
     "origin": "Bangladesh"
   },
   {
+    "id": "1",
     "price": "22 BDT",
     "name": "ACI Pure Salt",
     "quantity": "500 gm",
@@ -215,6 +217,7 @@ List saltNSugar = [
     "origin": "Bangladesh"
   },
   {
+    "id": "2",
     "price": "42 BDT",
     "name": "Fresh Super Premium",
     "quantity": "1 Kg",
@@ -226,6 +229,7 @@ List saltNSugar = [
     "origin": "Bangladesh"
   },
   {
+    "id": "3",
     "price": "55 BDT",
     "name": "Sugar Candy(Tal Misri) ",
     "quantity": "200 gm",
@@ -237,6 +241,7 @@ List saltNSugar = [
     "origin": "Bangladesh"
   },
   {
+    "id": "4",
     "price": "559 BDT",
     "name": "Sis Brown Sugar",
     "quantity": "800 gm",
