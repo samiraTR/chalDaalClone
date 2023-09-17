@@ -24,18 +24,17 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
+    {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
   ];
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    InputDecorationTheme inputDecoration =
-        Theme.of(context).inputDecorationTheme;
+    InputDecorationTheme inputDecoration = Theme.of(context).inputDecorationTheme;
     return WillPopScope(
       onWillPop: () async {
         setState(() {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyApp()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
           bottomNavRes = false;
         });
         return false;
@@ -75,12 +74,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
                   child: GridView.builder(
                     shrinkWrap: true,
                     itemCount: categories.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 1.6),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 1.6),
                     itemBuilder: (BuildContext context, int index) {
                       return CategoriesBarWidget(
                         categoryname: 'Ramadan',
