@@ -24,6 +24,8 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
     {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
+    {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
+    {"name": "Ramadan", "image": "aasets/images/ramadan2.png"},
   ];
 
   @override
