@@ -58,14 +58,20 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
                       SideBarWidget(
                         barName: 'Grocery',
                         image: "assets/icons/groceries.png",
+                        onTap: null,
+                        indexNum:0, tappedStates: [] ,
                       ),
                       SideBarWidget(
                         barName: 'Pharmacy',
                         image: "assets/icons/capsules.png",
+                         onTap: null,
+                         indexNum:1, tappedStates: [], 
                       ),
                       SideBarWidget(
                         barName: 'Cookups',
                         image: "assets/icons/stir-fry.png",
+                         onTap: null,
+                         indexNum:2, tappedStates: [], 
                       ),
                     ],
                   ),

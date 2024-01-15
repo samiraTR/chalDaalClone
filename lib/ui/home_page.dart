@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:tst_app2/bloc/theme_bloc.dart';
+import 'package:tst_app2/local_storage/boxes.dart';
+import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
-import 'package:tst_app2/ui/cash_image.dart';
 import 'package:tst_app2/ui/city_selection.dart';
 import 'package:tst_app2/ui/product_details.dart';
-import 'package:tst_app2/ui/search_product.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/widgets/card_item_widgets.dart';
 import 'package:tst_app2/ui/widgets/deals_bar_widget.dart';
@@ -30,15 +28,41 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List theme = ["System", "Light", "Dark"];
   PageController pageController = PageController();
-
   double screenHeight = 0.0;
   double screenWidth = 0.0;
+  //==================latest====================
+
+  RetStr? skuListData;
+  List<bool> tappedStates = [];
+  
+  
+
+
+
   @override
   void initState() {
     super.initState();
+     getAllSyncInfoFiter();
+     
+     
 
     homeColorNav = Colors.purple;
   }
+
+
+  //========================== sku filter =================
+  getAllSyncInfoFiter(){
+  skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
+ tappedStates = List.generate(
+  skuListData!.brandList.length,
+  (index) => false,
+);
+
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -303,27 +327,63 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SingleChildScrollView(
+  scrollDirection: Axis.horizontal,
+  child: Row(
+    children: List.generate(
+      skuListData!.brandList.length,
+      (index) => SideBarWidget(
+        indexNum: index,
+        barName: skuListData!.brandList[index].brandName,
+        image: "assets/icons/capsules.png",
+        tappedStates: tappedStates,
+        onTap: (index, isTapped) {
+          setState(() {
+            tappedStates = List.from(isTapped);
+          });
+          print("onTap called for index: $index, isTapped: $isTapped");
+        },
+      ),
+    ),
+  ),
+),
               // ==============================================slide bars of types of groceries=========================
 
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    SideBarWidget(
-                      barName: 'Grocery',
-                      image: "assets/icons/groceries.png",
-                    ),
-                    SideBarWidget(
-                      barName: 'Pharmacy',
-                      image: "assets/icons/capsules.png",
-                    ),
-                    SideBarWidget(
-                      barName: 'Cookups',
-                      image: "assets/icons/stir-fry.png",
-                    ),
-                  ],
-                ),
-              ),
+//               SingleChildScrollView(
+//                 scrollDirection: Axis.horizontal,
+//                 child: Row(
+//                   children: List.generate(
+//               skuListData!.brandList.length,
+//               (index) => SideBarWidget(
+//                 indexNum:index,
+//                 barName: skuListData!.brandList[index].brandName,
+//                 image: "assets/icons/capsules.png",
+//                   tappedStates: tappedStates,
+//                   onTap: (index, isTapped) {
+//                     setState(() {
+//                          tappedStates = List.from(isTapped);
+//                        });
+//                    },
+// //                 onTap: (index, isTapped) {
+// //                    tappedStates = isTapped;
+// //   print("onTap called for index: $index, isTapped: $isTapped");
+// //   // setState(() {
+// //   //   for (int i = 0; i < tappedStates.length; i++) {
+// //   //     tappedStates[i] =  false;
+// //   //   }
+// //   // });
+
+// //   setState(() {
+    
+// //   });
+
+// // },
+      
+
+//               ),
+//             ),
+//                 ),
+//               ),
 
               // ==============================================slide bars of posters==========================
 
