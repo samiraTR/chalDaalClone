@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:tst_app2/utils/theme.dart';
 
 class ListTileWidget extends StatelessWidget {
-  String image;
   IconData icon;
+  IconData trailingIcon;
   String tileName;
   VoidCallback? ontap;
   ListTileWidget(
       {Key? key,
-      this.image = " ",
+      required this.trailingIcon,
       required this.icon,
       required this.tileName,
+     
       this.ontap})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.asset(
-        image,
-        height: 30,
-        width: 30,
-      ),
-      trailing: Icon(icon),
+      leading: Icon(icon,color: mainColor,),
+      trailing: Icon(trailingIcon),
       onTap: ontap,
       title: Text(
         tileName,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style:  TextStyle(fontWeight: FontWeight.bold,color: mainColor),
       ),
     );
   }

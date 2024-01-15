@@ -16,4 +16,49 @@ class DataProviders {
 
     return response;
   }
+
+
+//============================== Sku for Sync===================================
+  Future<http.Response> getSKUDP (String SkUurl,String cid, String userId,String userPass,String planDate)async{
+    print(Apis().skuSyncApi(SkUurl));
+  final response = await http.post(
+      Uri.parse(
+          Apis().skuSyncApi(SkUurl), 
+          ),
+      //     headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',  
+      // },
+      body:{
+          "cid" : cid,
+          "user_id" : userId,
+          "user_pass" : userPass,
+          "visit_plan_date" : planDate
+       }       
+    );
+    return response;
+  }
+
+  //============================== outlets for Sync===================================
+Future<http.Response> getOutletsDP (String outletsUrl,String cid, String userId,String userPass,String planDate)async{
+    print(Apis().skuSyncApi(outletsUrl));
+  final response = await http.post(
+      Uri.parse(
+          Apis().outletSyncApi(outletsUrl), 
+          ),
+      //     headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',  
+      // },
+      body:{
+          "cid" : cid,
+          "user_id" : userId,
+          "user_pass" : userPass,
+          "visit_plan_date" : planDate
+       }       
+    );
+    return response;
+  }
+
+
+
+
 }

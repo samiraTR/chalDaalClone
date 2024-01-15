@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
-import 'package:tst_app2/model/image_model.dart';
+import 'package:tst_app2/local_storage/hive_adapters.dart';
+
 import 'package:tst_app2/utils/constants.dart';
-import 'package:tst_app2/service/repositories.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/home_page.dart';
 import 'package:tst_app2/ui/search_product.dart';
-import 'package:tst_app2/ui/themes/theme.dart';
+import 'package:tst_app2/themes/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await HiveAdapters().hiveAllAdapterBox();
+  
   await Hive.openBox("imageList");
 
   runApp(const MyApp());

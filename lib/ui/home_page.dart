@@ -6,17 +6,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/service/all_services.dart';
+import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/cash_image.dart';
 import 'package:tst_app2/ui/city_selection.dart';
 import 'package:tst_app2/ui/product_details.dart';
 import 'package:tst_app2/ui/search_product.dart';
-import 'package:tst_app2/ui/themes/theme.dart';
+import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/widgets/card_item_widgets.dart';
 import 'package:tst_app2/ui/widgets/deals_bar_widget.dart';
 import 'package:tst_app2/ui/widgets/list_tile_widget.dart';
 import 'package:tst_app2/ui/widgets/side_bar.dart';
+import 'package:tst_app2/utils/theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -56,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                 return SizedBox(
                   height: 180,
                   child: ListView(
-                    padding: EdgeInsets.all(10),
+                    padding:const EdgeInsets.all(10),
                     children: [
                       ListTile(
                         contentPadding: const EdgeInsets.all(8),
@@ -79,10 +81,10 @@ class _HomePageState extends State<HomePage> {
                                       }
                                     });
 
-                                    return Column(
+                                    return const Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      children: const [
+                                      children:  [
                                         Center(
                                           child: Padding(
                                             padding: EdgeInsets.all(80),
@@ -201,7 +203,7 @@ class _HomePageState extends State<HomePage> {
             ),
             TextButton(
               onPressed: () {},
-              child: const Text("Login"),
+              child:  Text("Tahmina Akter Bristy",style: TextStyle(color: mainColor),),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
@@ -234,56 +236,64 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(width: 0.5, color: Colors.grey),
-                  borderRadius: BorderRadius.circular(15)),
-              child: ListTile(
-                leading: Image.asset(
-                  "assets/icons/football-club.png",
-                  height: 30,
-                  width: 30,
-                ),
-                trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                title: const Text(
-                  "Egg Club",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            ListTileWidget(
-              icon: Icons.keyboard_arrow_right_rounded,
-              image: "assets/icons/football-club.png",
-              tileName: "All Stores",
-            ),
-            ListTileWidget(
-              icon: Icons.keyboard_arrow_right_rounded,
-              image: "assets/icons/football-club.png",
-              tileName: "Offers",
-            ),
-            const Divider(),
-            ListTileWidget(
-              icon: Icons.keyboard_arrow_right_rounded,
-              image: "assets/icons/deal.png",
-              tileName: "Daily Deals",
-            ),
-            ListTileWidget(
-              icon: Icons.keyboard_arrow_right_rounded,
-              image: "assets/icons/football-club.png",
-              tileName: "Egg Club",
-            ),
-            ListTileWidget(
-              icon: Icons.keyboard_arrow_right_rounded,
-              image: "assets/icons/football-club.png",
-              tileName: "Egg Club",
-            ),
-            ListTileWidget(
-              ontap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const CashImage())),
-              icon: Icons.keyboard_arrow_right_rounded,
-              image: "assets/icons/football-club.png",
-              tileName: "Cash Image",
-            ),
+             const Divider(),
+            // Container(
+            //   decoration: BoxDecoration(
+            //       border: Border.all(width: 0.5, color: Colors.grey),
+            //       borderRadius: BorderRadius.circular(15)),
+            //   child: ListTile(
+            //     leading: Image.asset(
+            //       "assets/icons/football-club.png",
+            //       height: 30,
+            //       width: 30,
+            //     ),
+            //     trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+            //     title: const Text(
+            //       "Egg Club",
+            //       style: TextStyle(fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
+           ListTileWidget(trailingIcon: Icons.keyboard_arrow_right_rounded, icon: Icons.history, tileName: "Sync", ontap: (){
+            Navigator.push(context,
+                   MaterialPageRoute(builder: (_) => const Syncpage()));
+
+           },)
+
+            // ListTileWidget(icon: Icons.history, tileName: "Sync",image: "assets/icons/football-club.png",),
+            // // ListTileWidget(
+            // //   icon: Icons.keyboard_arrow_right_rounded,
+            // //   image: "assets/icons/football-club.png",
+            // //   tileName: "All Stores",
+            // // ),
+            // ListTileWidget(
+            //   icon: Icons.keyboard_arrow_right_rounded,
+            //   image: "assets/icons/football-club.png",
+            //   tileName: "Offers",
+            // ),
+            // const Divider(),
+            // ListTileWidget(
+            //   icon: Icons.keyboard_arrow_right_rounded,
+            //   image: "assets/icons/deal.png",
+            //   tileName: "Daily Deals",
+            // ),
+            // ListTileWidget(
+            //   icon: Icons.keyboard_arrow_right_rounded,
+            //   image: "assets/icons/football-club.png",
+            //   tileName: "Egg Club",
+            // ),
+            // ListTileWidget(
+            //   icon: Icons.keyboard_arrow_right_rounded,
+            //   image: "assets/icons/football-club.png",
+            //   tileName: "Egg Club",
+            // ),
+            // ListTileWidget(
+            //   ontap: () => Navigator.push(context,
+            //       MaterialPageRoute(builder: (_) => const CashImage())),
+            //   icon: Icons.keyboard_arrow_right_rounded,
+            //   image: "assets/icons/football-club.png",
+            //   tileName: "Cash Image",
+            // ),
           ],
         ),
       ),
@@ -451,11 +461,11 @@ class _HomePageState extends State<HomePage> {
                                 const AllCategoriesScreen())));
                   },
                   child: const Text("All Categories")),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+           const   Padding(
+                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children:  [
                     Text(
                       "Popular",
                       style: TextStyle(
@@ -507,11 +517,11 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 20,
               // ),
-              Padding(
+            const  Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children:  [
                     Text(
                       "Flash Sales",
                       style: TextStyle(
@@ -616,11 +626,11 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            const  Padding(
+                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children:  [
                     Text(
                       "Biscuits",
                       style: TextStyle(
@@ -672,11 +682,11 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+             const Padding(
+                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children:  [
                     Text(
                       "Salt & Sugar",
                       style: TextStyle(
@@ -728,11 +738,11 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            const  Padding(
+                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children:  [
                     Text(
                       "Fresh Fruits",
                       style: TextStyle(
@@ -784,11 +794,11 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            const  Padding(
+                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children:  [
                     Text(
                       "Noodles",
                       style: TextStyle(

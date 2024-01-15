@@ -11,7 +11,7 @@ class _AllCitiesState extends State<AllCities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Select Your City")),
+      appBar: AppBar(title: const Text("Select Your City")),
       body: Column(
         children: [
           Padding(
@@ -35,7 +35,7 @@ class _AllCitiesState extends State<AllCities> {
                     padding: EdgeInsets.all(10.0),
                     child: Text(
                       "dealsname",
-                      style: const TextStyle(color: Colors.white, fontSize: 17),
+                      style:  TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   )
                 ],

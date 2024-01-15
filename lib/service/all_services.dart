@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart' as geo;
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AllServices {
   double lat = 0.0;
@@ -66,5 +69,28 @@ class AllServices {
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
 
     address = placemarks[0].street! + " " + placemarks[0].country!;
+  }
+
+
+
+   void dynamicToastMessage(
+      String msg, Color backgroundColor, Color textColor, fontSize) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: backgroundColor,
+        textColor: textColor,
+        fontSize: 16);
+  }
+
+
+  //============================ Model wise data put Method===========================
+   modelWiseDataSaveToHive(Box databaseName, String tableName, dynamic modelName ,String toastMaessageText,){
+     final syncSKUData=databaseName ;
+     databaseName.clear();
+     syncSKUData.put(tableName, modelName);
+     AllServices().dynamicToastMessage(toastMaessageText,
+                        Colors.green, Colors.white, 14); 
   }
 }

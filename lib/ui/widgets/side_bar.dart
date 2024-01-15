@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tst_app2/ui/themes/theme.dart';
+import 'package:tst_app2/themes/theme.dart';
 
 class SideBarWidget extends StatelessWidget {
   String image;

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tst_app2/ui/themes/theme.dart';
+import 'package:tst_app2/themes/theme.dart';
 
 class CardItemWidget extends StatefulWidget {
   final String price;
