@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/utils/theme.dart';
 
-class CardItemWidget extends StatefulWidget {
+class FlavourWiseEachItem extends StatefulWidget {
   final String price;
   final String imageName;
   final String dealsname;
   final String quantity;
   final String quantityName;
 
-  const CardItemWidget({
+
+  const FlavourWiseEachItem({
     Key? key,
     required this.price,
     required this.imageName,
@@ -21,10 +22,10 @@ class CardItemWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CardItemWidget> createState() => _CardItemWidgetState();
+  State<FlavourWiseEachItem> createState() => _flavourWiseEachItemState();
 }
 
-class _CardItemWidgetState extends State<CardItemWidget> {
+class _flavourWiseEachItemState extends State<FlavourWiseEachItem> {
   int itemQuantity = 0;
   bool animation = false;
 
@@ -36,11 +37,12 @@ class _CardItemWidgetState extends State<CardItemWidget> {
     
 
     return Container(
-      // height: 150,
-      width: 120,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+     
+      height: 130,
+      //width: 130,
+      decoration: BoxDecoration( borderRadius: BorderRadius.circular(15)),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
             height: 18,
@@ -49,11 +51,13 @@ class _CardItemWidgetState extends State<CardItemWidget> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: CachedNetworkImage(
-                  height: 100,
-                      imageUrl:widget.imageName,
-                      errorWidget: (context, url, error) =>const Icon(Icons.error),
-                    ),
+                child: SizedBox(
+                  child: CachedNetworkImage(
+                    height: 100,
+                        imageUrl:widget.imageName,
+                        errorWidget: (context, url, error) =>const Icon(Icons.error),
+                      ),
+                ),
               ),
               Positioned(
                 bottom: 2,
@@ -100,7 +104,6 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                                         Timer(const Duration(seconds: 5), () {
                                           setState(() {
                                             animation = true;
-
                                             print(animation);
                                           });
                                         });
@@ -123,7 +126,6 @@ class _CardItemWidgetState extends State<CardItemWidget> {
                                       Timer(const Duration(seconds: 2), () {
                                         setState(() {
                                           animation = true;
-
                                           print(animation);
                                         });
                                       });
@@ -159,17 +161,16 @@ class _CardItemWidgetState extends State<CardItemWidget> {
           const SizedBox(
             height: 4,
           ),
-          Expanded(child: Text("৳${widget.price}",style:const TextStyle(color: Color.fromARGB(255, 243, 109, 109),fontWeight: FontWeight.bold),)),
+          Expanded(child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text("৳${widget.price}",style:const TextStyle(color: Color.fromARGB(255, 243, 109, 109),fontWeight: FontWeight.bold),))),
           const SizedBox(
             height: 5,
           ),
           Text(widget.dealsname.trim(),
-              // overflow: TextOverflow.ellipsis, style: textTheme.bodyMedium
-              // const TextStyle(color: Colors.black, fontSize: 17),
+              
               ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
+         
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

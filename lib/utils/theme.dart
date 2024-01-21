@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 
   Color mainColor = const Color(0xff0012a9); 
+  Color mainColorShadow = const Color.fromARGB(255, 61, 80, 251); 
   Color secondaryColor =const Color.fromARGB(255, 226, 229, 246);
   Color mainShadeColor = const Color.fromARGB(95, 75, 139, 216);
   Color mainShadeColorNow = const Color(0xffe1eeff);
@@ -84,6 +85,8 @@ ThemeData defaultTheme = ThemeData(
     primary: mainColor,
     surface: secondaryColor,
   ).copyWith(background: backgroundColor),
+
+  
   // inputDecorationTheme: InputDecorationTheme(
   //   filled: true,
   //   fillColor: COLOR_White,

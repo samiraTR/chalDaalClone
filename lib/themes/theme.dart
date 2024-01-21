@@ -46,7 +46,7 @@ const textSTYLEHeadline15 =
 const textSTYLEHeadline14 =
     TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 15);
 const textSTYLEHeadline16 =
-    TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16);
+    TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16);
 
 DateTime getCurrentDateTime(String time) {
   return DateTime.parse(time);

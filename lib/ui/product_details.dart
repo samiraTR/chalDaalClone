@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  Map<String, dynamic> productDetail;
+  dynamic productDetail;
   ProductDetailsScreen({
     Key? key,
     required this.productDetail,
@@ -32,13 +33,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.productDetail["name"],
+                  widget.productDetail.itemName,
                   style: const TextStyle(fontSize: 22),
                 ),
                 SizedBox(
-                  height: 240,
+                  height: 100,
                   width: double.infinity,
-                  child: Image.asset(widget.productDetail["imageName"]),
+                  child: CachedNetworkImage(
+                    imageUrl:widget.productDetail.itemAvatar,
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -47,7 +51,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${widget.productDetail["price"]}| ${widget.productDetail["net-weight"]}",
+                      "${widget.productDetail.invoicePrice}| ${widget.productDetail.itemChain}",
                       style: const TextStyle(fontSize: 18),
                     ),
                     IconButton(
@@ -118,7 +122,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
                 const Divider(),
                 Text(
-                  widget.productDetail["details"],
+                  widget.productDetail.flavorName,
                   style: const TextStyle(fontSize: 17),
                 ),
                 // const Spacer(),

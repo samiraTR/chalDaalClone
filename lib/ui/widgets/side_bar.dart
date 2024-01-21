@@ -96,7 +96,8 @@ class _SideBarWidgetState extends State<SideBarWidget> {
     Color getColorForIndex() {
     List<Color> colors = [
       Color(0xffFED93E),
-      Colors.blue,
+      Color(0xff0B879F),
+      // const Color.fromARGB(255, 33, 150, 243),
       Colors.teal,
     ];
 

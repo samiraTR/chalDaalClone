@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tst_app2/main.dart';
-import 'package:tst_app2/ui/home_page.dart';
 import 'package:tst_app2/ui/widgets/side_bar.dart';
 import 'package:tst_app2/utils/constants.dart';
 
@@ -76,24 +75,27 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: categories.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 1.6),
-                    itemBuilder: (BuildContext context, int index) {
-                      return CategoriesBarWidget(
-                        categoryname: 'Ramadan',
-                      );
-                    },
-                  ),
-                ),
+
+                //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: GridView.builder(
+                //     shrinkWrap: true,
+                //     itemCount: categories.length,
+                //     gridDelegate:
+                //         const SliverGridDelegateWithFixedCrossAxisCount(
+                //             crossAxisCount: 2,
+                //             crossAxisSpacing: 12,
+                //             mainAxisSpacing: 12,
+                //             childAspectRatio: 1.6),
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return CategoriesBarWidget(
+                //         falourName: 'Ramadan',
+                //         index:index,itemList:  [],
+                //       );
+                //     },
+                //   ),
+                // ),
                 const SizedBox(
                   height: 40,
                 )

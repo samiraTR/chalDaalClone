@@ -6,7 +6,9 @@ import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
+import 'package:tst_app2/ui/flavour_wise_itemList.dart';
 import 'package:tst_app2/ui/sync_page.dart';
+import 'package:tst_app2/ui/widgets/flavor_wise_card_widget.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/city_selection.dart';
@@ -30,44 +32,62 @@ class _HomePageState extends State<HomePage> {
   PageController pageController = PageController();
   double screenHeight = 0.0;
   double screenWidth = 0.0;
+ // String? brandName;
   //==================latest====================
 
   RetStr? skuListData;
   List<bool> tappedStates = [];
-  
-  
+  List<ItemList>  allFlavourList=[];
+  int brandNameIndexVar=0;
+ 
 
-
+  
 
   @override
   void initState() {
     super.initState();
-     getAllSyncInfoFiter();
-     
-     
+    getAllSyncInfoFiter();
+    homeColorNav = mainColor;
 
-    homeColorNav = Colors.purple;
   }
 
 
   //========================== sku filter =================
   getAllSyncInfoFiter(){
   skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
- tappedStates = List.generate(
-  skuListData!.brandList.length,
-  (index) => false,
-);
-
+  if(skuListData!=null){
+     tappedStates = List.generate(
+      skuListData!.brandList.length,
+     (index) => false,
+      );
+    allFlavourList=[];
+    allFlavourList=skuListData!.brandList.isNotEmpty? getUniqueFlavorNames(skuListData!.brandList.first.brandName,0):[];
+    }   
   }
 
+//================================== unique flavour name =========================================
+  List<ItemList> getUniqueFlavorNames(String brandName,int brandIndexNum) {
+  List<ItemList> uniqueFlavorItems = skuListData!.brandList.isNotEmpty
+      ? skuListData!.brandList[brandIndexNum].itemList.toSet().toList()
+      : [];
 
-
-
+  Set<String> uniqueCombinations = Set<String>();
+  List<ItemList> result = [];
+  for (var item in uniqueFlavorItems) {
+    String combination = '${item.brandName.trim()}|${item.flavorName.trim()}';
+    if (!uniqueCombinations.contains(combination)) {
+      uniqueCombinations.add(combination);
+      result.add(item);
+    }
+  }
+  return result;
+  }
 
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
+    
     TextTheme textTheme = Theme.of(context).textTheme;
     InputDecorationTheme inputDecoration =
         Theme.of(context).inputDecorationTheme;
@@ -89,8 +109,6 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           setState(() {
                             final res = AllServices().getLatLong();
-                            print("res $res");
-
                             if (res == "") {
                               bool loading = false;
                               showDialog(
@@ -100,22 +118,19 @@ class _HomePageState extends State<HomePage> {
                                       loading = true;
                                       if (loading) {
                                         Navigator.pop(context);
-
                                         Navigator.pop(context);
                                       }
                                     });
 
-                                    return const Column(
+                                    return  Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children:  [
                                         Center(
                                           child: Padding(
-                                            padding: EdgeInsets.all(80),
+                                            padding:const EdgeInsets.all(80),
                                             child: CircularProgressIndicator(
-                                              // strokeWidth: 15,
-                                              // value: 0.3,
-                                              color: Colors.purple,
+                                              color: mainColor,
                                               backgroundColor: Colors.grey,
                                             ),
                                           ),
@@ -167,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => AllCities()));
+                              MaterialPageRoute(builder: (_) => const AllCities()));
                         },
                         title: const Text(
                           "Change City",
@@ -183,13 +198,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               height: 40,
-              decoration: const BoxDecoration(
-                  color: Colors.purple, shape: BoxShape.circle),
+              decoration:  BoxDecoration(
+                  color: white, shape: BoxShape.circle),
               child: IconButton(
-                icon: const Icon(
-                  Icons.location_on_outlined,
-                  color: Colors.white,
-                ),
+                icon:Image.asset("assets/icons/location.png",height: 30,color: mainColorShadow,),
                 onPressed: () {
                   showModalBottomSheet(
                       context: context,
@@ -202,20 +214,23 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(
-              width: 5,
+              width: 2,
             ),
-            Column(
-              children: const [
-                Text("Gulshan"),
+           const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+              children:  [
+                Text("Gulshan",style: TextStyle(fontSize: 14,color: Colors.black),),
                 Text(
                   "Dhaka",
-                  style: TextStyle(fontSize: 13),
+                  style: TextStyle(fontSize: 12,color: Colors.grey),
                 ),
               ],
             )
           ],
         ),
       )),
+
+
       //===============================================================Drawer==========================
       drawer: Drawer(
         width: 300,
@@ -284,916 +299,305 @@ class _HomePageState extends State<HomePage> {
 
            },)
 
-            // ListTileWidget(icon: Icons.history, tileName: "Sync",image: "assets/icons/football-club.png",),
-            // // ListTileWidget(
-            // //   icon: Icons.keyboard_arrow_right_rounded,
-            // //   image: "assets/icons/football-club.png",
-            // //   tileName: "All Stores",
-            // // ),
-            // ListTileWidget(
-            //   icon: Icons.keyboard_arrow_right_rounded,
-            //   image: "assets/icons/football-club.png",
-            //   tileName: "Offers",
-            // ),
-            // const Divider(),
-            // ListTileWidget(
-            //   icon: Icons.keyboard_arrow_right_rounded,
-            //   image: "assets/icons/deal.png",
-            //   tileName: "Daily Deals",
-            // ),
-            // ListTileWidget(
-            //   icon: Icons.keyboard_arrow_right_rounded,
-            //   image: "assets/icons/football-club.png",
-            //   tileName: "Egg Club",
-            // ),
-            // ListTileWidget(
-            //   icon: Icons.keyboard_arrow_right_rounded,
-            //   image: "assets/icons/football-club.png",
-            //   tileName: "Egg Club",
-            // ),
-            // ListTileWidget(
-            //   ontap: () => Navigator.push(context,
-            //       MaterialPageRoute(builder: (_) => const CashImage())),
-            //   icon: Icons.keyboard_arrow_right_rounded,
-            //   image: "assets/icons/football-club.png",
-            //   tileName: "Cash Image",
-            // ),
+        
           ],
         ),
       ),
       // ==============================================BODY=========================
+    //  body:  SizedBox(),
 
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SingleChildScrollView(
-  scrollDirection: Axis.horizontal,
-  child: Row(
-    children: List.generate(
-      skuListData!.brandList.length,
-      (index) => SideBarWidget(
-        indexNum: index,
-        barName: skuListData!.brandList[index].brandName,
-        image: "assets/icons/capsules.png",
-        tappedStates: tappedStates,
-        onTap: (index, isTapped) {
-          setState(() {
-            tappedStates = List.from(isTapped);
-          });
-          print("onTap called for index: $index, isTapped: $isTapped");
-        },
-      ),
-    ),
-  ),
-),
-              // ==============================================slide bars of types of groceries=========================
+        child: 
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                 skuListData!=null?   SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                    skuListData==null ?0:  skuListData!.brandList.length,
+                      (brandnameIndex) => SideBarWidget(
+                        indexNum: brandnameIndex,
+                        barName: skuListData!.brandList[brandnameIndex].brandName,
+                        image: "assets/icons/capsules.png",
+                        tappedStates: tappedStates,
+                        onTap: (index, isTapped) {
+                          setState(() {
+                            tappedStates = List.from(isTapped);
+                            brandNameIndexVar=brandnameIndex;
+                             allFlavourList=[];
+                            // print("brandname= ${skuListData!.brandList[brandnameIndex].brandName}");
+                             // print("brandIndex= ${br}");
+                           allFlavourList=getUniqueFlavorNames(skuListData!.brandList[index].brandName, index);
+                            
+                          });
+                          
 
-//               SingleChildScrollView(
-//                 scrollDirection: Axis.horizontal,
-//                 child: Row(
-//                   children: List.generate(
-//               skuListData!.brandList.length,
-//               (index) => SideBarWidget(
-//                 indexNum:index,
-//                 barName: skuListData!.brandList[index].brandName,
-//                 image: "assets/icons/capsules.png",
-//                   tappedStates: tappedStates,
-//                   onTap: (index, isTapped) {
-//                     setState(() {
-//                          tappedStates = List.from(isTapped);
-//                        });
-//                    },
-// //                 onTap: (index, isTapped) {
-// //                    tappedStates = isTapped;
-// //   print("onTap called for index: $index, isTapped: $isTapped");
-// //   // setState(() {
-// //   //   for (int i = 0; i < tappedStates.length; i++) {
-// //   //     tappedStates[i] =  false;
-// //   //   }
-// //   // });
+                           
+            },
+            ),
+        ),
+       ),
+      ):const SizedBox(),
+  // ============================================ promtion list  ==========================
 
-// //   setState(() {
-    
-// //   });
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        DealSHorizontalBarWidget(
+                          dealsname: 'Best Price',
+                          imageName: "assets/images/chaal-offer.jpg",
+                          color: const Color.fromARGB(255, 230, 209, 143),
+                        ),
+                        DealSHorizontalBarWidget(
+                          dealsname: 'Protein',
+                          imageName: "assets/images/Chaldal-Offer.jpg",
+                          color: const Color.fromARGB(255, 230, 215, 84),
+                        ),
+                         DealSHorizontalBarWidget(
+                          dealsname: 'Daily Deals',
+                          imageName: "assets/images/dim-offer.jpg",
+                          color: Colors.blueGrey,
+                        ),
+                        DealSHorizontalBarWidget(
+                          dealsname: 'Gogo Bangla',
+                          imageName: "assets/images/cooking.jpg",
+                          color: const Color.fromARGB(255, 9, 59, 100),
+                        ),
+                        DealSHorizontalBarWidget(
+                          dealsname: 'Toiletries',
+                          imageName: "assets/images/combo-offer-pack.jpg",
+                          color: const Color.fromARGB(255, 9, 100, 14),
+                        ),
+                      ],
+                    ),
+                  ),
 
-// // },
-      
+                  
 
-//               ),
-//             ),
-//                 ),
-//               ),
+ // ==============================================flavour List========================================
 
-              // ==============================================slide bars of posters==========================
-
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          GridView.builder(
+                            shrinkWrap: true,
+                            itemCount: allFlavourList.length,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                                childAspectRatio: 1.6),
+                            itemBuilder: (BuildContext context, int flavourIndex) {
+                              
+                              return FlavorBarWidget(
+                                brandName: skuListData!.brandList[brandNameIndexVar].brandName, 
+                                flavorName: allFlavourList[flavourIndex].flavorName, 
+                                flavorId: allFlavourList[flavourIndex].flavorId,
+                                brandIndex: brandNameIndexVar,
+                                flavourIndex:flavourIndex ,  
+                                
+                              );
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(onPressed: (() {
+                              Navigator.push(
+                            context,
+                            (MaterialPageRoute(
+                                builder: (context) =>
+                                    const AllCategoriesScreen())));
+                                              }), child: Text("All Categories",style: TextStyle(color: mainColor),)),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+ //============================================== Mixed product ===============================================                 
+               Column(
+                children: List.generate(skuListData!.brandList.length, (index1) {
+                 return  Column(
                   children: [
-                    DealSHorizontalBarWidget(
-                      dealsname: 'Daily Deals',
-                      imageName: "assets/images/dim-offer.jpg",
-                      color: Colors.blueGrey,
-                    ),
-                    DealSHorizontalBarWidget(
-                      dealsname: 'Best Price',
-                      imageName: "assets/images/chaal-offer.jpg",
-                      color: const Color.fromARGB(255, 230, 209, 143),
-                    ),
-                    DealSHorizontalBarWidget(
-                      dealsname: 'Protein',
-                      imageName: "assets/images/Chaldal-Offer.jpg",
-                      color: const Color.fromARGB(255, 230, 215, 84),
-                    ),
-                    DealSHorizontalBarWidget(
-                      dealsname: 'Gogo Bangla',
-                      imageName: "assets/images/cooking.jpg",
-                      color: const Color.fromARGB(255, 9, 59, 100),
-                    ),
-                    DealSHorizontalBarWidget(
-                      dealsname: 'Toiletries',
-                      imageName: "assets/images/combo-offer-pack.jpg",
-                      color: const Color.fromARGB(255, 9, 100, 14),
-                    ),
-                  ],
-                ),
-              ),
-
-              // ==============================================Daily deals limited stock==========================
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (builder) {
-                          return const AlertDialog(
-                            content: SizedBox(
-                              height: 200,
+                      Padding(
+                        padding:const  EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:  [
+                            Text(
+                              skuListData!.brandList[index1].brandName,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Colors.black),
+                            ),
+                            GestureDetector
+                            (
+                              onTap: () {
+                                   Navigator.push(
+                            context,
+                            (MaterialPageRoute(
+                                builder: (context) =>
+                                     FlavourWiseitemListScreen(itemList: getFlavourWoseItemList(skuListData!.brandList[index1].brandName, index1)))));
+                              
+                              },
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  "View more",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 15,
+                                      color: mainColor),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                    height: 250,
+                    width: double.infinity,       
+                    child: skuListData!.brandList.isNotEmpty? ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: skuListData!.brandList[index1].itemList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailsScreen(
+                                      productDetail: skuListData!.brandList[index1].itemList[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: CardItemWidget(
+                                dealsname: skuListData!.brandList[index1].itemList[index].itemName,
+                                imageName: skuListData!.brandList[index1].itemList[index].itemAvatar,
+                                price: skuListData!.brandList[index1].itemList[index].invoicePrice,
+                             quantity   : skuListData!.brandList[index1].itemList[index].itemChain,
+                                quantityName: skuListData!.brandList[index1].itemList[index].itemUnit,
+                              ),
                             ),
                           );
-                        });
-                  },
-                  child: Container(
-                    height: screenHeight / 6.5,
-                    width: screenWidth / 0.8,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromARGB(255, 127, 185, 233),
-                    ),
+                        },
+                        ):const SizedBox(),
+                  ),
+                 const SizedBox(height: 30,)
+                 ],
+                );}
+                )
+                 
+               ),
+                  
+ //=========================================== any query =======================================            
+                  Container(
+                    height: 120,
+                    color: newValue
+                        ? const Color.fromARGB(255, 235, 229, 229)
+                        : const Color.fromARGB(255, 116, 113, 113),
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(6.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 8, 8, 8),
+                            child: Text(
+                              "Need Help?",
+                              style: textTheme.headlineSmall,
+                            ),
+                          ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Daily Deals",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18),
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children:  [
+                              Chip(
+                                backgroundColor: Colors.white,
+                                elevation: 3,
+                                padding:const EdgeInsets.all(13),
+                                avatar: Icon(
+                                  Icons.message,
+                                  size: 20,
+                                  color: mainColor
+                                ),
+                                label: Text(
+                                  "Live Chat",
+                                  style: TextStyle(color: mainColor),
+                                ),
                               ),
-                              Container(
-                                  height: 30,
-                                  width: 140,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          color: const Color.fromARGB(
-                                              255, 149, 172, 184),
-                                          width: 1),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Center(
-                                    child: Text(
-                                      "10H:57M:32S",
-                                      style: textTheme.bodyMedium!.merge(
-                                          const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black)),
+                              Chip(
+                                backgroundColor: Colors.white,
+                                // padding: EdgeInsets.fromLTRB(8, 5, 5, 5),
+                                padding: const EdgeInsets.all(13),
 
-                                      // TextStyle(
-                                      //     fontWeight: FontWeight.w500,
-                                      //     fontSize: 18),
-                                    ),
-                                  )),
+                                elevation: 3,
+                                avatar: Icon(
+                                  Icons.call,
+                                  size: 18,
+                                  color: mainColor,
+                                ),
+                                label: Text(
+                                  "Call",
+                                  style: TextStyle(color: mainColor),
+                                ),
+                              ),
+                              Chip(
+                                backgroundColor: Colors.white,
+                 
+                                padding:const EdgeInsets.all(13),
+
+                                elevation: 3,
+                                avatar: Icon(
+                                  Icons.question_mark_sharp,
+                                  size: 17,
+                                  color: mainColor,
+                                ),
+                                label: Text(
+                                  "FAQ",
+                                  style: TextStyle(color: mainColor),
+                                ),
+                              ),
                             ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text("Order over 99 to activate"),
-                          const Text("*Limited Stock")
+                          )
                         ],
                       ),
                     ),
-                  ),
-                ),
+                  )
+                ],
               ),
-
-              // ==============================================Categories==========================
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: categories.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: 1.6),
-                  itemBuilder: (BuildContext context, int index) {
-                    return CategoriesBarWidget(
-                      categoryname: 'Ramadan',
-                    );
-                  },
-                ),
-              ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        (MaterialPageRoute(
-                            builder: (context) =>
-                                const AllCategoriesScreen())));
-                  },
-                  child: const Text("All Categories")),
-           const   Padding(
-                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Text(
-                      "Popular",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: saltNSugar.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsScreen(
-                                  productDetail: saltNSugar[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CardItemWidget(
-                            dealsname: saltNSugar[index]["name"],
-                            imageName: saltNSugar[index]["imageName"],
-                            price: saltNSugar[index]["price"],
-                            quantity: saltNSugar[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-            const  Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Text(
-                      "Flash Sales",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: saltNSugar.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsScreen(
-                                  productDetail: saltNSugar[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CardItemWidget(
-                            dealsname: saltNSugar[index]["name"],
-                            imageName: saltNSugar[index]["imageName"],
-                            price: saltNSugar[index]["price"],
-                            quantity: saltNSugar[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-
-              // const SizedBox(
-              //   height: 30,
-              // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Fresh Vegetables",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text("View more >",
-                        style: textTheme.titleMedium
-                            ?.merge(const TextStyle(color: Colors.purple))),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: saltNSugar.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsScreen(
-                                  productDetail: saltNSugar[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CardItemWidget(
-                            dealsname: saltNSugar[index]["name"],
-                            imageName: saltNSugar[index]["imageName"],
-                            price: saltNSugar[index]["price"],
-                            quantity: saltNSugar[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              // const SizedBox(
-              //   height: 30,
-              // ),
-            const  Padding(
-                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Text(
-                      "Biscuits",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: biscuits.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsScreen(
-                                  productDetail: biscuits[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CardItemWidget(
-                            dealsname: biscuits[index]["name"],
-                            imageName: biscuits[index]["imageName"],
-                            price: biscuits[index]["price"],
-                            quantity: biscuits[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              // const SizedBox(
-              //   height: 30,
-              // ),
-             const Padding(
-                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Text(
-                      "Salt & Sugar",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: saltNSugar.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsScreen(
-                                  productDetail: saltNSugar[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CardItemWidget(
-                            dealsname: saltNSugar[index]["name"],
-                            imageName: saltNSugar[index]["imageName"],
-                            price: saltNSugar[index]["price"],
-                            quantity: saltNSugar[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              // const SizedBox(
-              //   height: 30,
-              // ),
-            const  Padding(
-                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Text(
-                      "Fresh Fruits",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 280,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: freshFruits.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsScreen(
-                                  productDetail: freshFruits[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CardItemWidget(
-                            dealsname: freshFruits[index]["name"],
-                            imageName: freshFruits[index]["imageName"],
-                            price: freshFruits[index]["price"],
-                            quantity: freshFruits[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              // const SizedBox(
-              //   height: 30,
-              // ),
-            const  Padding(
-                padding:  EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Text(
-                      "Noodles",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 300,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: noodles.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProductDetailsScreen(
-                                          productDetail: noodles[index],
-                                        )));
-                          },
-                          child: CardItemWidget(
-                            dealsname: noodles[index]["name"],
-                            imageName: noodles[index]["imageName"],
-                            price: noodles[index]["price"],
-                            quantity: noodles[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-
-              const SizedBox(
-                height: 15,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Oil",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                    Text(
-                      "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 280,
-                width: double.infinity,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    itemCount: oil.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductDetailsScreen(
-                                  productDetail: oil[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CardItemWidget(
-                            dealsname: oil[index]["name"],
-                            imageName: oil[index]["imageName"],
-                            price: oil[index]["price"],
-                            quantity: oil[index]["quantity"],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                height: 120,
-                color: newValue
-                    ? const Color.fromARGB(255, 235, 229, 229)
-                    : const Color.fromARGB(255, 116, 113, 113),
-                child: Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 8, 8, 8),
-                        child: Text(
-                          "Need Help?",
-                          style: textTheme.headlineSmall,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
-                          Chip(
-                            backgroundColor: Colors.white,
-                            elevation: 3,
-                            padding: EdgeInsets.all(13),
-                            avatar: Icon(
-                              Icons.message,
-                              size: 20,
-                              color: Colors.purple,
-                            ),
-                            label: Text(
-                              "Live Chat",
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                          ),
-                          Chip(
-                            backgroundColor: Colors.white,
-                            // padding: EdgeInsets.fromLTRB(8, 5, 5, 5),
-                            padding: EdgeInsets.all(13),
-
-                            elevation: 3,
-                            avatar: Icon(
-                              Icons.call,
-                              size: 18,
-                              color: Colors.purple,
-                            ),
-                            label: Text(
-                              "Call",
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                          ),
-                          Chip(
-                            backgroundColor: Colors.white,
-                            // padding: EdgeInsets.fromLTRB(8, 5, 5, 5),
-                            padding: EdgeInsets.all(13),
-
-                            elevation: 3,
-                            avatar: Icon(
-                              Icons.question_mark_sharp,
-                              size: 17,
-                              color: Colors.purple,
-                            ),
-                            label: Text(
-                              "FAQ",
-                              style: TextStyle(color: Colors.purple),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-      // bottomNavigationBar: BottomNavigationBar(
-
-      //     onTap: (value) {
-      //       setState(() {
-      //         _currentIndex = value;
-      //       });
-      //     },
-      //     items: [
-      //       BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-      //       BottomNavigationBarItem(
-      //           icon: Icon(Icons.category_outlined), label: "Categories"),
-      //       BottomNavigationBarItem(
-      //           icon: Icon(Icons.search), label: "Search"),
-      //     ])
-      // ClipRRect(
-      //   child: BackdropFilter(
-      //     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-      //     child: Container(
-      //       decoration: const BoxDecoration(
-      //         gradient: LinearGradient(
-      //           begin: Alignment.topCenter,
-      //           end: Alignment.bottomRight,
-      //           colors: [
-      //             Color.fromARGB(0, 247, 238, 238),
-      //             Colors.white,
-      //           ],
-      //         ),
-      //       ),
-      //       height: 50,
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //         children: [
-      //           InkWell(
-      //             onTap: () {
-      //               setState(() {});
-      //               homeNav = "assets/icons/house-black.png";
-      //               categoryNav = "assets/icons/menu.png";
-      //               menuColorNav = Colors.black;
-
-      //               homeColorNav = Colors.purple;
-      //             },
-      //             child: Image.asset(
-      //               homeNav,
-      //               height: 30,
-      //               width: 50,
-      //               color: homeColorNav,
-      //             ),
-      //           ),
-      //           InkWell(
-      //             onTap: () {
-      //               setState(() {
-      //                 categoryNav = "assets/icons/category.png";
-      //                 homeNav = "assets/icons/home.png";
-      //                 homeColorNav = Colors.black;
-      //                 menuColorNav = Colors.purple;
-      //               });
-
-      //               Navigator.push(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                       builder: (context) => AllCategoriesScreen()));
-      //             },
-      //             child: Image.asset(
-      //               categoryNav,
-      //               height: 30,
-      //               width: 50,
-      //               color: menuColorNav,
-      //             ),
-      //           ),
-      //           Image.asset(
-      //             "assets/icons/search.png",
-      //             height: 30,
-      //             width: 50,
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
-
-      // bottomNavigationBar: BottomNavigationBar(
-      //     selectedItemColor: Colors.purple,
-      //     unselectedItemColor: Colors.grey,
-      //     selectedIconTheme: const IconThemeData(size: 32),
-      //     currentIndex: _currentIndex,
-      //     onTap: (value) {
-      //       print(value);
-      //       setState(() {
-      //         _currentIndex = value;
-      //         if (_currentIndex == 1) {
-      //           Navigator.push(
-      //               context,
-      //               (MaterialPageRoute(
-      //                   builder: (context) => AllCategoriesScreen())));
-      //         }
-      //         // pageController.animateToPage(_currentIndex,
-      //         //     duration: const Duration(milliseconds: 100),
-      //         //     curve: Curves.linear);
-      //       });
-      //     },
-      //     items: const [
-      //       BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-      //       BottomNavigationBarItem(
-      //           icon: Icon(Icons.category_outlined), label: "Categories"),
-      //       BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-      //     ]),
-    );
-  }
-}
-
-class CategoriesBarWidget extends StatelessWidget {
-  String categoryname;
-  CategoriesBarWidget({
-    Key? key,
-    required this.categoryname,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    TextTheme textTheme = Theme.of(context).textTheme;
-    InputDecorationTheme inputDecoration =
-        Theme.of(context).inputDecorationTheme;
-    return Container(
-      height: 140,
-      width: 200,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color.fromARGB(255, 197, 217, 236),
-          boxShadow: [
-            BoxShadow(
-                offset: Offset.fromDirection(1),
-                blurRadius: 2,
-                spreadRadius: 0.5,
-                color: Colors.grey)
-          ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            categoryname,
-            style: textTheme.bodyLarge?.copyWith(color: cOLORBlack),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Image.asset(
-              "assets/images/ramadan2.png",
-              fit: BoxFit.cover,
-              height: 140,
-              width: 110,
             ),
-          ),
-        ],
+           
+        
       ),
+     
     );
   }
+
+   //================================ Get Flavour Wise Item List=================================
+  List<ItemList> getFlavourWoseItemList(String brandName,int brandIndexNum) {
+  List<ItemList> brandwiseAllItemList = skuListData!.brandList.isNotEmpty
+      ? skuListData!.brandList[brandIndexNum].itemList.toList()
+      : [];
+  // List<ItemList> result = [];
+  
+
+  // for( int i =0 ; i<brandwiseAllItemList.length; i++){
+  //   if(brandwiseAllItemList[i].flavorId.contains(flavorid)){
+  //     result.add(brandwiseAllItemList[i]);
+  //   }
+  // }
+  
+ // _updateMessage();
+  return brandwiseAllItemList;
+  }
 }
+
