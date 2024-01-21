@@ -69,5 +69,49 @@ class Repositories {
     }
     return ouletsListModelData;
   }
+//================================= areList Selection=====================
+   Future<Map<String,dynamic>> getAReWiseList(String outletsUrl,String cid, String userId,String userPass,String planDate) async {
+    Map<String,dynamic> dateWiseOutlet={};
+    try {
+      final http.Response response = await DataProviders().getOutletsDP(outletsUrl, cid, userId, userPass, planDate);
+      Map<String, dynamic> responseBody = json.decode(response.body);
+      if (response.statusCode == 200 && responseBody["status"]==200) {
+        dateWiseOutlet=responseBody;
+        return responseBody;
+      } else {
+         AllServices().dynamicToastMessage(responseBody["message"].toString(),
+                        Colors.red, Colors.white, 14); 
+
+        return dateWiseOutlet;
+      }
+    } catch (e) {
+      AllServices().dynamicToastMessage("$e", Colors.red, Colors.white, 14);
+     
+    }
+    return dateWiseOutlet;
+  }
+
+
+
+
+  //====================================== AreaList  =============================
+  Future<Map<String, dynamic>> getAreaList(String areaListUrl,String cid, String userId,String userPass) async {
+   Map<String, dynamic> responseBody={} ;
+    try {
+      final http.Response response = await DataProviders().getAreaList(areaListUrl, cid, userId, userPass);
+      Map<String, dynamic> responseBody = json.decode(response.body);
+      if (response.statusCode == 200 && responseBody["status"]==200) {
+        return responseBody;
+      } else {
+         AllServices().dynamicToastMessage(responseBody["message"].toString(),
+                        Colors.red, Colors.white, 14); 
+        return responseBody;
+      }
+    } catch (e) {
+      AllServices().dynamicToastMessage("$e", Colors.red, Colors.white, 14);
+     
+    }
+    return responseBody;
+  }
 
 }

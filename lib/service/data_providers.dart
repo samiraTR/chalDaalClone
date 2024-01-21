@@ -60,5 +60,25 @@ Future<http.Response> getOutletsDP (String outletsUrl,String cid, String userId,
 
 
 
+    //============================== areaList===================================
+Future<http.Response> getAreaList (String areListApi,String cid, String userId,String userPass)async{
+    print(Apis().areaList());
+  final response = await http.post(
+      Uri.parse(
+          Apis().areaList(), 
+          ),
+      body:{
+          "cid" : cid,
+          "user_id" : userId,
+          "user_pass" : userPass,
+         
+       }       
+    );
+    return response;
+  }
+
+
+
+
 
 }
