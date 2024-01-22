@@ -6,12 +6,12 @@ import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
+import 'package:tst_app2/ui/customer_list.dart';
 import 'package:tst_app2/ui/flavour_wise_itemList.dart';
 import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/ui/widgets/flavor_wise_card_widget.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
-import 'package:tst_app2/ui/city_selection.dart';
 import 'package:tst_app2/ui/product_details.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/widgets/card_item_widgets.dart';
@@ -29,7 +29,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List theme = ["System", "Light", "Dark"];
-  PageController pageController = PageController();
+ // PageController pageController = PageController();
   double screenHeight = 0.0;
   double screenWidth = 0.0;
  // String? brandName;
@@ -96,103 +96,103 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
           title: InkWell(
         onTap: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return SizedBox(
-                  height: 180,
-                  child: ListView(
-                    padding:const EdgeInsets.all(10),
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.all(8),
-                        onTap: () {
-                          setState(() {
-                            final res = AllServices().getLatLong();
-                            if (res == "") {
-                              bool loading = false;
-                              showDialog(
-                                  context: context,
-                                  builder: (builder) {
-                                    Timer(const Duration(seconds: 3), () {
-                                      loading = true;
-                                      if (loading) {
-                                        Navigator.pop(context);
-                                        Navigator.pop(context);
-                                      }
-                                    });
+          // showModalBottomSheet(
+          //     context: context,
+          //     builder: (context) {
+          //       return SizedBox(
+          //         height: 180,
+          //         child: ListView(
+          //           padding:const EdgeInsets.all(10),
+          //           children: [
+          //             ListTile(
+          //               contentPadding: const EdgeInsets.all(8),
+          //               onTap: () {
+          //                 setState(() {
+          //                   final res = AllServices().getLatLong();
+          //                   if (res == "") {
+          //                     bool loading = false;
+          //                     showDialog(
+          //                         context: context,
+          //                         builder: (builder) {
+          //                           Timer(const Duration(seconds: 3), () {
+          //                             loading = true;
+          //                             if (loading) {
+          //                               Navigator.pop(context);
+          //                               Navigator.pop(context);
+          //                             }
+          //                           });
 
-                                    return  Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children:  [
-                                        Center(
-                                          child: Padding(
-                                            padding:const EdgeInsets.all(80),
-                                            child: CircularProgressIndicator(
-                                              color: mainColor,
-                                              backgroundColor: Colors.grey,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            }
-                          });
-                        },
-                        leading: SizedBox(
-                          height: 70,
-                          width: 70,
-                          child: Card(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)),
-                            elevation: 3,
-                            child: const Icon(
-                              Icons.location_searching,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        title: const Text(
-                          "Use my current location",
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      const Divider(
-                        color: Colors.grey,
-                        height: 3,
-                      ),
-                      ListTile(
-                        contentPadding: const EdgeInsets.all(8),
-                        leading: SizedBox(
-                          height: 70,
-                          width: 70,
-                          child: Card(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)),
-                            elevation: 3,
-                            child: const Icon(
-                              Icons.location_city,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => const AllCities()));
-                        },
-                        title: const Text(
-                          "Change City",
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              });
+          //                           return  Column(
+          //                             crossAxisAlignment:
+          //                                 CrossAxisAlignment.center,
+          //                             children:  [
+          //                               Center(
+          //                                 child: Padding(
+          //                                   padding:const EdgeInsets.all(80),
+          //                                   child: CircularProgressIndicator(
+          //                                     color: mainColor,
+          //                                     backgroundColor: Colors.grey,
+          //                                   ),
+          //                                 ),
+          //                               ),
+          //                             ],
+          //                           );
+          //                         });
+          //                   }
+          //                 });
+          //               },
+          //               leading: SizedBox(
+          //                 height: 70,
+          //                 width: 70,
+          //                 child: Card(
+          //                   color: Colors.white,
+          //                   shape: RoundedRectangleBorder(
+          //                       borderRadius: BorderRadius.circular(100)),
+          //                   elevation: 3,
+          //                   child: const Icon(
+          //                     Icons.location_searching,
+          //                     color: Colors.black,
+          //                   ),
+          //                 ),
+          //               ),
+          //               title: const Text(
+          //                 "Use my current location",
+          //                 style: TextStyle(fontWeight: FontWeight.w500),
+          //               ),
+          //             ),
+          //             const Divider(
+          //               color: Colors.grey,
+          //               height: 3,
+          //             ),
+          //             ListTile(
+          //               contentPadding: const EdgeInsets.all(8),
+          //               leading: SizedBox(
+          //                 height: 70,
+          //                 width: 70,
+          //                 child: Card(
+          //                   color: Colors.white,
+          //                   shape: RoundedRectangleBorder(
+          //                       borderRadius: BorderRadius.circular(100)),
+          //                   elevation: 3,
+          //                   child: const Icon(
+          //                     Icons.location_city,
+          //                     color: Colors.black,
+          //                   ),
+          //                 ),
+          //               ),
+          //               onTap: () {
+          //                 Navigator.push(context,
+          //                     MaterialPageRoute(builder: (_) => const AllCities()));
+          //               },
+          //               title: const Text(
+          //                 "Change City",
+          //                 style: TextStyle(fontWeight: FontWeight.w500),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       );
+          //     });
         },
         child: Row(
           children: [
@@ -228,7 +228,29 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-      )),
+      ),actions: [
+        GestureDetector(
+          onTap: () {
+             Navigator.push(context,
+                   MaterialPageRoute(builder: (_) => const CutomerListScreen()));
+            
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: mainColor,
+                borderRadius: BorderRadius.circular(5)
+              ),
+               child:const Padding(
+                 padding:  EdgeInsets.all(8.0),
+                 child: Center(child: Text("Select Outlets")),
+               )
+            ),
+          ),
+        )
+      ],
+      ),
 
 
       //===============================================================Drawer==========================
@@ -276,23 +298,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
              const Divider(),
-            // Container(
-            //   decoration: BoxDecoration(
-            //       border: Border.all(width: 0.5, color: Colors.grey),
-            //       borderRadius: BorderRadius.circular(15)),
-            //   child: ListTile(
-            //     leading: Image.asset(
-            //       "assets/icons/football-club.png",
-            //       height: 30,
-            //       width: 30,
-            //     ),
-            //     trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-            //     title: const Text(
-            //       "Egg Club",
-            //       style: TextStyle(fontWeight: FontWeight.bold),
-            //     ),
-            //   ),
-            // ),
+           
            ListTileWidget(trailingIcon: Icons.keyboard_arrow_right_rounded, icon: Icons.history, tileName: "Sync", ontap: (){
             Navigator.push(context,
                    MaterialPageRoute(builder: (_) => const Syncpage()));
@@ -326,19 +332,17 @@ class _HomePageState extends State<HomePage> {
                             tappedStates = List.from(isTapped);
                             brandNameIndexVar=brandnameIndex;
                              allFlavourList=[];
-                            // print("brandname= ${skuListData!.brandList[brandnameIndex].brandName}");
-                             // print("brandIndex= ${br}");
-                           allFlavourList=getUniqueFlavorNames(skuListData!.brandList[index].brandName, index);
+                             allFlavourList=getUniqueFlavorNames(skuListData!.brandList[index].brandName, index);
                             
                           });
                           
 
                            
             },
+               ),
             ),
-        ),
-       ),
-      ):const SizedBox(),
+           ),
+            ):const SizedBox(),
   // ============================================ promtion list  ==========================
 
                   SingleChildScrollView(
@@ -494,10 +498,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                  const SizedBox(height: 30,)
                  ],
-                );}
+                );
+                }
                 )
                  
-               ),
+              ),
                   
  //=========================================== any query =======================================            
                   Container(

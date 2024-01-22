@@ -47,8 +47,12 @@ final appbarTextStyle =
 
 ThemeData defaultTheme = ThemeData(
   primaryColor: mainColor,
-  appBarTheme:  AppBarTheme(
-      color: mainColor, titleTextStyle: appbarTextStyle),
+   appBarTheme: AppBarTheme( 
+       color: mainColor,
+       iconTheme:const IconThemeData(
+        color: Colors.white
+      )
+),
   //drawerTheme: const DrawerThemeData(backgroundColor: COLOR_SECONDARY),
   textTheme: const TextTheme(
     // bodyText2: TextStyle(

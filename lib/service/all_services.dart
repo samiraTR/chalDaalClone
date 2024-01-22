@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tst_app2/model/oulets_model.dart';
+import 'package:tst_app2/model/sku_list_model.dart';
 
 class AllServices {
   double lat = 0.0;
@@ -93,4 +95,85 @@ class AllServices {
      AllServices().dynamicToastMessage(toastMaessageText,
                         Colors.green, Colors.white, 14); 
   }
+
+  //================================= dynamic search ===========================================
+  List<Client> searchCleint(String enterTheKey, List<Client> ffList) {
+    List<Client> searchData = ffList;
+    List<Client> results = [];
+    if (enterTheKey.isEmpty || enterTheKey == '') {
+      results = searchData;
+    } else {
+      var starts = searchData
+          .where((element) =>
+              element.shortName
+                  .toLowerCase()
+                  .startsWith(enterTheKey.toLowerCase()) ||
+              element.depotId
+                  .toLowerCase()
+                  .startsWith(enterTheKey.toLowerCase()) ||
+              element.depotName
+                  .toLowerCase()
+                  .startsWith(enterTheKey.toLowerCase()))
+          .toList();
+      var contains = searchData
+          .where((element) =>
+              (element.shortName
+                      .toLowerCase()
+                      .contains(enterTheKey.toLowerCase()) ||
+                  element.depotId
+                      .toLowerCase()
+                      .contains(enterTheKey.toLowerCase()) ||
+                  element.depotName
+                      .toLowerCase()
+                      .contains(enterTheKey.toLowerCase())) &&
+              !(element.shortName
+                      .toLowerCase()
+                      .startsWith(enterTheKey.toLowerCase()) ||
+                  element.depotId
+                      .toLowerCase()
+                      .startsWith(enterTheKey.toLowerCase()) ||
+                  element.depotName
+                      .toLowerCase()
+                      .startsWith(enterTheKey.toLowerCase())))
+          .toList();
+
+      results = [...starts, ...contains];
+    }
+//print("result============================$result");
+    return results;
+  }
+
+
+    //================================= dynamic search ===========================================
+  List<BrandList> searchItem(String enterTheKey, List<BrandList> tempBrandffList) {
+  List<BrandList> searchData = tempBrandffList;
+  List<BrandList> results = [];
+
+  if (enterTheKey.isEmpty || enterTheKey == '') {
+    results = searchData;
+  } else {
+    var starts = searchData
+        .where((brand) =>
+            brand.itemList
+                    .any((item) =>
+                        item.itemName.toLowerCase().startsWith(enterTheKey.toLowerCase()) ||
+                        item.itemSize.toLowerCase().startsWith(enterTheKey.toLowerCase()))
+                ? true
+                : false)
+        .toList();
+
+    var contains = searchData
+        .where((brand) =>
+            (brand.brandName.toLowerCase().contains(enterTheKey.toLowerCase())) ||
+            brand.itemList
+                .any((item) =>
+                    item.itemName.toLowerCase().contains(enterTheKey.toLowerCase()) ||
+                    item.itemSize.toLowerCase().contains(enterTheKey.toLowerCase())))
+        .toList();
+
+    results = [...starts, ...contains];
+  }
+
+  return results;
+}
 }
