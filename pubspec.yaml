@@ -48,6 +48,7 @@ dependencies:
   permission_handler: ^10.2.0
   photo_view: ^0.14.0
   platform_device_id: ^1.0.1
+  easy_stepper: ^0.8.3
 
 dev_dependencies:
   build_runner: ^2.4.8

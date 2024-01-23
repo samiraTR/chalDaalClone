@@ -3,6 +3,7 @@ import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/ui/pageControllers.dart';
+import 'package:tst_app2/ui/widgets/questions.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class CutomerListScreen extends StatefulWidget {
@@ -323,7 +324,7 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
               GestureDetector(
                 onTap: (){
                   Navigator.push(context,
-                   MaterialPageRoute(builder: (_) =>  PageControllerScreen(bottomNav: 1,)));
+                   MaterialPageRoute(builder: (_) =>  const QuestionsScreen()));
                   
 
                 },

@@ -14,18 +14,19 @@ class AllProductListScreen extends StatefulWidget {
 }
 
 class _AllProductListScreenState extends State<AllProductListScreen> {
+  TextEditingController searchController= TextEditingController();
   RetStr? skuListData;
     bool isItemTile=true;
+    bool isClear=false;
      List<bool> tappedStates = [];
   List<ItemList>  allFlavourList=[];
   List<BrandList> tempBrand=[];
+  bool isSearch=false;
     @override
   void initState() {
     super.initState();
     getAllSyncInfoFiter();
     homeColorNav = mainColor;
-    
-
   }
 
 
@@ -68,9 +69,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
         foregroundColor: white,
    
         title: Text("All Product",style: TextStyle(color:white),),
-        bottom: PreferredSize(
-
-         
+        bottom:isSearch == false? null: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
           child: Row(
             children: [
@@ -81,15 +80,19 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                   child: SizedBox(
                     height: 45,
                     child: TextFormField(
+                      controller: searchController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white
                                 
                       ),
                       onChanged: (value) {
-                      
-                                          setState(() {
-                                            tempBrand = AllServices()
+                        if(value.isNotEmpty){
+                          isClear=true;
+                          
+                        }   
+                        setState(() {
+                           tempBrand = AllServices()
                                                 .searchItem(
                                                     value,
                                                     skuListData!.brandList.toList());
@@ -99,7 +102,33 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                   ),
                 ),
               ),
-             Expanded(child:   Padding(
+           isClear?Expanded(child:   GestureDetector(
+            onTap: (() {
+              searchController.clear();
+              tempBrand = AllServices().searchItem(
+                                                    "",
+                                                    skuListData!.brandList.toList());
+                                                    
+              setState(() {
+                
+              });
+              
+            }),
+             child: Padding(
+                  padding: const EdgeInsets.only(top: 8,bottom: 8,right: 8),
+                  child: Container(
+                    height: 45,
+                  decoration: BoxDecoration(
+                    color: mainColorShadow,
+                    borderRadius: BorderRadius.circular(5)
+                  ),
+                   child: Padding(
+                     padding: const EdgeInsets.all(8.0),
+                     child: Center(child: Text("Clear",style: TextStyle(color: white,fontWeight: FontWeight.bold),)),
+                   )
+                          ),
+                ),
+           ),):  Expanded(child:   Padding(
                 padding: const EdgeInsets.only(top: 8,bottom: 8,right: 8),
                 child: Container(
                   height: 45,
@@ -135,6 +164,25 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                  borderRadius: BorderRadius.circular(5)
                ),
                 child:Image.asset(isItemTile?"assets/icons/grid.png":"assets/icons/listTile.png",color:white, height: 20,)),
+            ),
+          ),
+          GestureDetector(
+            onTap: (){
+               
+                setState(() {
+                  isSearch =!isSearch;
+
+                 });              
+
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+               decoration: BoxDecoration(
+                 color: mainColor,
+                 borderRadius: BorderRadius.circular(5)
+               ),
+                child:Image.asset("assets/icons/search1.png",color:white, height: 20,)),
             ),
           )
         ],
