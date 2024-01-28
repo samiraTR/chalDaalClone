@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/all_product_list.dart';
 import 'package:tst_app2/ui/customer_list.dart';
@@ -13,6 +17,8 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
+    File? imageFile;
+  final picker = ImagePicker();
   Map<String, bool> checklist = {};
   // List<String> questions = [
   //   'আপনি কি স্টক কাউন্ট করেছেন ?',
@@ -99,15 +105,18 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: (() {
+                onTap: () {
+                  _capturePhoto();
 
-                  
-                  Navigator.push(
+               if (imageFile!=null){
+                Navigator.push(
                         context,
                         (MaterialPageRoute(
                             builder: (context) => PageControllerScreen(bottomNav: 1))));
-                  
-                }),
+
+               }
+    
+                },
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 0),
                   child: Container(
@@ -203,8 +212,22 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
             ],
                  ),
          ),
+         
      
 
     );
+  }
+  Future<void> _capturePhoto() async {
+    var status = await Permission.camera.request();
+    if (status.isGranted) {
+      final pickedFile = await picker.getImage(source: ImageSource.camera);
+      if (pickedFile != null) {
+        setState(() {
+          imageFile = File(pickedFile.path);
+        });
+      }
+    } else {
+      print('Camera permission denied');
+    }
   }
 }

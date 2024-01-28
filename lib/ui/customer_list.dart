@@ -55,18 +55,21 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
          backgroundColor: mainColor,
         title: Text("Outlets",style: TextStyle(color: white,fontSize: 20),),
         centerTitle: true,
-   bottom: TabBar(
-            controller: controller,
-            onTap: (value) async {
-              yetToVisitList= outletList!.visitPlan.clients.where((element) => element.orderStatus=="Yet to Visit").toList();
-              setState(() {});
-            },
-            isScrollable: true,
-            tabs:  [
-              Tab(text: "Yet to Visit(${yetToVisitList.length})"),
-              Tab(text: " Ordered(${yetToVisitList.length})"),
-              Tab(text: " Not Ordered(${yetToVisitList.length})"),  
-            ]),
+   bottom: PreferredSize(
+     preferredSize: const Size.fromHeight(65.0), 
+     child: TabBar(
+              controller: controller,
+              onTap: (value) async {
+                yetToVisitList= outletList!.visitPlan.clients.where((element) => element.orderStatus=="Yet to Visit").toList();
+                setState(() {});
+              },
+              isScrollable: true,
+              tabs:  [
+                Tab(text: "Yet to Visit(${yetToVisitList.length})"),
+                Tab(text: " Ordered(${yetToVisitList.length})"),
+                Tab(text: " Not Ordered(${yetToVisitList.length})"),  
+              ]),
+   ),
         
       ),
       body: TabBarView(controller: controller, children: [
@@ -336,15 +339,10 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
                     ListTile(
                     leading:  SizedBox(
                   
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: mainColor),
-                              
-                              shape: BoxShape.circle),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset("assets/icons/shop.png",color:Colors.black87, height: 20,),
-                            ))
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset("assets/icons/shops22.png",color:mainColor,height: 30,),
+                          )
                         ),
                     title: Text(clientList[outletIndex].clientName,style: TextStyle(color: blackColor), ),
                         ),
