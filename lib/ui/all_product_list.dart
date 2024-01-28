@@ -7,15 +7,22 @@ import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class AllProductListScreen extends StatefulWidget {
-  const AllProductListScreen({super.key});
+  // final void Function()? onPress;
+  // const AllProductListScreen({super.key,required this.onPress});
 
   @override
   State<AllProductListScreen> createState() => _AllProductListScreenState();
 }
 
 class _AllProductListScreenState extends State<AllProductListScreen> {
-  TextEditingController searchController= TextEditingController();
   RetStr? skuListData;
+  TextEditingController searchController= TextEditingController();
+  Map<String, TextEditingController> ctnControllerMap = {};
+  Map<String, TextEditingController> pcsControllerMap = {};
+  Map<String, TextEditingController> discountControllerMap = {};
+  Map<String,TextEditingController> eachprice={};
+ 
+
     bool isItemTile=true;
     bool isClear=false;
      List<bool> tappedStates = [];
@@ -26,7 +33,19 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
   void initState() {
     super.initState();
     getAllSyncInfoFiter();
+    List<BrandList> brandList=skuListData!.brandList;
+    for(int i=0; i<brandList.length; i++){
+      for(int j=0; j<brandList[i].itemList.length;j++){
+        ctnControllerMap[skuListData!.brandList[i].itemList[j].itemId] = TextEditingController();
+        pcsControllerMap[skuListData!.brandList[i].itemList[j].itemId] = TextEditingController(); 
+        discountControllerMap[skuListData!.brandList[i].itemList[j].itemId] = TextEditingController(); 
+        eachprice[skuListData!.brandList[i].itemList[j].itemId] = TextEditingController(); 
+      }
+    }
+   
     homeColorNav = mainColor;
+    totalCartAmount=0.0;
+
   }
 
 
@@ -42,6 +61,11 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
     allFlavourList=skuListData!.brandList.isNotEmpty? getUniqueFlavorNames(skuListData!.brandList.first.brandName,0):[];
     }  
     tempBrand= skuListData!.brandList.toList();
+    for(int i=0 ; i<tempBrand.length;i++){
+      for(int j=0; j<tempBrand[i].itemList.length; j++){
+
+      }
+    }
   }
   //================================== unique flavour name =========================================
   List<ItemList> getUniqueFlavorNames(String brandName,int brandIndexNum) {
@@ -60,6 +84,66 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
   }
   return result;
   }
+
+  //======================================= total count ===================================
+  totalvaluCount(List<BrandList>brandList , String itemId ){
+    double totalAmount=0.0;
+    for(int i=0; i<brandList.length; i++){
+      double eachBrandPrice=0;
+      for(int j=0; j<brandList[i].itemList.length;j++){
+        double eachCount1=0;
+        String? ctnPrice= ctnControllerMap[brandList[i].itemList[j].itemId]!.text;
+        String? pcsPrice= pcsControllerMap[brandList[i].itemList[j].itemId]!.text;
+        double? ctnPriceEach=double.tryParse(ctnPrice)??0.0;
+        double? pcsEachPrice=double.tryParse(pcsPrice)??0.0;
+        double perctnPrice=ctnPriceEach*double.parse(brandList[i].itemList[j].tradePrice)*int.parse(brandList[i].itemList[j].ctnPcsRatio);
+        double perPcsPrice =pcsEachPrice*double.parse(brandList[i].itemList[j].tradePrice);
+        print("perctnPrice=$perctnPrice");
+        print("perPcsPrice=$perPcsPrice");
+        eachCount1=perctnPrice+perPcsPrice;
+        eachBrandPrice=eachBrandPrice+eachCount1;
+       // eachCount +=(double.parse(ctnControllerMap[brandList[i].itemList[j].itemId]!.text ?? "0.0")*double.parse(brandList[i].itemList[j].invoicePrice));  
+      }
+      totalAmount+=eachBrandPrice;
+      totalCartAmount=totalAmount;
+      setState(() { 
+      
+        print("total count======$totalAmount");
+      });
+    }
+  }
+
+
+  eachTotalCount(List<BrandList>brandList , String itemId ){
+    double eachBrandPrice=0;
+    for(int i=0; i<brandList.length; i++){
+      //double eachBrandPrice=0;
+      for(int j=0; j<brandList[i].itemList.length;j++){
+        double eachCount1=0;
+        String? ctnPrice= ctnControllerMap[brandList[i].itemList[j].itemId]!.text;
+        String? pcsPrice= pcsControllerMap[brandList[i].itemList[j].itemId]!.text;
+         String? dicountEach= discountControllerMap[brandList[i].itemList[j].itemId]!.text;
+        double? ctnPriceEach=double.tryParse(ctnPrice)??0.0;
+        double? pcsEachPrice=double.tryParse(pcsPrice)??0.0;
+        double? discountEachPrice=double.tryParse(dicountEach)??0.0;
+        double perctnPrice=ctnPriceEach*double.parse(brandList[i].itemList[j].tradePrice)*int.parse(brandList[i].itemList[j].ctnPcsRatio);
+        double perPcsPrice =pcsEachPrice*double.parse(brandList[i].itemList[j].tradePrice);
+        eachCount1=perctnPrice+perPcsPrice;
+        eachBrandPrice=(eachBrandPrice+eachCount1)-discountEachPrice;
+        eachprice[brandList[i].itemList[j].itemId]!.text=eachBrandPrice.toString();
+        print("itemId=${brandList[i].itemList[j].itemId}");
+       // eachCount +=(double.parse(ctnControllerMap[brandList[i].itemList[j].itemId]!.text ?? "0.0")*double.parse(brandList[i].itemList[j].invoicePrice));  
+      }
+     
+      setState(() { 
+         
+        print("eachBrandPrice======$eachBrandPrice");
+      });
+    }
+
+  }
+    
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +172,10 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                       ),
                       onChanged: (value) {
                         if(value.isNotEmpty){
-                          isClear=true;
-                          
+                          isClear=true;    
                         }   
                         setState(() {
-                           tempBrand = AllServices()
-                                                .searchItem(
+                           tempBrand = AllServices() .searchItem(
                                                     value,
                                                     skuListData!.brandList.toList());
                                           });
@@ -216,6 +298,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                      itemCount: tempBrand[index1].itemList.length,
                      itemBuilder: (BuildContext context, int itemIndex) {
                      return ExpansionTile(
+                     // backgroundColor: mainShadeColorNow,
                        leading:  SizedBox(
                          width: 70,
                          child: CachedNetworkImage(
@@ -225,7 +308,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                   ),
                        ),
                      title: Text(tempBrand[index1].itemList[itemIndex].itemName),
-                     subtitle: Text('Price: ${tempBrand[index1].itemList[itemIndex].invoicePrice}'),
+                     subtitle: Text('Price: ${tempBrand[index1].itemList[itemIndex].tradePrice}'),
                      children: [
                        Padding(
                        padding:const  EdgeInsets.only(left: 20),
@@ -247,45 +330,176 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                  Expanded(flex: 3,
                   child: Row(
                     children: [
-                      Expanded(child: TextFormField(
-                    decoration:const InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: "ctn"
-                         ),
-                                  textAlign: TextAlign.center,
-                                  keyboardType: TextInputType.number,
-                    
-                    
-                      )),
-                    const  Text(" ctn"),
+                      Expanded(
+                        child: Padding(
+                          padding:const  EdgeInsets.symmetric(horizontal: 8),
+                          child: TextFormField(
+                            textDirection: TextDirection.rtl,
+                             decoration: InputDecoration(
+                               filled: true,
+                          fillColor: Colors.white,
+                          hintText: "Ctn",
+                          enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                          width: 1, 
+                          color: mainColor,
+                                             ), 
+                                                ),
+                        ),
+                             
+                            controller:  ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId],
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            onChanged: ((value) {
+                              eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                              
+                              totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                            
+                              
+                            }),
+                        
+                                            
+                                            
+                                              ),
+                        )),
+                    const  Text(" Ctn"),
                      const SizedBox(width: 20,),
-                      Expanded(child: TextFormField(
-                     decoration:const InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: "pcs"
-                         ),
-                                  textAlign: TextAlign.center,
-                                  keyboardType: TextInputType.number,
-                      )),
-                    const  Text(" pcs"),
+                      Expanded(child: Padding(
+                       padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: TextFormField( 
+                          textDirection: TextDirection.rtl,
+
+                          decoration: InputDecoration(
+                               filled: true,
+                          fillColor: Colors.white,
+                          hintText: "Pcs",
+                          enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                          width: 1, 
+                          color: mainColor,
+                                             ), 
+                                                ),
+                        ),
+                          controller: pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId],
+                        
+                         textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value){
+                          int pcs = int.tryParse(value) ?? 0;
+                          int ctn = pcs ~/ int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
+                          int givenCtnRatio=int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
+                          if(givenCtnRatio<=pcs){
+                            pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text= (pcs-givenCtnRatio).toString();
+                           ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text = (int.tryParse(ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text) ?? 0+ctn).toString();
+                      
+                          }
+                          eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                            totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                          },
+                        ),
+                      ),
+                      ),
+                      
+                   // const  Text(" pcs"),
                     ],
                   ))
                          ],
                        ),
                        ),
-                       const  Padding(
-                       padding:  EdgeInsets.only(left: 20,top:8 ),
+                       Padding(
+                       padding:const  EdgeInsets.only(left: 20),
                        child: Row(
                          children: [
-                Expanded(child: Text("Value ",style: TextStyle(fontWeight: FontWeight.bold),)),
-                Text(" :  "),
-                 Expanded(flex: 3,
-                  child: Text("120 ",style: TextStyle(),))
+                const Expanded(child: Text("Discount ",style: TextStyle(fontWeight: FontWeight.bold),)),
+                const Text(" :  "),
+                  Expanded(flex: 3,
+                    child: Padding(
+                       padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: TextFormField( 
+                          textDirection: TextDirection.rtl,
+
+                          decoration: InputDecoration(
+                               filled: true,
+                          fillColor: Colors.white,
+                          hintText: "",
+                          
+                          enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                          width: 1, 
+                          color: mainColor,
+                                             ), 
+                                                ),
+                          focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                          width: 1, 
+                          color: mainColor,
+                                             ), 
+                                                ),
+                        ),
+                          controller: discountControllerMap[tempBrand[index1].itemList[itemIndex].itemId],
+                        
+                         textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value){
+                          // int pcs = int.tryParse(value) ?? 0;
+                          // int ctn = (pcs / int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio)).ceil();
+                          // int givenCtnRatio=int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
+                          // if(givenCtnRatio<=pcs){
+                          //   pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text= (pcs-givenCtnRatio).toString();
+                          //  ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text = (int.tryParse(ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text) ?? 0+ctn).toString();
+                      
+                          // }
+                          eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                          
+                            totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                          },
+                        ),
+                      ),
+                      ),
                          ],
                        ),
                        ),
+                         Padding(
+                       padding:const  EdgeInsets.only(left: 20,top:15, bottom: 20 ),
+                       child: Row(
+                         children: [
+              const  Expanded(child: Text("Value ",style: TextStyle(fontWeight: FontWeight.bold),)),
+               const Text(" :  "),
+                 Expanded(flex: 3,
+                  child: TextFormField( 
+                          textDirection: TextDirection.rtl,
+                          readOnly: true,
+
+                          decoration:const InputDecoration(
+                               filled: true,
+                          fillColor: Colors.transparent,
+                        //  hintText: "",
+                          
+                          enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                          width: 1, 
+                          color: Colors.transparent,
+                                             ), 
+                                                ),
+                         
+                        ),
+                          controller: eachprice[tempBrand[index1].itemList[itemIndex].itemId],
+                        
+                         textAlign: TextAlign.end,
+                          keyboardType: TextInputType.number,
+                          onChanged: (value){
+                         
+                         // eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                          
+                           // totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                          },
+                        ),
+                  )
+                         ],
+                       ),
+                       ),
+
+                       
                        
                        
                        const SizedBox(height: 10,)

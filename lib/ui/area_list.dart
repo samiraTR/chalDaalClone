@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tst_app2/service/repositories.dart';
-import 'package:tst_app2/ui/customer_list.dart';
+import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 
@@ -18,21 +18,21 @@ class _AreaListScreenState extends State<AreaListScreen> {
   @override
   void initState() {
     super.initState();
-    getAreaList();
+   // getAreaList();
     homeColorNav = mainColor;
   }
 
   Future<void> getAreaList() async {
     Map<String, dynamic> responseData = await Repositories().getAreaList(
-        "https://my.transcombd.com/smart_api", "SMART", "IT19", "8899");
+        "https://my.transcombd.com/smart_api", "SMART", "IT22", "1234");
     areaList = responseData["ret_str"]["area_list"];
 
     Map<String, dynamic> todayBeatList = await Repositories().getAReWiseList(
         "https://my.transcombd.com/smart_api",
         "SMART",
-        "IT19",
-        "8899",
-        "2023-12-14");
+        "IT22",
+        "1234",
+        "2023-01-29");
     String beatId = todayBeatList["ret_str"]["visit_plan"]["beat_id"];
     for (String location in areaList) {
       checklist[location] = false;
@@ -107,32 +107,32 @@ class _AreaListScreenState extends State<AreaListScreen> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                (MaterialPageRoute(
-                                    builder: (context) => const CutomerListScreen())));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                  color: mainColor,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Center(
-                                  child: Text(
-                                "Next",
-                                style: TextStyle(fontSize: 16, color: white),
-                              )),
-                            ),
-                          ),
-                        ),
-                      )
+                      // Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: GestureDetector(
+                      //     onTap: () {
+                      //       Navigator.push(
+                      //           context,
+                      //           (MaterialPageRoute(
+                      //               builder: (context) => const Syncpage())));
+                      //     },
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Container(
+                      //         height: 50,
+                      //         width: 150,
+                      //         decoration: BoxDecoration(
+                      //             color: mainColor,
+                      //             borderRadius: BorderRadius.circular(10)),
+                      //         child: Center(
+                      //             child: Text(
+                      //           "Next",
+                      //           style: TextStyle(fontSize: 16, color: white),
+                      //         )),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
                     ],
                   ),
                 );
@@ -143,6 +143,19 @@ class _AreaListScreenState extends State<AreaListScreen> {
           }
         },
       ),
+      floatingActionButton:FloatingActionButton.extended(
+        backgroundColor: mainColor,
+    
+        label:  Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Start",style: TextStyle(color: white),),
+        ),
+        onPressed: (){
+        Navigator.push(
+                                context,
+                                (MaterialPageRoute(
+                                    builder: (context) => const Syncpage())));
+        }) ,
     );
   }
 }

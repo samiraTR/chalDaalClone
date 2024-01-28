@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/all_product_list.dart';
 import 'package:tst_app2/ui/home_page.dart';
+import 'package:tst_app2/ui/order_confirmation_screen.dart';
 import 'package:tst_app2/ui/search_product.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
@@ -15,8 +16,12 @@ class PageControllerScreen extends StatefulWidget {
 }
 
 class _PageControllerScreenState extends State<PageControllerScreen> {
+  //late int initialIndex;
+
+  //late PageController pageController;
+ // int inistialIndex = widget.bottomNav;
   
-   PageController pageController = PageController(initialPage:1);
+   PageController pageController = PageController();
   
 
 
@@ -24,17 +29,18 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
   bool addToCart = false;
   final navigationPages = [
     const HomePage(),
-   const  AllProductListScreen(),
+     AllProductListScreen(),
     //const AllCategoriesScreen(),
     const SearchproductScreen()
   ];
-  int _currentPage=0;
+ // int _currentPage=0;
   
 
   
   @override
   void initState() {
   currentIndex=widget.bottomNav;
+  pageController = PageController(initialPage: widget.bottomNav);
     super.initState();
   }
   @override
@@ -62,43 +68,7 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
                     child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                                  Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(7.0),
-                                        child: Container(
-                                          height: 55,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                                  color:const Color.fromARGB(255, 61, 80, 251),
-                                              
-                                              ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              const Text(
-                                                "Checkout",
-                                                style: textSTYLEHeadline16,
-                                              ),
-                                              Card(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  color: mainColor,
-                                                  child: const Padding(
-                                                    padding: EdgeInsets.all(10.0),
-                                                    child: Text(
-                                                      "    ৳400     ",
-                                                      style: textSTYLEHeadline15,
-                                                    ),
-                                                  ))
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                  
                                     Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 10),
@@ -137,6 +107,52 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
                                       ]),
                                 ),
                               ), 
+                              Expanded(
+                                      child: GestureDetector(
+                                        onTap: (() {
+                                          Navigator.push(
+                        context,
+                        (MaterialPageRoute(
+                            builder: (context) =>const OrderConfirmationScreen())));
+                                          
+                                        }),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(7.0),
+                                          child: Container(
+                                            height: 55,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                    color:const Color.fromARGB(255, 61, 80, 251),
+                                                
+                                                ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                const Text(
+                                                  "Checkout",
+                                                  style: textSTYLEHeadline16,
+                                                ),
+                                                Card(
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                10)),
+                                                    color: mainColor,
+                                                    child:  Padding(
+                                                      padding: EdgeInsets.all(10.0),
+                                                      child: Text(
+                                                        "    ৳${totalCartAmount}     ",
+                                                        style: textSTYLEHeadline15,
+                                                      ),
+                                                    ))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   // : SizedBox.shrink(),
                               // Expanded(
                               //   child: BottomNavigationBar(

@@ -3,6 +3,7 @@ import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/flavour_wise_itemList.dart';
+import 'package:tst_app2/utils/theme.dart';
 
 class FlavorBarWidget extends StatefulWidget {
   String brandName;
@@ -112,13 +113,16 @@ class _FlavorBarWidgetState extends State<FlavorBarWidget> {
             ),
             Expanded(
               flex: 5,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Image.asset(
-                  "assets/images/ramadan2.png",
-                  fit: BoxFit.cover,
-                  height: 140,
-                  width: 110,
+              child: ClipRRect(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  widthFactor: 0.5,
+                  child: Image.asset(
+                    "assets/images/ramadan2.png",
+                    fit: BoxFit.cover,
+                    height: 140,
+                    width: 110,
+                  ),
                 ),
               ),
             ),
@@ -127,17 +131,31 @@ class _FlavorBarWidgetState extends State<FlavorBarWidget> {
       ),
     );
   }
-
    Color getColorForIndex() {
-    List<Color> colors =const [
-       Color(0xffD6E5D8),
-       Color(0xffF0E2D9),
-       Color(0xffFFE8CC),
-       Color(0xffF4EAF3),
+    List<Color> colors = [
+      mainShadeColorNow,
+      mainShadeColorNow,
+      //  Color(0xffD6E5D8),
+      //  Color(0xffF0E2D9),
+      //  Color(0xffFFE8CC),
+      //  Color(0xffF4EAF3),
         
        
     ];
 
     return colors[widget.flavourIndex % colors.length];
   }
+
+  //  Color getColorForIndex() {
+  //   List<Color> colors =const [
+  //      Color(0xffD6E5D8),
+  //      Color(0xffF0E2D9),
+  //      Color(0xffFFE8CC),
+  //      Color(0xffF4EAF3),
+        
+       
+  //   ];
+
+  //   return colors[widget.flavourIndex % colors.length];
+  // }
 }

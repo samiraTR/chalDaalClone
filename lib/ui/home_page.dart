@@ -1,11 +1,10 @@
-import 'dart:async';
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
-import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/ui/customer_list.dart';
 import 'package:tst_app2/ui/flavour_wise_itemList.dart';
 import 'package:tst_app2/ui/sync_page.dart';
@@ -94,157 +93,165 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: InkWell(
-        onTap: () {
-          // showModalBottomSheet(
-          //     context: context,
-          //     builder: (context) {
-          //       return SizedBox(
-          //         height: 180,
-          //         child: ListView(
-          //           padding:const EdgeInsets.all(10),
-          //           children: [
-          //             ListTile(
-          //               contentPadding: const EdgeInsets.all(8),
-          //               onTap: () {
-          //                 setState(() {
-          //                   final res = AllServices().getLatLong();
-          //                   if (res == "") {
-          //                     bool loading = false;
-          //                     showDialog(
-          //                         context: context,
-          //                         builder: (builder) {
-          //                           Timer(const Duration(seconds: 3), () {
-          //                             loading = true;
-          //                             if (loading) {
-          //                               Navigator.pop(context);
-          //                               Navigator.pop(context);
-          //                             }
-          //                           });
+        backgroundColor: mainColor,
+        title: Text("Home Page",style: TextStyle(color: white),),
+        
+      //     title: InkWell(
+      //   onTap: () {
 
-          //                           return  Column(
-          //                             crossAxisAlignment:
-          //                                 CrossAxisAlignment.center,
-          //                             children:  [
-          //                               Center(
-          //                                 child: Padding(
-          //                                   padding:const EdgeInsets.all(80),
-          //                                   child: CircularProgressIndicator(
-          //                                     color: mainColor,
-          //                                     backgroundColor: Colors.grey,
-          //                                   ),
-          //                                 ),
-          //                               ),
-          //                             ],
-          //                           );
-          //                         });
-          //                   }
-          //                 });
-          //               },
-          //               leading: SizedBox(
-          //                 height: 70,
-          //                 width: 70,
-          //                 child: Card(
-          //                   color: Colors.white,
-          //                   shape: RoundedRectangleBorder(
-          //                       borderRadius: BorderRadius.circular(100)),
-          //                   elevation: 3,
-          //                   child: const Icon(
-          //                     Icons.location_searching,
-          //                     color: Colors.black,
-          //                   ),
-          //                 ),
-          //               ),
-          //               title: const Text(
-          //                 "Use my current location",
-          //                 style: TextStyle(fontWeight: FontWeight.w500),
-          //               ),
-          //             ),
-          //             const Divider(
-          //               color: Colors.grey,
-          //               height: 3,
-          //             ),
-          //             ListTile(
-          //               contentPadding: const EdgeInsets.all(8),
-          //               leading: SizedBox(
-          //                 height: 70,
-          //                 width: 70,
-          //                 child: Card(
-          //                   color: Colors.white,
-          //                   shape: RoundedRectangleBorder(
-          //                       borderRadius: BorderRadius.circular(100)),
-          //                   elevation: 3,
-          //                   child: const Icon(
-          //                     Icons.location_city,
-          //                     color: Colors.black,
-          //                   ),
-          //                 ),
-          //               ),
-          //               onTap: () {
-          //                 Navigator.push(context,
-          //                     MaterialPageRoute(builder: (_) => const AllCities()));
-          //               },
-          //               title: const Text(
-          //                 "Change City",
-          //                 style: TextStyle(fontWeight: FontWeight.w500),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       );
-          //     });
-        },
-        child: Row(
-          children: [
-            Container(
-              height: 40,
-              decoration:  BoxDecoration(
-                  color: white, shape: BoxShape.circle),
-              child: IconButton(
-                icon:Image.asset("assets/icons/location.png",height: 30,color: mainColorShadow,),
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return const SizedBox(
-                          height: 180,
-                        );
-                      });
-                },
-              ),
-            ),
-            const SizedBox(
-              width: 2,
-            ),
-           const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
-                Text("Gulshan",style: TextStyle(fontSize: 14,color: Colors.black),),
-                Text(
-                  "Dhaka",
-                  style: TextStyle(fontSize: 12,color: Colors.grey),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),actions: [
+      //     // showModalBottomSheet(
+      //     //     context: context,
+      //     //     builder: (context) {
+      //     //       return SizedBox(
+      //     //         height: 180,
+      //     //         child: ListView(
+      //     //           padding:const EdgeInsets.all(10),
+      //     //           children: [
+      //     //             ListTile(
+      //     //               contentPadding: const EdgeInsets.all(8),
+      //     //               onTap: () {
+      //     //                 setState(() {
+      //     //                   final res = AllServices().getLatLong();
+      //     //                   if (res == "") {
+      //     //                     bool loading = false;
+      //     //                     showDialog(
+      //     //                         context: context,
+      //     //                         builder: (builder) {
+      //     //                           Timer(const Duration(seconds: 3), () {
+      //     //                             loading = true;
+      //     //                             if (loading) {
+      //     //                               Navigator.pop(context);
+      //     //                               Navigator.pop(context);
+      //     //                             }
+      //     //                           });
+
+      //     //                           return  Column(
+      //     //                             crossAxisAlignment:
+      //     //                                 CrossAxisAlignment.center,
+      //     //                             children:  [
+      //     //                               Center(
+      //     //                                 child: Padding(
+      //     //                                   padding:const EdgeInsets.all(80),
+      //     //                                   child: CircularProgressIndicator(
+      //     //                                     color: mainColor,
+      //     //                                     backgroundColor: Colors.grey,
+      //     //                                   ),
+      //     //                                 ),
+      //     //                               ),
+      //     //                             ],
+      //     //                           );
+      //     //                         });
+      //     //                   }
+      //     //                 });
+      //     //               },
+      //     //               leading: SizedBox(
+      //     //                 height: 70,
+      //     //                 width: 70,
+      //     //                 child: Card(
+      //     //                   color: Colors.white,
+      //     //                   shape: RoundedRectangleBorder(
+      //     //                       borderRadius: BorderRadius.circular(100)),
+      //     //                   elevation: 3,
+      //     //                   child: const Icon(
+      //     //                     Icons.location_searching,
+      //     //                     color: Colors.black,
+      //     //                   ),
+      //     //                 ),
+      //     //               ),
+      //     //               title: const Text(
+      //     //                 "Use my current location",
+      //     //                 style: TextStyle(fontWeight: FontWeight.w500),
+      //     //               ),
+      //     //             ),
+      //     //             const Divider(
+      //     //               color: Colors.grey,
+      //     //               height: 3,
+      //     //             ),
+      //     //             ListTile(
+      //     //               contentPadding: const EdgeInsets.all(8),
+      //     //               leading: SizedBox(
+      //     //                 height: 70,
+      //     //                 width: 70,
+      //     //                 child: Card(
+      //     //                   color: Colors.white,
+      //     //                   shape: RoundedRectangleBorder(
+      //     //                       borderRadius: BorderRadius.circular(100)),
+      //     //                   elevation: 3,
+      //     //                   child: const Icon(
+      //     //                     Icons.location_city,
+      //     //                     color: Colors.black,
+      //     //                   ),
+      //     //                 ),
+      //     //               ),
+      //     //               onTap: () {
+      //     //                 Navigator.push(context,
+      //     //                     MaterialPageRoute(builder: (_) => const AllCities()));
+      //     //               },
+      //     //               title: const Text(
+      //     //                 "Change City",
+      //     //                 style: TextStyle(fontWeight: FontWeight.w500),
+      //     //               ),
+      //     //             ),
+      //     //           ],
+      //     //         ),
+      //     //       );
+      //     //     });
+      //   },
+      //   child: Row(
+      //     children: [
+      //       Container(
+      //         height: 40,
+      //         decoration:  BoxDecoration(
+      //             color: white, shape: BoxShape.circle),
+      //         child: IconButton(
+      //           icon:Image.asset("assets/icons/location.png",height: 30,color: mainColorShadow,),
+      //           onPressed: () {
+      //             showModalBottomSheet(
+      //                 context: context,
+      //                 builder: (context) {
+      //                   return const SizedBox(
+      //                     height: 180,
+      //                   );
+      //                 });
+      //           },
+      //         ),
+      //       ),
+      //     //   const SizedBox(
+      //     //     width: 2,
+      //     //   ),
+      //     //  const Column(
+      //     //   crossAxisAlignment: CrossAxisAlignment.start,
+      //     //     children:  [
+      //     //       Text("Gulshan",style: TextStyle(fontSize: 14,color: Colors.black),),
+      //     //       Text(
+      //     //         "Dhaka",
+      //     //         style: TextStyle(fontSize: 12,color: Colors.grey),
+      //     //       ),
+      //     //     ],
+      //     //   )
+      //     ],
+      //   ),
+      // ),
+      
+      actions: [
         GestureDetector(
           onTap: () {
              Navigator.push(context,
-                   MaterialPageRoute(builder: (_) => const CutomerListScreen()));
+                   MaterialPageRoute(builder: (_) =>  CutomerListScreen(
+                    fromScreenName: 'home',
+                   )));
             
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
               decoration: BoxDecoration(
-                color: mainColor,
+                color: white,
                 borderRadius: BorderRadius.circular(5)
               ),
-               child:const Padding(
-                 padding:  EdgeInsets.all(8.0),
-                 child: Center(child: Text("Select Outlets")),
+               child: Padding(
+                 padding:const  EdgeInsets.all(8.0),
+                 child: Center(child: Text("Select Outlets",style: TextStyle(color: mainColor,fontWeight: FontWeight.bold),)),
                )
             ),
           ),
@@ -485,11 +492,13 @@ class _HomePageState extends State<HomePage> {
                                 );
                               },
                               child: CardItemWidget(
-                                dealsname: skuListData!.brandList[index1].itemList[index].itemName,
-                                imageName: skuListData!.brandList[index1].itemList[index].itemAvatar,
-                                price: skuListData!.brandList[index1].itemList[index].invoicePrice,
-                             quantity   : skuListData!.brandList[index1].itemList[index].itemChain,
-                                quantityName: skuListData!.brandList[index1].itemList[index].itemUnit,
+                                itemList:skuListData!.brandList[index1].itemList[index] ,
+
+                            //     dealsname: skuListData!.brandList[index1].itemList[index].itemName,
+                            //     imageName: skuListData!.brandList[index1].itemList[index].itemAvatar,
+                            //     price: skuListData!.brandList[index1].itemList[index].invoicePrice,
+                            //  quantity   : skuListData!.brandList[index1].itemList[index].itemChain,
+                            //     quantityName: skuListData!.brandList[index1].itemList[index].itemUnit,
                               ),
                             ),
                           );

@@ -47,6 +47,12 @@ final appbarTextStyle =
 
 ThemeData defaultTheme = ThemeData(
   primaryColor: mainColor,
+
+  // appBarTheme: AppBarTheme(
+  //         iconTheme: IconThemeData(
+  //           color: Colors.white, // Set the color here
+  //         ),
+  //       ),
    appBarTheme: AppBarTheme( 
        color: mainColor,
        iconTheme:const IconThemeData(

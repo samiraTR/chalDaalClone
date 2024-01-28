@@ -170,7 +170,7 @@ class _FlavourWiseitemListScreenState extends State<FlavourWiseitemListScreen> {
                              Navigator.push(
                             context,
                             (MaterialPageRoute(
-                                builder: (context) =>const CutomerListScreen()
+                                builder: (context) => CutomerListScreen(fromScreenName: 'flavourWiseItemList',)
                                      )));
                         
 

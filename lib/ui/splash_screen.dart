@@ -3,6 +3,9 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/ui/area_list.dart';
+import 'package:tst_app2/ui/pageControllers.dart';
+import 'package:tst_app2/ui/sync_page.dart';
+import 'package:tst_app2/utils/theme.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -34,11 +37,13 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: AnimatedSplashScreen(
+        
           duration: 2000,
-          splash: Image.asset('assets/images/Transcom.png'),
+          splash: Image.asset('assets/images/Transcom.png',color: white,),
           nextScreen: AreaListScreen(),
+          // nextScreen: PageControllerScreen(bottomNav: 0),
           splashTransition: SplashTransition.fadeTransition,
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255)),
+          backgroundColor: mainColor),
     );
   }
 }

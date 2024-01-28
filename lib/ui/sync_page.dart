@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
+import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/repositories.dart';
+import 'package:tst_app2/ui/pageControllers.dart';
 import 'package:tst_app2/ui/widgets/sync_button_widget.dart';
 import 'package:tst_app2/utils/theme.dart';
 
@@ -14,10 +17,15 @@ class Syncpage extends StatefulWidget {
 }
 
 class _SyncpageState extends State<Syncpage> {
+  RetStr? skuListData;
+  OutletReturnList? outletReturnList;
 
 //===================================== Get Sku and Save to Hive ===================================
   getSkuAndSave() async{
-        await Repositories().getSKUList("https://my.transcombd.com/smart_api","SMART", "IT29", "1234", "2023-12-14");
+        await Repositories().getSKUList("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-28");
+        setState(() {
+          
+        });
         //  if(skuList!=null && skuList.status==200) {  
         //               AllServices().modelWiseDataSaveToHive(Boxes.getSkuListDataForSync(),"syncSkuList", skuList.retStr,"SKU Synchronization Successfully Done");
         
@@ -25,20 +33,40 @@ class _SyncpageState extends State<Syncpage> {
   }
 //===================================== Get Outlets and Save to Hive ===================================
   getOuletsAndSave() async{
-         await Repositories().getOuletsList("https://my.transcombd.com/smart_api","SMART", "IT29", "1234", "2023-12-14");
+         await Repositories().getOuletsList("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
+         setState(() {
+           
+         });
          
   }
   //================================== all Synchronization ====================================
   allSynchronization()async{
-    SkuListModel? skuList = await Repositories().getSKUList("https://my.transcombd.com/smart_api","SMART", "IT29", "1234", "2023-12-14");
-    OutletsListModel? outletsList = await Repositories().getOuletsList("https://my.transcombd.com/smart_api","SMART", "IT29", "1234", "2023-12-14");
-    if(skuList!=null && skuList.status==200) {
+    SkuListModel? skuList = await Repositories().getSKUList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-28");
+    OutletsListModel? outletsList = await Repositories().getOuletsList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
+    if(skuList!=null && outletsList!=null) {
+      // skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
+      //  outletReturnList = Boxes.getOutletDataForSync().get('syncOutletsList');
+       
+      AllServices().dynamicToastMessage("All sync successfully done",
       
-
+                        Colors.green, Colors.white, 14); 
+                        
     } 
+    else{
+       AllServices().dynamicToastMessage("Did not sync all",
+                        Colors.red, Colors.white, 14); 
+    }
 
-   
+    setState(() {
+         
+       });
+  }
 
+
+  @override
+  void initState() {
+    super.initState();
+    
   }
 
 
@@ -47,13 +75,36 @@ class _SyncpageState extends State<Syncpage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: mainShadeColorNow,
       appBar: AppBar(
-        title: Text("Sync Screen",style: TextStyle(color: mainColor),),
+        backgroundColor: mainColor,
+        title: Text(
+          "Sync Screen ",
+          style: TextStyle(color: white),
+        ),
         centerTitle: true,
+        actions: [
+          IconButton(onPressed: (){
+            skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
+           outletReturnList = Boxes.getOutletDataForSync().get('syncOutletsList');
+           if(skuListData!=null || outletReturnList!=null ){
+            Navigator.push(
+                        context,
+                        (MaterialPageRoute(
+                            builder: (context) => PageControllerScreen(bottomNav: 0))));
+
+           }
+           else{
+            AllServices().dynamicToastMessage("Plaese Sync all", Colors.red, Colors.white, 16);
+           }
+
+            
+          }, icon: Icon(Icons.home,color: white,))
+
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 55,vertical: 20),
         child: Column(
           children: [
             
@@ -94,17 +145,15 @@ class _SyncpageState extends State<Syncpage> {
           ],
         ),
       ),
-      floatingActionButton:FloatingActionButton.large(
+      floatingActionButton:FloatingActionButton.extended(
+        backgroundColor: mainColor,
     
-        child: Column(children: [
-          
-          Image.asset("assets/icons/sync.png", ),
-          const Text("All Sync")
-          
-        
-        ]),
+        label:  Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Sync All",style: TextStyle(color: white),),
+        ),
         onPressed: ()async{
-        await getOuletsAndSave();
+        allSynchronization();
         }) ,
     );
   }

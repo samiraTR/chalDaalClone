@@ -1,19 +1,22 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/service/all_services.dart';
-import 'package:tst_app2/ui/pageControllers.dart';
-import 'package:tst_app2/ui/widgets/questions.dart';
+import 'package:tst_app2/ui/questions.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class CutomerListScreen extends StatefulWidget {
-  const CutomerListScreen({super.key});
+  String fromScreenName;
+   CutomerListScreen({super.key,required this.fromScreenName});
 
   @override
   State<CutomerListScreen> createState() => _CutomerListScreenState();
 }
 
 class _CutomerListScreenState extends State<CutomerListScreen> with SingleTickerProviderStateMixin {
+  File? imagePath;
   late TabController controller;
   OutletReturnList? outletList;
   List<bool> tappedStates = [];
@@ -343,7 +346,7 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
                               child: Image.asset("assets/icons/shop.png",color:Colors.black87, height: 20,),
                             ))
                         ),
-                    title: Text(clientList[outletIndex].shortName ),
+                    title: Text(clientList[outletIndex].clientName,style: TextStyle(color: blackColor), ),
                         ),
                       const  Divider(height: 2,)
                   ],

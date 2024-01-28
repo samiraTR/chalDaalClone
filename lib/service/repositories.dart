@@ -6,6 +6,7 @@ import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/data_providers.dart';
+import 'package:tst_app2/utils/constants.dart';
 
 class Repositories {
   Future getImageRepo(pageNumber) async {
@@ -26,15 +27,20 @@ class Repositories {
   }
 
   //====================================== Get SKU from Sync =============================
-  Future<SkuListModel?> getSKUList(String skUurl,String cid, String userId,String userPass,String planDate) async {
+  Future<SkuListModel?> getSKUList(String messageChecker,String skUurl,String cid, String userId,String userPass,String planDate) async {
     SkuListModel? repositoryListModelData;
     try {
       final http.Response response = await DataProviders().getSKUDP(skUurl, cid, userId, userPass, planDate);
       Map<String, dynamic> responseBody = json.decode(response.body);
+      //  repositoryListModelData = skuListModelFromJson(json.encode(data));
+      //     AllServices().modelWiseDataSaveToHive(Boxes.getSkuListDataForSync(),"syncSkuList", repositoryListModelData.retStr,"SKU Synchronization Successfully Done");
       if (response.statusCode == 200 && responseBody["status"]==200) {
         repositoryListModelData = skuListModelFromJson(response.body);
-         AllServices().modelWiseDataSaveToHive(Boxes.getSkuListDataForSync(),"syncSkuList", repositoryListModelData.retStr,"SKU Synchronization Successfully Done");
-        return repositoryListModelData;
+        if(messageChecker==""){
+          AllServices().modelWiseDataSaveToHive(Boxes.getSkuListDataForSync(),"syncSkuList", repositoryListModelData.retStr,"SKU Synchronization Successfully Done");
+
+        } 
+         return repositoryListModelData;
       } else {
          AllServices().dynamicToastMessage(responseBody["message"].toString(),
                         Colors.red, Colors.white, 14); 
@@ -49,14 +55,18 @@ class Repositories {
 
 
    //====================================== Get Outlets from Sync =============================
-  Future<OutletsListModel?> getOuletsList(String outletsUrl,String cid, String userId,String userPass,String planDate) async {
+  Future<OutletsListModel?> getOuletsList(String messageChecker,String outletsUrl,String cid, String userId,String userPass,String planDate) async {
     OutletsListModel? ouletsListModelData;
     try {
       final http.Response response = await DataProviders().getOutletsDP(outletsUrl, cid, userId, userPass, planDate);
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody["status"]==200) {
         ouletsListModelData = outletsListModelFromJson(response.body);
-        AllServices().modelWiseDataSaveToHive(Boxes.getOutletDataForSync(),"syncOutletsList", ouletsListModelData.outletReturnList,"Outlet Synchronization Successfully Done");
+        if(messageChecker==""){
+            AllServices().modelWiseDataSaveToHive(Boxes.getOutletDataForSync(),"syncOutletsList", ouletsListModelData.outletReturnList,"Outlet Synchronization Successfully Done");
+
+        } 
+      
         return ouletsListModelData;
       } else {
          AllServices().dynamicToastMessage(responseBody["message"].toString(),
