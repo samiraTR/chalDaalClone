@@ -106,15 +106,15 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  _capturePhoto();
+              //     _capturePhoto();
 
-               if (imageFile!=null){
+              //  if (imageFile!=null){
                 Navigator.push(
                         context,
                         (MaterialPageRoute(
                             builder: (context) => PageControllerScreen(bottomNav: 1))));
 
-               }
+               //}
     
                 },
                 child: Padding(

@@ -77,6 +77,23 @@ Future<http.Response> getAreaList (String areListApi,String cid, String userId,S
     return response;
   }
 
+ //============================== stock sync===================================
+Future<http.Response> getStockSync (String stockUrl,String cid, String userId,String userPass,String visitPlan)async{
+    print(Apis().stockSyncApi(stockUrl));
+  final response = await http.post(
+      Uri.parse(
+          Apis().stockSyncApi(stockUrl)
+          ),
+      body:{
+          "cid" : cid,
+          "user_id" : userId,
+          "user_pass" : userPass,
+          "visit_plan_date" : visitPlan,
+         
+       }       
+    );
+    return response;
+  }
 
 
 

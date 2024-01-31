@@ -8,6 +8,7 @@ import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class PageControllerScreen extends StatefulWidget {
+  
   int bottomNav;
    PageControllerScreen({super.key, required this.bottomNav});
 
@@ -16,10 +17,10 @@ class PageControllerScreen extends StatefulWidget {
 }
 
 class _PageControllerScreenState extends State<PageControllerScreen> {
-  //late int initialIndex;
+  double totalCartAmount = 0;
 
-  //late PageController pageController;
- // int inistialIndex = widget.bottomNav;
+  int currentIndex = 0; 
+  
   
    PageController pageController = PageController();
   
@@ -29,8 +30,21 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
   bool addToCart = false;
   final navigationPages = [
     const HomePage(),
-     AllProductListScreen(),
-    //const AllCategoriesScreen(),
+    AllProductListScreen(
+      onCheckoutChanged: (newValue) {
+       
+  //         print("onCheckoutChanged called with $newValue");
+  // if (mounted) {
+  //   print("Widget is mounted. Updating state.");
+  //   setState(() {
+  //     totalCartAmount = newValue ?? 0;
+  //   });
+  // } else {
+  //   print("Widget is not mounted. State not updated.");
+  // }
+      },
+    ),
+    // const AllCategoriesScreen(),
     const SearchproductScreen()
   ];
  // int _currentPage=0;
@@ -51,6 +65,11 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
                     onPageChanged: (value) {
                       setState(() {
                         currentIndex = value;
+                        if (value == 1) {
+                          
+
+                          // bottomNavRes = true;
+                        } 
 
                         if (value == 2) {
                           bottomNavRes = true;

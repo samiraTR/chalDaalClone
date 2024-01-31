@@ -18,7 +18,6 @@ class _AreaListScreenState extends State<AreaListScreen> {
   @override
   void initState() {
     super.initState();
-   // getAreaList();
     homeColorNav = mainColor;
   }
 
@@ -41,7 +40,6 @@ class _AreaListScreenState extends State<AreaListScreen> {
         print("Found: $location");
       }
     }
-
   }
 
   @override

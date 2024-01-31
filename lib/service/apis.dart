@@ -10,4 +10,5 @@ class Apis {
   String skuSyncApi(String url)=> "${url}/item/index";
 
   String outletSyncApi(String url)=> "${url}/visit_plan";
+  String stockSyncApi(String url)=>"${url}/stock/index";
 }

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
+import 'package:tst_app2/model/Hive_model/stock_model.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
@@ -23,34 +24,31 @@ class _SyncpageState extends State<Syncpage> {
 //===================================== Get Sku and Save to Hive ===================================
   getSkuAndSave() async{
         await Repositories().getSKUList("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-28");
-        setState(() {
-          
-        });
-        //  if(skuList!=null && skuList.status==200) {  
-        //               AllServices().modelWiseDataSaveToHive(Boxes.getSkuListDataForSync(),"syncSkuList", skuList.retStr,"SKU Synchronization Successfully Done");
-        
-        //   }
+        setState(() {  
+        }); 
   }
 //===================================== Get Outlets and Save to Hive ===================================
   getOuletsAndSave() async{
          await Repositories().getOuletsList("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
          setState(() {
            
-         });
-         
+         });       
+  }
+  //===================================== Get Stock and Save to Hive ===================================
+  getStockAndSave() async{
+         await Repositories().getStock("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
+         setState(() {
+           
+         });       
   }
   //================================== all Synchronization ====================================
   allSynchronization()async{
     SkuListModel? skuList = await Repositories().getSKUList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-28");
     OutletsListModel? outletsList = await Repositories().getOuletsList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
-    if(skuList!=null && outletsList!=null) {
-      // skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
-      //  outletReturnList = Boxes.getOutletDataForSync().get('syncOutletsList');
-       
+    StockModel? stockList = await Repositories().getStock("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
+    if(skuList!=null && outletsList!=null && stockList!=null) {
       AllServices().dynamicToastMessage("All sync successfully done",
-      
-                        Colors.green, Colors.white, 14); 
-                        
+                        Colors.green, Colors.white, 14);                   
     } 
     else{
        AllServices().dynamicToastMessage("Did not sync all",
@@ -130,9 +128,9 @@ class _SyncpageState extends State<Syncpage> {
               children: [
                 Expanded(
                   child:Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:80),
+                    padding: const EdgeInsets.symmetric(horizontal:70),
                     child: SyncButtonWidget(buttonbackgroudColor: white, buttonRadiousMea: 20,image: "assets/icons/stock.png", imageHeight: 90, imagewidth: 60, buttonName: "Stock", textColor: mainColor, onpressedFuc: ()async{
-                     await getOuletsAndSave();
+                     await getStockAndSave();
                     }),
                   )
                 ), 

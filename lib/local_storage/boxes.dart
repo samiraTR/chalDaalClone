@@ -1,10 +1,12 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tst_app2/model/Hive_model/stock_model.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 
 class Boxes{
   static Box<RetStr> getSkuListDataForSync()=> Hive.box("syncSkuList");
   static Box<OutletReturnList>getOutletDataForSync()=> Hive.box("syncOutletsList");
+  static Box<StockReturnList>getStockForSync()=> Hive.box("syncStock");
 
 
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-double totalCartAmount=0;
+// double totalCartAmount=0;
 
 
 

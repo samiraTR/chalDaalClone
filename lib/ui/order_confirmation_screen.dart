@@ -340,6 +340,7 @@ import 'package:flutter/material.dart';
 import 'package:tst_app2/ui/all_product_list.dart';
 import 'package:tst_app2/ui/customer_list.dart';
 import 'package:tst_app2/themes/theme.dart';
+import 'package:tst_app2/ui/market_return.dart';
 import 'package:tst_app2/ui/pageControllers.dart';
 import 'package:tst_app2/ui/posm_screen.dart';
 import 'package:tst_app2/utils/theme.dart';
@@ -463,7 +464,13 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                               Expanded(flex: 2,
                                 child: ElevatedButton(
                                    style: ElevatedButton.styleFrom(primary: mainColor),
-                                  onPressed: (){},child: Text("ADD"),)),
+                                  onPressed: (){
+                                    Navigator.push(
+                      context,
+                      (MaterialPageRoute(
+                          builder: (context) => MarketReturnScreen())));
+
+                                  },child: Text("ADD"),)),
                           ],
                         ),
                       ),
@@ -611,13 +618,13 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                       ),
                     
 
-                      const SizedBox(height: 140),
+                      const SizedBox(height: 160),
 
                       
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context,
-                 MaterialPageRoute(builder: (_) =>  POSMScreen()));
+                //           Navigator.push(context,
+                //  MaterialPageRoute(builder: (_) =>  POSMScreen()));
                           
                         },
                         child: Container(
