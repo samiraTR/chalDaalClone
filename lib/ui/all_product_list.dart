@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
+import 'package:tst_app2/ui/widgets/search_text_form_field_widget.dart';
 import 'package:tst_app2/ui/widgets/show_dialog_item_Input.dart';
 import 'package:tst_app2/ui/widgets/textFormField_custom_widget.dart';
 import 'package:tst_app2/utils/constants.dart';
@@ -152,6 +153,18 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
      return total.toString();
 
   }
+
+
+ void getItemList(String brandName){
+  String brandId="";
+    for(var item in skuListData!.brandList ){
+                if(item.brandName==brandName){
+                  brandId=item.brandId;
+         }
+    }
+   tempBrand= skuListData!.brandList.where((element) => element.brandId==brandId).toList();
+
+  }
     
 
 
@@ -173,23 +186,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
     padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 16),
     child: SizedBox(
       height: 45,
-      
-      child: TextFormField( 
-        controller: searchController,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide.none,
-            
-          ),
-           prefixIcon:const Icon(Icons.search), 
-          hintText: 'Search for item by name', 
-        
-        ),
-        
-        onChanged: (value) {
+      child: SearchTextFormFieldWidget(borderColor: mainColor, controller: searchController, fillColor: white, hintText: 'Search for item by name', onChanged:(value) {
           if (value.isNotEmpty) {
             isClear = true;
           }
@@ -199,8 +196,9 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
               skuListData!.brandList.toList(),
             );
           });
-        },
-      ),
+        }, ),
+      
+    
     ),
   ),
 ),
@@ -296,7 +294,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
            Padding(
              padding: const EdgeInsets.all(8.0),
              child: Container(
-              width: 120, 
+              width: 125, 
               height: 80,
                decoration: BoxDecoration(
                 border: Border.all(color: Colors.white),
@@ -328,7 +326,11 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
              onChanged: (String? value) {
               setState(() {
                 selectedValue = value;
+
               });
+              getItemList(value!);
+
+           
              },
              style: TextStyle(color: blackColor),
               underline: Container(), //
