@@ -1,30 +1,37 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:tst_app2/model/sku_list_model.dart';
+import 'package:tst_app2/service/all_services.dart';
+import 'package:tst_app2/ui/widgets/cancel_button_widget.dart';
+import 'package:tst_app2/ui/widgets/confirm_button.dart';
 import 'package:tst_app2/ui/widgets/textFormField_custom_order_input.dart';
 import 'package:tst_app2/utils/theme.dart';
 
-class ShowDialogForItemInput extends StatelessWidget {
-   
-  String productName;
-  String image;
-  String promoInfo;
-  String itemCtn;
-  String itemPcs;
-  String discount;
-  String eachValue;
-   ShowDialogForItemInput({super.key,required this.productName,required this.image,
-    required this.promoInfo,required this.itemCtn,required this.itemPcs,required this.discount,required this.eachValue});
+class ShowDialogForItemInput extends StatefulWidget {
+ final ItemList itemList;
+  Map<String,dynamic> callbackValue;
+  Function callbackFunction;
+
+  ShowDialogForItemInput({super.key,required this.itemList, required this.callbackValue,required this.callbackFunction});
+
+  @override
+  State<ShowDialogForItemInput> createState() => _ShowDialogForItemInputState();
+}
+
+class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
+  String total="";
+  TextEditingController ctnController=TextEditingController();
+  TextEditingController pcsController=TextEditingController();
+  TextEditingController disountController= TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController ctnController=TextEditingController();;
-    TextEditingController pcsController=TextEditingController();;
-    TextEditingController disountController= TextEditingController();
+    
     return SizedBox(
       child: AlertDialog(
         insetPadding:const EdgeInsets.all(20),
          contentPadding: EdgeInsets.zero,
-                  title:  Text(productName),
+                  title:  Text(widget.itemList.itemName.toString()),
                   content: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -33,21 +40,17 @@ class ShowDialogForItemInput extends StatelessWidget {
                           SizedBox(
                                  child: CachedNetworkImage(
                                   height: 150,
-                                  // width: 100,
-                                  //          height: 200,
-                                               imageUrl:image,
+                                               imageUrl:widget.itemList.itemAvatar.toString(),
                                                errorWidget: (context, url, error) =>const Icon(Icons.error),
                                              ),
                                ),
                                const SizedBox(height: 20,),
-                          
-                          
                                          Row(
                                            children: [
                                                      const Expanded(child: Text("Promo Info ",style: TextStyle(fontWeight: FontWeight.bold),)),
                                                      const Text(" :  "),
                                                       Expanded(flex: 3,
-                                                       child:Text(promoInfo,style:const TextStyle(),))
+                                                       child:Text(widget.itemList.itemPromo.toString(),style:const TextStyle(),))
                                            ],
                                          ),
                                         const SizedBox(height: 10,),
@@ -61,10 +64,13 @@ class ShowDialogForItemInput extends StatelessWidget {
                                         Expanded(
                                          child: Padding(
                                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                                           child: TextFormFieldCustomOrderInput(
-                                            
+                                           child: TextFormFieldCustomOrderInput( 
                                             controller:ctnController,
-                                            hintText: "Ctn",borderColor: mainColor, validator: (value) {  }, 
+                                            hintText: "Ctn",
+                                            borderColor: mainColor, 
+                                            validator: (value) { 
+                                              updateTotal();
+                                                   }, 
 
                                            )
                                          )),
@@ -73,264 +79,117 @@ class ShowDialogForItemInput extends StatelessWidget {
                                         Expanded(child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 8),
                                         child: TextFormFieldCustomOrderInput(
-                                          controller: pcsController,
-                                          hintText: "Pcs",
-                                          borderColor: mainColor, validator: (value){
-                                        //  //   int pcs = int.tryParse(value) ?? 0;
-                                        //  //   int ctn = pcs ~/ int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                        //  //   int givenCtnRatio=int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                        //  //   if(givenCtnRatio<=pcs){
-                                        //  //     pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text= (pcs-givenCtnRatio).toString();
-                                        //  //    ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text = (int.tryParse(ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text) ?? 0+ctn).toString();
-                                        //  //   }
-                                        //  // double  eachCount1=0;
-                                     
-                                        //  //     String? ctnPrice= ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text;
-                                        //  //    String? pcsPrice= pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text;
-                                        //  //     String? dicountEach= discountControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text;
-                                        //  //    double? ctnPriceEach=double.tryParse(ctnPrice)??0.0;
-                                        //  //    double? pcsEachPrice=double.tryParse(pcsPrice)??0.0;
-                                        //  //    double? discountEachPrice=double.tryParse(dicountEach)??0.0;
-                                        //  //    double perctnPrice=ctnPriceEach*double.parse(tempBrand[index1].itemList[itemIndex].tradePrice)*int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                        //  //    double perPcsPrice =pcsEachPrice*double.parse(tempBrand[index1].itemList[itemIndex].tradePrice);
-                                        //  //    eachCount1=perctnPrice+perPcsPrice;
-                                        //  //    value=(eachCount1-discountEachPrice).toString();
-                                     
-                                     
-                                     
-                                          
-                                        //  //   eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                        //  //     totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                                        controller: pcsController,
+                                        hintText: "Pcs",
+                                        borderColor: mainColor, 
+                                        validator: (value) {
+                                        //   double? pcs= double.tryParse(pcsController.text)??0.0;
+                                        // double? itemChain=  double.parse(widget.itemList.itemChain)?? 1;
+                                        // print("itemchain=$itemChain");
+                                        //   if(pcs>double.parse(widget.itemList.itemChain)){
+                                            
+                                        //    ctnController.text= (pcs/itemChain).toInt().toString();
+                                        //    pcsController.text=(pcs%itemChain).toInt().toString();
+                                        //    }
+                                           updateTotal();
                                             },
-
-                                           ),
-                                        //  child: TextFormField( 
-                                        //    textDirection: TextDirection.rtl,
-                                     
-                                        //    decoration: InputDecoration(
-                                        //         filled: true,
-                                        //    fillColor: Colors.white,
-                                        //    hintText: "Pcs",
-                                        //    enabledBorder: UnderlineInputBorder(
-                                        //    borderSide: BorderSide(
-                                        //    width: 1, 
-                                        //    color: mainColor,
-                                        //                       ), 
-                                        //                          ),
-                                        //  ),
-                                        //    //controller: pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId],
-                                         
-                                        //   textAlign: TextAlign.center,
-                                        //    keyboardType: TextInputType.number,
-                                        //    onChanged: (value){
-                                        //  //   int pcs = int.tryParse(value) ?? 0;
-                                        //  //   int ctn = pcs ~/ int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                        //  //   int givenCtnRatio=int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                        //  //   if(givenCtnRatio<=pcs){
-                                        //  //     pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text= (pcs-givenCtnRatio).toString();
-                                        //  //    ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text = (int.tryParse(ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text) ?? 0+ctn).toString();
-                                        //  //   }
-                                        //  // double  eachCount1=0;
-                                     
-                                        //  //     String? ctnPrice= ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text;
-                                        //  //    String? pcsPrice= pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text;
-                                        //  //     String? dicountEach= discountControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text;
-                                        //  //    double? ctnPriceEach=double.tryParse(ctnPrice)??0.0;
-                                        //  //    double? pcsEachPrice=double.tryParse(pcsPrice)??0.0;
-                                        //  //    double? discountEachPrice=double.tryParse(dicountEach)??0.0;
-                                        //  //    double perctnPrice=ctnPriceEach*double.parse(tempBrand[index1].itemList[itemIndex].tradePrice)*int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                        //  //    double perPcsPrice =pcsEachPrice*double.parse(tempBrand[index1].itemList[itemIndex].tradePrice);
-                                        //  //    eachCount1=perctnPrice+perPcsPrice;
-                                        //  //    value=(eachCount1-discountEachPrice).toString();
-                                     
-                                     
-                                     
-                                          
-                                        //  //   eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                        //  //     totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                        //    },
-                                        //  ),
-                                        ),
-                                        ),
-                                        
-                                                       // const  Text(" pcs"),
-                                                        ],
+                                         ),
+                                      
+                                          ),
+                                         ),
+                                        ],
                                                       ))
                                           ],
                                         ),
                                         const SizedBox(height: 10,),
                                          Row(
                                            children: [
-                                                     const Expanded(child: Text("Discount ",style: TextStyle(fontWeight: FontWeight.bold),)),
-                                                     const Text(" :  "),
-                                                       Expanded(flex: 3,
-                                                         child: Padding(
+                                           const Expanded(child: Text("Discount ",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                           const Text(" :  "),
+                                            Expanded(flex: 3,
+                                              child: Padding(
                                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                                         child: TextFormFieldCustomOrderInput(hintText: "Discount",borderColor: mainColor, controller: disountController, validator: (value){
-                                          //   // int pcs = int.tryParse(value) ?? 0;
-                                          //   // int ctn = (pcs / int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio)).ceil();
-                                          //   // int givenCtnRatio=int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                          //   // if(givenCtnRatio<=pcs){
-                                          //   //   pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text= (pcs-givenCtnRatio).toString();
-                                          //   //  ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text = (int.tryParse(ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text) ?? 0+ctn).toString();
-                                        
-                                          //   // }
-                                          //   // eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
+                                         child: TextFormFieldCustomOrderInput(hintText: "Discount",borderColor: mainColor, controller: disountController, 
+                                         validator: (value) {
+                                          double? dis= double.tryParse(disountController.text)??0.0;
+                                          if((total=="")||(dis>double.parse(total))){
+                                            AllServices().dynamicToastMessage("Discount must be less than total amount", Colors.red, Colors.white, 16);
                                             
-                                          //   //   totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                            },
-
-                                           ),
-                                          // child: TextFormField( 
-                                          //   textDirection: TextDirection.rtl,
+                                          }
                                      
-                                          //   decoration: InputDecoration(
-                                          //        filled: true,
-                                          //   fillColor: Colors.white,
-                                          //   hintText: "",
-                                            
-                                          //   enabledBorder: UnderlineInputBorder(
-                                          //   borderSide: BorderSide(
-                                          //   width: 1, 
-                                          //   color: mainColor,
-                                          //                      ), 
-                                          //                         ),
-                                          //   focusedBorder: UnderlineInputBorder(
-                                          //   borderSide: BorderSide(
-                                          //   width: 1, 
-                                          //   color: mainColor,
-                                          //                      ), 
-                                          //                         ),
-                                          // ),
-                                          //  // controller: discountControllerMap[tempBrand[index1].itemList[itemIndex].itemId],
+                                            updateTotal();
+
                                           
-                                          //  textAlign: TextAlign.center,
-                                          //   keyboardType: TextInputType.number,
-                                          //   onChanged: (value){
-                                          //   // int pcs = int.tryParse(value) ?? 0;
-                                          //   // int ctn = (pcs / int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio)).ceil();
-                                          //   // int givenCtnRatio=int.parse(tempBrand[index1].itemList[itemIndex].ctnPcsRatio);
-                                          //   // if(givenCtnRatio<=pcs){
-                                          //   //   pcsControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text= (pcs-givenCtnRatio).toString();
-                                          //   //  ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text = (int.tryParse(ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId]!.text) ?? 0+ctn).toString();
+
+                                                   
+                                      },
+
+                                         ),
                                         
-                                          //   // }
-                                          //   // eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                            
-                                          //   //   totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                          //   },
-                                          // ),
                                         ),
                                         ),
                                            ],
                                          ),
-                                         const SizedBox(height: 10,),
-                                         const Row(
+                                         const SizedBox(height: 20,),
+                                          Row(
                                             children: [
-                                                      Expanded(child: Text("Value ",style: TextStyle(fontWeight: FontWeight.bold),)),
-                                                      Text(" :  "),
+                                                     const Expanded(child: Text("Value ",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                                     const Text(" :  "),
                                                        Expanded(flex: 3,
-                                                        child: Text(""),
-                                                       // child: Text(eachTotalCount(tempBrand , tempBrand[index1].itemList[itemIndex].itemId)),
-                                                        // child: TextFormField( 
-                                                        //         textDirection: TextDirection.rtl,
-                                                        //         readOnly: true,
-                                     
-                                                        //         decoration:const InputDecoration(
-                                                        //              filled: true,
-                                                        //         fillColor: Colors.transparent,
-                                                        //       //  hintText: "",
-                                             
-                                                        //         enabledBorder: UnderlineInputBorder(
-                                                        //         borderSide: BorderSide(
-                                                        //         width: 1, 
-                                                        //         color: Colors.transparent,
-                                                        //                            ), 
-                                                        //                               ),
-                                            
-                                                        //       ),
-                                                        //         controller: eachprice[tempBrand[index1].itemList[itemIndex].itemId],
-                                           
-                                                        //        textAlign: TextAlign.end,
-                                                        //         keyboardType: TextInputType.number,
-                                                        //         onChanged: (value){
-                                            
-                                                        //        // eachTotalCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                             
-                                                        //          // totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                                        //         },
-                                                        //       ),
+                                                        child: Text(total.toString()),
+                                                      
                                                         )
                                             ],
                                           ),
-                                     
-                                         
-                                         
-                                         
-                                         const SizedBox(height: 10,)
-                                                         // SizedBox(
-                                                         //               height: 250,
-                                                         //               width: double.infinity,       
-                                                         //               child: skuListData!.brandList.isNotEmpty? ListView.builder(
-                                                         //                   scrollDirection: Axis.horizontal,
-                                                         //                   shrinkWrap: true,
-                                                         //                   itemCount: skuListData!.brandList[index1].itemList.length,
-                                                         //                   itemBuilder: (context, index) {
-                                                         //                     return Padding(
-                                                         //                       padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                                                         //                       child: InkWell(
-                                                         //                         onTap: () {
-                                                         //                           Navigator.push(
-                                                         //                             context,
-                                                         //                             MaterialPageRoute(
-                                                         //                               builder: (context) => ProductDetailsScreen(
-                                                         //                                 productDetail: skuListData!.brandList[index1].itemList[index],
-                                                         //                               ),
-                                                         //                             ),
-                                                         //                           );
-                                                         //                         },
-                                                         //                         child: CardItemWidget(
-                                                         //                           dealsname: skuListData!.brandList[index1].itemList[index].itemName,
-                                                         //                           imageName: skuListData!.brandList[index1].itemList[index].itemAvatar,
-                                                         //                           price: skuListData!.brandList[index1].itemList[index].invoicePrice,
-                                                         //                        quantity   : skuListData!.brandList[index1].itemList[index].itemChain,
-                                                         //                           quantityName: skuListData!.brandList[index1].itemList[index].itemUnit,
-                                                         //                         ),
-                                                         //                       ),
-                                                         //                     );
-                                                         //                   },
-                                                         //                   ):const SizedBox(),
-                                                         //             ),
-                                          //const SizedBox(height: 30,)
-                                          ],
+                        ],
                       ),
                     )
                   ),
                   actions: [
-                    ElevatedButton(
-                     // style: ,
-                      onPressed: () {
-                        // setState(() {
-                        //   tableData.add({
-                        //     'Brand': selectedBrand!,
-                        //     'SKU': selectedSku ?? '',
-                        //     'Reason': reason,
-                        //     'Qty': qty,
-                        //   });
-                        // });
-      
-                        // selectedBrand = null;
-                        // selectedSku = null;
-                        // reason = '';
-                        // qty = '';
-      
-                        // Navigator.of(context).pop();
-                        // setState2(() {}); // Trigger a rebuild
-                      },
-                      child: Text('Add'),
-                    ),
+                   Padding(
+                     padding: const EdgeInsets.symmetric(horizontal:20,vertical: 10 ),
+                     child: Row(
+                          children: [
+                            Expanded(child: CancelButtonWidget(buttonHeight: 50, fontColor: mainColor, buttonName: "Cancel", fontSize: 16, onTapFuction:  () { 
+                              Navigator.pop(context) ;
+                              
+                            },borderColor: mainColor)),
+                           const SizedBox(width: 10,),
+                           Expanded(child: ConfirmButtonWidget(buttonHeight: 50, fontColor: white, buttonName: "Add", fontSize: 16, onTapFuction: () {
+                             addToCartMethod();
+
+                             },))
+                           
+                          ],
+                        ),
+                   ),
+                   
                   ],
                 ),
     );
+  }
+
+  void addToCartMethod(){
+    int ctn=((int.tryParse(ctnController.text)??0)* int.parse(widget.itemList.itemChain));
+    int pcs= int.tryParse(pcsController.text)??0;
+    int? totalPcs=ctn+pcs;
+     Map<String,dynamic> callbackValue={
+        "pcsCount":totalPcs.toString(),
+        "discount":disountController.text.toString(),
+        "totalAmount":total.toString(),
+         };
+
+         widget.callbackValue=callbackValue;
+         widget.callbackFunction(widget.callbackValue);
+         Navigator.pop(context) ;
+  }
+
+  void updateTotal() {
+    setState(() {
+      total = AllServices().getCountEachValue(
+        widget.itemList,ctnController.text.toString(),pcsController.text.toString(),
+        disountController.text.toString(),
+      );
+    });
   }
 }

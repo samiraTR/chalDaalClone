@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class TextFormFieldCustomWidget extends StatelessWidget {
+  final TextEditingController controller;
+  final void Function(dynamic) onChnaged; 
 
-  const TextFormFieldCustomWidget({super.key});
+   TextFormFieldCustomWidget({super.key,required this.controller,required this.onChnaged});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,10 @@ class TextFormFieldCustomWidget extends StatelessWidget {
                                       width: 1,
                                     ),
                                   ),
-                                  child:const  TextField(
+                                  child:  TextFormField(
                                     textAlign: TextAlign.center,
-                                    decoration:  InputDecoration(
+                                    controller:controller ,
+                                    decoration:const  InputDecoration(
                                       
                                       fillColor: Colors.transparent,
                                       filled: true,
@@ -27,6 +30,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
                                       border: InputBorder.none,
                             
                                     ),
+                                    onChanged: onChnaged,
                                   ),
                                 );
   }

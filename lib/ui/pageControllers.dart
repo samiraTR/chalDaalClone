@@ -31,18 +31,18 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
   final navigationPages = [
     const HomePage(),
     AllProductListScreen(
-      onCheckoutChanged: (newValue) {
+  //     onCheckoutChanged: (newValue) {
        
-  //         print("onCheckoutChanged called with $newValue");
-  // if (mounted) {
-  //   print("Widget is mounted. Updating state.");
-  //   setState(() {
-  //     totalCartAmount = newValue ?? 0;
-  //   });
-  // } else {
-  //   print("Widget is not mounted. State not updated.");
-  // }
-      },
+  // //         print("onCheckoutChanged called with $newValue");
+  // // if (mounted) {
+  // //   print("Widget is mounted. Updating state.");
+  // //   setState(() {
+  // //     totalCartAmount = newValue ?? 0;
+  // //   });
+  // // } else {
+  // //   print("Widget is not mounted. State not updated.");
+  // // }
+  //     },
     ),
     // const AllCategoriesScreen(),
     const SearchproductScreen()

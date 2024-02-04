@@ -144,6 +144,9 @@ class AllServices {
   }
 
 
+  //================================ 
+
+
     //================================= dynamic search ===========================================
   List<BrandList> searchItem(String enterTheKey, List<BrandList> tempBrandffList) {
   List<BrandList> searchData = tempBrandffList;
@@ -176,4 +179,18 @@ class AllServices {
 
   return results;
 }
+
+//=========================== each Item Count =============================
+String getCountEachValue(ItemList itemList,String ctnValue,String pcsValue,String discountValue){
+  double total=0;
+  double? ctn= double.tryParse(ctnValue)??0.0;
+  double? pcs= double.tryParse(pcsValue)??0.0;
+  double? dis= double.tryParse(discountValue)??0.0;
+  int? ctnRatio= int.parse(itemList.itemChain);
+  double pcsRatio = (ctn*ctnRatio*double.parse(itemList.tradePrice))+ (pcs*double.parse(itemList.tradePrice));
+   total=pcsRatio-dis;
+  print(total);
+  return total.toString();
+  
+ }
 }

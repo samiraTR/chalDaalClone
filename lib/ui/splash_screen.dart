@@ -40,8 +40,8 @@ class _SplashPageState extends State<SplashPage> {
         
           duration: 2000,
           splash: Image.asset('assets/images/Transcom.png',color: white,),
-          nextScreen: AreaListScreen(),
-          // nextScreen: PageControllerScreen(bottomNav: 0),
+          //nextScreen: AreaListScreen(),
+          nextScreen: PageControllerScreen(bottomNav: 1),
           splashTransition: SplashTransition.fadeTransition,
           backgroundColor: mainColor),
     );

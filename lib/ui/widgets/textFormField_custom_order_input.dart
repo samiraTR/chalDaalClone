@@ -7,7 +7,6 @@ class TextFormFieldCustomOrderInput extends StatelessWidget {
   final TextEditingController controller;
   final void Function(dynamic) validator; 
 
-  //final Function(String?)? onSaved;
    TextFormFieldCustomOrderInput({super.key,required this.hintText, required this.borderColor,required this.controller,required this.validator});
 
   @override
@@ -26,17 +25,10 @@ class TextFormFieldCustomOrderInput extends StatelessWidget {
                                                                  ),
                                          ),
                                               
-                                             //controller:  ctnControllerMap[tempBrand[index1].itemList[itemIndex].itemId],
+                                             controller:  controller,
                                              textAlign: TextAlign.center,
                                              keyboardType: TextInputType.number,
-                                             onChanged: ((value) {
-                                     
-                                               // eachTotalCount(tempBrand,index1,itemIndex,tempBrand[index1].itemList[itemIndex].itemId);
-                                               
-                                             //  totalvaluCount(tempBrand,tempBrand[index1].itemList[itemIndex].itemId);
-                                             
-                                               
-                                             }),
+                                             onChanged: validator
                                          
                                                              
                                                              
