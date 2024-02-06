@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/themes/theme.dart';
-import 'package:tst_app2/ui/customer_list.dart';
+import 'package:tst_app2/ui/oultet_list.dart';
 import 'package:tst_app2/ui/widgets/Flavour_wise_each_item_widget.dart';
 import 'package:tst_app2/utils/theme.dart';
 

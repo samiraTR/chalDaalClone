@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 //     TextStyle(color: COLOR_White, fontWeight: FontWeight.w400, fontSize: 34);
 final appbarTextStyle =
     TextStyle(color: white, fontWeight: FontWeight.bold, fontSize: 20);
+    
 // const TEXTSTYLE_Headline6 =
 //     TextStyle(color: COLOR_White, fontWeight: FontWeight.w500, fontSize: 20);
 // const TEXTSTYLE_Headline18 =
@@ -57,7 +58,8 @@ ThemeData defaultTheme = ThemeData(
        color: mainColor,
        iconTheme:const IconThemeData(
         color: Colors.white
-      )
+      ),
+      
 ),
   //drawerTheme: const DrawerThemeData(backgroundColor: COLOR_SECONDARY),
   textTheme: const TextTheme(

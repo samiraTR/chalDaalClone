@@ -51,6 +51,7 @@ dependencies:
   photo_view: ^0.14.0
   platform_device_id: ^1.0.1
   easy_stepper: ^0.8.3
+  google_fonts: 
 
 dev_dependencies:
   build_runner: ^2.4.8
@@ -78,6 +79,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  # fonts:
+  #   - family: Lobster
+  #     fonts:
+  #       - asset: assets/fonts/Lobster-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

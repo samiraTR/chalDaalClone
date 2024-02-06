@@ -1,5 +1,6 @@
 
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class CancelButtonWidget extends StatelessWidget {
@@ -29,7 +30,7 @@ class CancelButtonWidget extends StatelessWidget {
                                   color: borderColor
                                 )
                               ),
-                              child:Center(child:  Text(buttonName,style: TextStyle(color: fontColor,fontSize: fontSize,fontWeight: FontWeight.bold),)),
+                              child:Center(child:  Text(buttonName,style: GoogleFonts.inter(color: fontColor,fontSize: fontSize,fontWeight: FontWeight.bold),)),
                             ),
     );
   }

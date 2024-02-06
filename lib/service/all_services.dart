@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 
@@ -190,11 +191,35 @@ String getCountEachValue(ItemList itemList,String ctnValue,String pcsValue,Strin
   double pcsRatio = (ctn*ctnRatio*double.parse(itemList.tradePrice))+ (pcs*double.parse(itemList.tradePrice));
    total=pcsRatio-dis;
   print(total);
-  return total.toString();
-  
+  return total.toString(); 
  }
+//=========================== brandId wise filtering data========================
+  List<ItemList> getItemList(String brandName,List<BrandList> brandList,){
+  List<ItemList> machingItem=[];
+  String brandId="";
+    for(var item in brandList ){
+                if(item.brandName==brandName){
+                  brandId=item.brandId;
+         }
+    }
+   for (var brand in brandList) {
+     machingItem.addAll(brand.itemList
+      .where((item) => item.brandId.toLowerCase().contains(brandId.toLowerCase())));
+   }
+   return machingItem;
 
-//  List<ItemList> getItemList(){
+  }
 
-//  }
+  //=========================== edit Item Count =============================
+String updateItemAmount(AllItem itemList,String ctnValue,String pcsValue,String discountValue){
+  double total=0;
+  double? ctn= double.tryParse(ctnValue)??0.0;
+  double? pcs= double.tryParse(pcsValue)??0.0;
+  double? dis= double.tryParse(discountValue)??0.0;
+  int? ctnRatio= int.parse(itemList.ctnPcsRatio!);
+  double pcsRatio = (ctn*ctnRatio*double.parse(itemList.tradePrice!))+ (pcs*double.parse(itemList.tradePrice!));
+   total=pcsRatio-dis;
+  print(total);
+  return total.toString(); 
+ }
 }

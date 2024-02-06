@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tst_app2/model/Hive_model/check_out_model.dart';
+import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/all_product_list.dart';
 import 'package:tst_app2/ui/home_page.dart';
@@ -10,14 +12,14 @@ import 'package:tst_app2/utils/theme.dart';
 class PageControllerScreen extends StatefulWidget {
   
   int bottomNav;
-   PageControllerScreen({super.key, required this.bottomNav});
-
+  // String totalCartAmount ;
+  PageControllerScreen({Key? key, required this.bottomNav,}) : super(key: key);
   @override
   State<PageControllerScreen> createState() => _PageControllerScreenState();
 }
 
 class _PageControllerScreenState extends State<PageControllerScreen> {
-  double totalCartAmount = 0;
+  //String totalCartAmount = "";
 
   int currentIndex = 0; 
   
@@ -29,21 +31,14 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
   List unsplashData = [];
   bool addToCart = false;
   final navigationPages = [
-    const HomePage(),
-    AllProductListScreen(
-  //     onCheckoutChanged: (newValue) {
-       
-  // //         print("onCheckoutChanged called with $newValue");
-  // // if (mounted) {
-  // //   print("Widget is mounted. Updating state.");
-  // //   setState(() {
-  // //     totalCartAmount = newValue ?? 0;
-  // //   });
-  // // } else {
-  // //   print("Widget is not mounted. State not updated.");
-  // // }
-  //     },
-    ),
+    //const HomePage(),
+    // AllProductListScreen(checkoutDataModel: CheckoutDataModel(cid: '', userId: "", userPass: "", deviceId: "", clientId: "", clientName: "", orderDate: "", orderTime: "", deliveryDate: "", deliveryTime: "", paymentMode: "", latitude: "", longitude: "", allItem: [], offer: "", rakList: "", note: ""),
+    // total:"" ,
+    //   ),
+    // AllProductListScreen(
+    //   // clientName:"",
+    //   // clientId:""
+    // ),
     // const AllCategoriesScreen(),
     const SearchproductScreen()
   ];
@@ -71,9 +66,9 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
                           // bottomNavRes = true;
                         } 
 
-                        if (value == 2) {
-                          bottomNavRes = true;
-                        } 
+                        // if (value == 2) {
+                        //   // bottomNavRes = true;
+                        // } 
                         else {
                           bottomNavRes = false;
                         }
@@ -129,10 +124,10 @@ class _PageControllerScreenState extends State<PageControllerScreen> {
                               Expanded(
                                       child: GestureDetector(
                                         onTap: (() {
-                                          Navigator.push(
-                        context,
-                        (MaterialPageRoute(
-                            builder: (context) =>const OrderConfirmationScreen())));
+                        //                   Navigator.push(
+                        // context,
+                        // (MaterialPageRoute(
+                        //     builder: (context) => OrderConfirmationScreen(chekoutDataModel: null,))));
                                           
                                         }),
                                         child: Padding(

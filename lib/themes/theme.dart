@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tst_app2/utils/theme.dart';
 
 //--------------Settings Colors----------------------
 const bACKGROUNDCOLOR = Color(0xff2D2E3F);
@@ -63,10 +65,13 @@ final defaultTheme = {
   AppTheme.light: ThemeData(
     brightness: Brightness.light,
     primaryColor: const Color(0xFF6A75EB),
-    appBarTheme: const AppBarTheme(
-        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-        iconTheme: IconThemeData(color: Colors.black),
-        titleTextStyle: TextStyle(color: Colors.black, fontSize: 18)),
+    appBarTheme:  AppBarTheme(
+        backgroundColor: mainColor,
+        iconTheme: IconThemeData(color: white),
+        titleTextStyle: GoogleFonts.inter(
+                              color: white, fontSize: 18
+       ),
+        ),
     textTheme: const TextTheme(
       displayLarge: TextStyle(
         color: cOLORBlack,
@@ -116,11 +121,11 @@ final defaultTheme = {
         // elevation: 20,
       ),
     ),
-    cardTheme: const CardTheme(
-      color: Colors.transparent,
-      // elevation: 8,
-      shadowColor: Colors.grey,
-    ),
+    // cardTheme: const CardTheme(
+    //   color: Colors.transparent,
+    //   // elevation: 8,
+    //   shadowColor: Colors.grey,
+    // ),
     dialogTheme: DialogTheme(
       backgroundColor: cOLORSECONDARY,
       shape: RoundedRectangleBorder(
@@ -148,7 +153,7 @@ final defaultTheme = {
     primaryColor: const Color(0xFF6A75EB),
     primarySwatch: Colors.blueGrey,
     appBarTheme: AppBarTheme(
-        backgroundColor: Color.fromARGB(255, 35, 42, 61).withOpacity(.5),
+        backgroundColor: mainColor,
         iconTheme: const IconThemeData(color: Colors.white),
         titleTextStyle: const TextStyle(color: Colors.white)),
     textTheme: const TextTheme(

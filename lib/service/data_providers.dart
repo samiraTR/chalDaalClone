@@ -39,20 +39,20 @@ class DataProviders {
   }
 
   //============================== outlets for Sync===================================
-Future<http.Response> getOutletsDP (String outletsUrl,String cid, String userId,String userPass,String planDate)async{
-    print(Apis().skuSyncApi(outletsUrl));
+Future<http.Response> getOutletsDP (String outletsUrl,String cid, String userId,String userPass,String planDate,String appVersion,String syncCode)async{
+  print(Apis().skuSyncApi(outletsUrl));
   final response = await http.post(
       Uri.parse(
           Apis().outletSyncApi(outletsUrl), 
           ),
-      //     headers: <String, String>{
-      //   'Content-Type': 'application/json; charset=UTF-8',  
-      // },
+      
       body:{
           "cid" : cid,
           "user_id" : userId,
           "user_pass" : userPass,
-          "visit_plan_date" : planDate
+          "visit_plan_date" : planDate,
+          "app_v":appVersion,
+          "sync_code": syncCode
        }       
     );
     return response;
@@ -61,7 +61,7 @@ Future<http.Response> getOutletsDP (String outletsUrl,String cid, String userId,
 
 
     //============================== areaList===================================
-Future<http.Response> getAreaList (String areListApi,String cid, String userId,String userPass)async{
+Future<http.Response> getAreaList (String areListApi,String cid, String userId,String userPass,String syncCode,String appVersion)async{
     print(Apis().areaList());
   final response = await http.post(
       Uri.parse(
@@ -71,6 +71,8 @@ Future<http.Response> getAreaList (String areListApi,String cid, String userId,S
           "cid" : cid,
           "user_id" : userId,
           "user_pass" : userPass,
+          "app_v":appVersion,
+          "sync_code": syncCode
          
        }       
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/service/repositories.dart';
+import 'package:tst_app2/ui/oultet_list.dart';
 import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
@@ -23,15 +25,11 @@ class _AreaListScreenState extends State<AreaListScreen> {
 
   Future<void> getAreaList() async {
     Map<String, dynamic> responseData = await Repositories().getAreaList(
-        "https://my.transcombd.com/smart_api", "SMART", "IT22", "1234");
+        "https://my.transcombd.com/smart_api_uat/area/index", "SMART", "IT22", "1234","v1.0-20240203-1","6269");
     areaList = responseData["ret_str"]["area_list"];
 
     Map<String, dynamic> todayBeatList = await Repositories().getAReWiseList(
-        "https://my.transcombd.com/smart_api",
-        "SMART",
-        "IT22",
-        "1234",
-        "2023-01-29");
+        "https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-28","v1.0-20240203-1","6269");
     String beatId = todayBeatList["ret_str"]["visit_plan"]["beat_id"];
     for (String location in areaList) {
       checklist[location] = false;
@@ -49,7 +47,7 @@ class _AreaListScreenState extends State<AreaListScreen> {
         backgroundColor: mainColor,
         title: Text(
           "Area Screen ",
-          style: TextStyle(color: white),
+          style: GoogleFonts.inter(color: white),
         ),
         centerTitle: true,
       ),
@@ -77,9 +75,15 @@ class _AreaListScreenState extends State<AreaListScreen> {
                               return Column(
                                 children: [
                                   Container(
-                                    color: checklist[areaList[index]] == true
+                                    decoration: BoxDecoration(
+                                       color: checklist[areaList[index]] == true
                                         ? mainShadeColorNow
                                         : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(5)
+
+                                    ),
+                                    
+                                   
                                     child: CheckboxListTile(
                                       checkColor: white,
                                       activeColor: mainColor,
@@ -105,6 +109,25 @@ class _AreaListScreenState extends State<AreaListScreen> {
                           ),
                         ),
                       ),
+                      //const Spacer(),
+           SizedBox(
+               width: MediaQuery.of(context).size.width/1.2,
+               height: 320, // Set the desired height
+               child: Image.asset(
+                      "assets/icons/stock.jpg",
+                      fit: BoxFit.cover, // Choose the BoxFit that suits your needs
+               ),
+           )
+                      //  Center(child: Opacity(
+                      //    opacity: 1, 
+                      //   child: 
+                      //   Image.asset("assets/icons/stock.jpg",height: 450,)
+                      //   )),
+                      // Expanded(
+                        
+                      //   child: SizedBox(
+                      //   child: Image.asset("assets/icons/area.png",height: 400,),
+                      // ))
                       // Align(
                       //   alignment: Alignment.centerRight,
                       //   child: GestureDetector(
@@ -152,7 +175,7 @@ class _AreaListScreenState extends State<AreaListScreen> {
         Navigator.push(
                                 context,
                                 (MaterialPageRoute(
-                                    builder: (context) => const Syncpage())));
+                                    builder: (context) => CutomerListScreen(fromScreenName: 'Home',))));
         }) ,
     );
   }

@@ -32,8 +32,8 @@ class _MyAppState extends State<MyApp> {
   List unsplashData = [];
   bool addToCart = false;
   final navigationPages = [
-    const HomePage(),
-     const HomePage(),
+    // const HomePage(),
+    //  const HomePage(),
     //const AllCategoriesScreen(),
     const SearchproductScreen()
   ];

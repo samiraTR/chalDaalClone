@@ -6,6 +6,8 @@ import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/repositories.dart';
+import 'package:tst_app2/ui/area_list.dart';
+import 'package:tst_app2/ui/oultet_list.dart';
 import 'package:tst_app2/ui/pageControllers.dart';
 import 'package:tst_app2/ui/widgets/sync_button_widget.dart';
 import 'package:tst_app2/utils/theme.dart';
@@ -29,7 +31,7 @@ class _SyncpageState extends State<Syncpage> {
   }
 //===================================== Get Outlets and Save to Hive ===================================
   getOuletsAndSave() async{
-         await Repositories().getOuletsList("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
+         await Repositories().getOuletsList("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29","v1.0-20240203-1","6269");
          setState(() {
            
          });       
@@ -44,7 +46,7 @@ class _SyncpageState extends State<Syncpage> {
   //================================== all Synchronization ====================================
   allSynchronization()async{
     SkuListModel? skuList = await Repositories().getSKUList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-28");
-    OutletsListModel? outletsList = await Repositories().getOuletsList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
+    OutletsListModel? outletsList = await Repositories().getOuletsList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29","v1.0-20240203-1","6269");
     StockModel? stockList = await Repositories().getStock("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
     if(skuList!=null && outletsList!=null && stockList!=null) {
       AllServices().dynamicToastMessage("All sync successfully done",
@@ -73,7 +75,8 @@ class _SyncpageState extends State<Syncpage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: mainShadeColorNow,
+     // backgroundColor: mainColor,
+      backgroundColor: white,
       appBar: AppBar(
         backgroundColor: mainColor,
         title: Text(
@@ -89,7 +92,8 @@ class _SyncpageState extends State<Syncpage> {
             Navigator.push(
                         context,
                         (MaterialPageRoute(
-                            builder: (context) => PageControllerScreen(bottomNav: 0))));
+                            builder: (context) => AreaListScreen())));
+            
 
            }
            else{
@@ -101,58 +105,110 @@ class _SyncpageState extends State<Syncpage> {
 
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 55,vertical: 20),
-        child: Column(
-          children: [
-            
-            Row(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 55,vertical: 30),
+            child: Column(
               children: [
-                Expanded(
-                  child: SyncButtonWidget(buttonbackgroudColor: white, buttonRadiousMea: 20, image: "assets/icons/item3.png", imageHeight: 90, imagewidth: 70, buttonName: "SKU", textColor: mainColor, onpressedFuc: ()async{
-                   await getSkuAndSave();
-                  })
-                ),
-               const SizedBox(width: 
-                17,),
-                Expanded(
-                  child:SyncButtonWidget(buttonbackgroudColor: white, buttonRadiousMea: 20,image: "assets/icons/shops.png", imageHeight: 90, imagewidth: 70, buttonName: "Outlet", textColor: mainColor, onpressedFuc: ()async{
-                   await getOuletsAndSave();
-                  })
-                ),
+                
+                Row(
+                  children: [
+                    Expanded(
+                      child: SyncButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20, image: "assets/icons/product.png", imageHeight: 90, imagewidth: 70, buttonName: "SKU", textColor: mainColor, onpressedFuc: ()async{
+                       await getSkuAndSave();
+                      })
+                    ),
+                   const SizedBox(width: 
+                    17,),
+                    Expanded(
+                      child:SyncButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20,image: "assets/icons/shops13.png", imageHeight: 90, imagewidth: 70, buttonName: "Outlet", textColor: mainColor, onpressedFuc: ()async{
+                       await getOuletsAndSave();
+                      })
+                    ),
     
+                  ],
+                ),
+                const SizedBox(height: 12,),
+                Row(
+                  children: [
+                   
+                   
+                    Expanded(
+                      child:SyncButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20,image: "assets/icons/stock1.png", imageHeight: 90, imagewidth: 60, buttonName: "Stock", textColor: mainColor, onpressedFuc: ()async{
+                        await getStockAndSave();
+                      })
+                    ),
+                    const SizedBox(width: 
+                    17,),
+                     Expanded(
+                      child: SyncButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20, image: "assets/icons/all.png", imageHeight: 90, imagewidth: 70, buttonName: "Sync All", textColor: mainColor, onpressedFuc: ()async{
+                      allSynchronization();
+                      })
+                    ),
+    
+                  ],
+                ),
+                // Row(
+                //   children: [
+                //     Expanded(
+                //       child:Padding(
+                //         padding: const EdgeInsets.symmetric(horizontal:70),
+                //         child: SyncButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20,image: "assets/icons/stock.png", imageHeight: 90, imagewidth: 60, buttonName: "Stock", textColor: mainColor, onpressedFuc: ()async{
+                //          await getStockAndSave();
+                //         }),
+                //       )
+                //     ), 
+          
+                //   ],
+                // ),
+                const SizedBox(height: 12),
+               
+          
+                
               ],
             ),
-            const SizedBox(height: 12,),
-            Row(
-              children: [
-                Expanded(
-                  child:Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:70),
-                    child: SyncButtonWidget(buttonbackgroudColor: white, buttonRadiousMea: 20,image: "assets/icons/stock.png", imageHeight: 90, imagewidth: 60, buttonName: "Stock", textColor: mainColor, onpressedFuc: ()async{
-                     await getStockAndSave();
-                    }),
-                  )
-                ), 
-      
-              ],
-            ),
-            const SizedBox(height: 12,),
-      
             
-          ],
-        ),
+          ),
+        const Spacer(),
+           SizedBox(
+               width: MediaQuery.of(context).size.width/1.2,
+               height: 320, // Set the desired height
+               child: Image.asset(
+                      "assets/icons/sync3465667.jpg",
+                      fit: BoxFit.cover, // Choose the BoxFit that suits your needs
+               ),
+           )
+           
+          // Image.asset("assets/icons/sync_catoon.png"),
+            //     Container(
+            //    //   height: 300,
+            //       width: MediaQuery.of(context).size.width,
+            //       decoration: BoxDecoration(
+            //         color:white,
+            //          borderRadius: BorderRadius.only(
+            //   topRight: Radius.circular(
+            //     90,
+            //   ),
+            //   topLeft: Radius.circular(
+            //     90,
+            //   ),
+            // ),
+            //       ),
+            //       child:   Image.asset("assets/icons/sync3465667.jpg",height: 400,),
+            //     )
+        ],
       ),
-      floatingActionButton:FloatingActionButton.extended(
-        backgroundColor: mainColor,
+      // floatingActionButton:FloatingActionButton.extended(
+      //   backgroundColor: mainColor,
     
-        label:  Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text("Sync All",style: TextStyle(color: white),),
-        ),
-        onPressed: ()async{
-        allSynchronization();
-        }) ,
+      //   label:  Padding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     child: Text("Sync All",style: TextStyle(color: white),),
+      //   ),
+      //   onPressed: ()async{
+      //   allSynchronization();
+      //   }) ,
     );
   }
 }

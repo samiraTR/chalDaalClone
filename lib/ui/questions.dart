@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/all_product_list.dart';
-import 'package:tst_app2/ui/customer_list.dart';
+import 'package:tst_app2/ui/oultet_list.dart';
 import 'package:tst_app2/ui/pageControllers.dart';
 import 'package:tst_app2/utils/theme.dart';
 

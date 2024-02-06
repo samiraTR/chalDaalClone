@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class TextFormFieldCustomOrderInput extends StatelessWidget {
@@ -17,6 +18,7 @@ class TextFormFieldCustomOrderInput extends StatelessWidget {
                                                 filled: true,
                                            fillColor: Colors.transparent,
                                            hintText: hintText,
+                                           hintStyle: GoogleFonts.inter(),
                                            enabledBorder: UnderlineInputBorder(
                                            borderSide: BorderSide(
                                            width: 1, 
@@ -26,7 +28,8 @@ class TextFormFieldCustomOrderInput extends StatelessWidget {
                                          ),
                                               
                                              controller:  controller,
-                                             textAlign: TextAlign.center,
+                                             textAlign: TextAlign.left,
+                                             style: GoogleFonts.inter(),
                                              keyboardType: TextInputType.number,
                                              onChanged: validator
                                          

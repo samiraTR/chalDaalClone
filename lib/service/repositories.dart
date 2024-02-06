@@ -56,10 +56,10 @@ class Repositories {
 
 
    //====================================== Get Outlets from Sync =============================
-  Future<OutletsListModel?> getOuletsList(String messageChecker,String outletsUrl,String cid, String userId,String userPass,String planDate) async {
+  Future<OutletsListModel?> getOuletsList(String messageChecker,String outletsUrl,String cid, String userId,String userPass,String planDate,String appVersion,String syncCode) async {
     OutletsListModel? ouletsListModelData;
     try {
-      final http.Response response = await DataProviders().getOutletsDP(outletsUrl, cid, userId, userPass, planDate);
+      final http.Response response = await DataProviders().getOutletsDP(outletsUrl, cid, userId, userPass, planDate, appVersion, syncCode);
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody["status"]==200) {
         ouletsListModelData = outletsListModelFromJson(response.body);
@@ -81,10 +81,10 @@ class Repositories {
     return ouletsListModelData;
   }
 //================================= areList Selection=====================
-   Future<Map<String,dynamic>> getAReWiseList(String outletsUrl,String cid, String userId,String userPass,String planDate) async {
+   Future<Map<String,dynamic>> getAReWiseList(String outletsUrl,String cid, String userId,String userPass,String planDate,String syncCode, String appVersion) async {
     Map<String,dynamic> dateWiseOutlet={};
     try {
-      final http.Response response = await DataProviders().getOutletsDP(outletsUrl, cid, userId, userPass, planDate);
+      final http.Response response = await DataProviders().getOutletsDP(outletsUrl, cid, userId, userPass, planDate,appVersion,syncCode);
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody["status"]==200) {
         dateWiseOutlet=responseBody;
@@ -106,10 +106,10 @@ class Repositories {
 
 
   //====================================== AreaList  =============================
-  Future<Map<String, dynamic>> getAreaList(String areaListUrl,String cid, String userId,String userPass) async {
+  Future<Map<String, dynamic>> getAreaList(String areListApi,String cid, String userId,String userPass,String syncCode,String appVersion) async {
    Map<String, dynamic> responseBody={} ;
     try {
-      final http.Response response = await DataProviders().getAreaList(areaListUrl, cid, userId, userPass);
+      final http.Response response = await DataProviders().getAreaList(areListApi, cid, userId, userPass, syncCode, appVersion);
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody["status"]==200) {
         return responseBody;

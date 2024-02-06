@@ -12,17 +12,18 @@ class TextFormFieldCustomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Container(
                                   decoration:  BoxDecoration(
+                                    color: mainShadeColorNow,
                                     shape: BoxShape.rectangle,
                                     borderRadius: BorderRadius.circular(10),
                                     border:  Border.all(
-                                      color: mainColor,
+                                      color: mainShadeColorNow,
                                       width: 1,
                                     ),
                                   ),
                                   child:  TextFormField(
                                     textAlign: TextAlign.center,
                                     controller:controller ,
-                                    decoration:const  InputDecoration(
+                                    decoration:  InputDecoration(
                                       
                                       fillColor: Colors.transparent,
                                       filled: true,
