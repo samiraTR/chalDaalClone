@@ -6,12 +6,11 @@ class TextFormFieldCustomWidget extends StatelessWidget {
   final TextEditingController controller;
   final void Function(dynamic) onChnaged; 
 
-   TextFormFieldCustomWidget({super.key,required this.controller,required this.onChnaged});
+  TextFormFieldCustomWidget({super.key,required this.controller,required this.onChnaged});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-                                  decoration:  BoxDecoration(
+    return  Container( decoration:  BoxDecoration(
                                     color: mainShadeColorNow,
                                     shape: BoxShape.rectangle,
                                     borderRadius: BorderRadius.circular(10),
@@ -23,8 +22,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
                                   child:  TextFormField(
                                     textAlign: TextAlign.center,
                                     controller:controller ,
-                                    decoration:  InputDecoration(
-                                      
+                                    decoration:const  InputDecoration( 
                                       fillColor: Colors.transparent,
                                       filled: true,
                                       hintText: '',
@@ -32,7 +30,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
                             
                                     ),
                                     onChanged: onChnaged,
-                                  ),
-                                );
+          ),
+     );
   }
 }

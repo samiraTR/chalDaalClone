@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/ui/all_product_list.dart';
 import 'package:tst_app2/ui/widgets/home_button_widget.dart';
-import 'package:tst_app2/ui/widgets/sync_button_widget.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class HomeScreen extends StatefulWidget {
-     OutletReturnList clientInfo;
+  CheckoutDataModel? checkoutDataModel;
+  OutletReturnList clientInfo;
   int outletIndex;
     String total;
   
-   HomeScreen({super.key,required this.clientInfo,required this.outletIndex,required this.total});
+   HomeScreen({super.key,required this.clientInfo,required this.outletIndex,required this.total,required this.checkoutDataModel});
 
   //const HomeScreen({super.key});
 
@@ -43,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: HomeButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20, image: "assets/icons/create_order.gif", imageHeight: 90, imagewidth: 70, buttonName: "Pre Order", textColor: mainColor, onpressedFuc: ()async{
                       // await getSkuAndSave();
                       Navigator.push(context,
-                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home',)));
+                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(
+                    total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel ,)));
                       })
                     ),
                    const SizedBox(width: 
@@ -52,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child:HomeButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20,image: "assets/icons/post_order.gif", imageHeight: 90, imagewidth: 70, buttonName: "Post Order", textColor: mainColor, onpressedFuc: ()async{
                        //await getOuletsAndSave();
                        Navigator.push(context,
-                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home',)));
+                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel,)));
                       })
                     ),
     
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.symmetric(horizontal:70),
                         child: HomeButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20,image: "assets/icons/purchase-order.gif", imageHeight: 90, imagewidth: 60, buttonName: "Order", textColor: mainColor, onpressedFuc: ()async{
                           Navigator.push(context,
-                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home',)));
+                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel,)));
                   
                          // await getStockAndSave();
                         }),

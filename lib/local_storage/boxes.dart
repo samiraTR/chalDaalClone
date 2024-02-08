@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:tst_app2/model/Hive_model/check_out_model.dart';
 import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/Hive_model/stock_model.dart';
 import 'package:tst_app2/model/oulets_model.dart';

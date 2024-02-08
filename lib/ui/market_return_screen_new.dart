@@ -260,48 +260,50 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                   flex: 5,
                    child: ListTile(
                     onTap: (){
-                      showDialog(
-                       context: context,
-                       builder: (BuildContext context) {
-                         return Theme(
-                           data: ThemeData(
-                             dialogBackgroundColor: Colors.white,
-                             dialogTheme: DialogTheme(
-                               shape: RoundedRectangleBorder(
-                                 borderRadius: BorderRadius.circular(16.0),
-                               ),
-                             ),
-                           ),
-                           child: StatefulBuilder(
-                             builder: (BuildContext context, StateSetter setState2) {
-                              Map<String,dynamic> callbackValue={
-                                "pcsCount":"",
-                                "discount":"",
-                                "totalAmount":"",
-                              };
-                               return ShowDialogForItemInput(
-                                itemList:machingItem[itemIndex], callbackValue:callbackValue, 
-                                callbackFunction:(value){
-                                pcsControllerMap[machingItem[itemIndex].itemId]!.text= value["pcsCount"].toString();
-                                discountControllerMap[machingItem[itemIndex].itemId]!.text= value["discount"].toString();
-                                addItemList.add(value["addItem"]);
-                                totalCartAmount=totalCartAmount+double.parse(value["totalAmount"]);
-                                print(addItemList);
-                                 setState2;
-                                  setState(() {
+
+                      //************************************************ */
+                    //   showDialog(
+                    //    context: context,
+                    //    builder: (BuildContext context) {
+                    //      return Theme(
+                    //        data: ThemeData(
+                    //          dialogBackgroundColor: Colors.white,
+                    //          dialogTheme: DialogTheme(
+                    //            shape: RoundedRectangleBorder(
+                    //              borderRadius: BorderRadius.circular(16.0),
+                    //            ),
+                    //          ),
+                    //        ),
+                    //        child: StatefulBuilder(
+                    //          builder: (BuildContext context, StateSetter setState2) {
+                    //           Map<String,dynamic> callbackValue={
+                    //             "pcsCount":"",
+                    //             "discount":"",
+                    //             "totalAmount":"",
+                    //           };
+                    //            return ShowDialogForItemInput(
+                    //             itemList:machingItem[itemIndex], callbackValue:callbackValue, 
+                    //             callbackFunction:(value){
+                    //             pcsControllerMap[machingItem[itemIndex].itemId]!.text= value["pcsCount"].toString();
+                    //             discountControllerMap[machingItem[itemIndex].itemId]!.text= value["discount"].toString();
+                    //             addItemList.add(value["addItem"]);
+                    //             totalCartAmount=totalCartAmount+double.parse(value["totalAmount"]);
+                    //             print(addItemList);
+                    //              setState2;
+                    //               setState(() {
                                     
-                                  });
-                                  } ,
+                    //               });
+                    //               }, checkoutDataModel: widget. ,
                                 
-                                );
+                    //             );
                      
 
                                 
-                             },
-                           ),
-                         );
-                       },
-                     );
+                    //          },
+                    //        ),
+                    //      );
+                    //    },
+                    //  );
                                       
                     },
                    

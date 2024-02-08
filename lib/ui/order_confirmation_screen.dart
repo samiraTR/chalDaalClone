@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/oulets_model.dart';
-import 'package:tst_app2/ui/all_product_list.dart';
 import 'package:tst_app2/ui/market_return_screen_new.dart';
-import 'package:tst_app2/ui/oultet_list.dart';
 import 'package:tst_app2/themes/theme.dart';
-// import 'package:tst_app2/ui/market_return.dart';
-import 'package:tst_app2/ui/pageControllers.dart';
+import 'package:tst_app2/ui/oultet_list_.dart';
 import 'package:tst_app2/ui/posm_screen.dart';
 import 'package:tst_app2/ui/widgets/cancel_button_widget.dart';
 import 'package:tst_app2/ui/widgets/showDialog_for_order_edit.dart';
-import 'package:tst_app2/ui/widgets/show_dialog_item_Input.dart';
-import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class OrderConfirmationScreen extends StatefulWidget {
@@ -542,7 +537,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   }
   void getTotalData(){
     totalAmount=0;
-     widget.chekoutDataModel.allItem.forEach((element) {
+     for (var element in widget.chekoutDataModel.allItem) {
                            double total =
                                   double.parse(element.totalPrice??"0.0");
                               double discount = double.parse(element
@@ -553,7 +548,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                       .toString());
                               totalAmount = totalAmount + total;
                               discountTotal = discountTotal + discount;
-                              print(totalAmount);});
+                              print(totalAmount);}
 
   }
 }

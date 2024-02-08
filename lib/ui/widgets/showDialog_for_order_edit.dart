@@ -168,9 +168,11 @@ class _ShowDialogForOrderEditState extends State<ShowDialogForOrderEdit> {
     int pcs= int.tryParse(pcsController.text)??0;
     int? totalPcs=ctn+pcs;
      Map<String,dynamic> callbackValue={
-        "pcsCount":totalPcs.toString(),
+        "pcsCount":pcs.toString(),
+        "ctnCount":ctn.toString(),
         "discount":disountController.text.toString(),
         "totalAmount":total.toString(),
+
         "addItem":AllItem(itemId: widget.itemList.itemId, 
          itemName: widget.itemList.itemName, 
          tradePrice: widget.itemList.tradePrice, 

@@ -7,8 +7,6 @@ import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/repositories.dart';
 import 'package:tst_app2/ui/area_list.dart';
-import 'package:tst_app2/ui/oultet_list.dart';
-import 'package:tst_app2/ui/pageControllers.dart';
 import 'package:tst_app2/ui/widgets/sync_button_widget.dart';
 import 'package:tst_app2/utils/theme.dart';
 

@@ -14,14 +14,15 @@ import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class AllProductListScreen extends StatefulWidget {
+ 
+   CheckoutDataModel? checkoutDataModel;
   String routingFrom;
   OutletReturnList clientInfo;
   int outletIndex;
-  
-  //CheckoutDataModel checkoutDataModel;
   String total;
 
-  AllProductListScreen({super.key,required this.routingFrom,required this.total,required this.clientInfo,required this.outletIndex});
+  AllProductListScreen({super.key,required this.checkoutDataModel,
+  required this.routingFrom,required this.total,required this.clientInfo,required this.outletIndex});
 
   @override
   State<AllProductListScreen> createState() => _AllProductListScreenState();
@@ -41,8 +42,8 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
   List<bool> tappedStates = [];
   List<ItemList>  allFlavourList=[];
   List<BrandList> tempBrand=[];
-  List<ItemList> machingItem=[];
-  List<AllItem> addItemList=[];
+  List<ItemList> filteredData=[];
+  List<AllItem> savedItemList=[];
   bool isSearch=false;
     @override
   void initState() {
@@ -50,7 +51,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
     skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
     List<BrandList> brandList=skuListData!.brandList;
     selectedValue=skuListData!.brandList.first.brandName;
-    machingItem=AllServices().getItemList(selectedValue!, skuListData!.brandList);
+    filteredData=AllServices().getItemList(selectedValue!, skuListData!.brandList);
     //totalCartAmount=0;
 
 
@@ -65,41 +66,6 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
    
 
   }
-
-
-
-  
-
-  // //======================================= total count ===================================
-  // totalvaluCount(List<BrandList>brandList , String itemId ){
-  //   double totalAmount=0.0;
-  //   for(int i=0; i<brandList.length; i++){
-  //     double eachBrandPrice=0;
-  //     for(int j=0; j<brandList[i].itemList.length;j++){
-  //       double eachCount1=0;
-  //       String? ctnPrice= ctnControllerMap[brandList[i].itemList[j].itemId]!.text;
-  //       String? pcsPrice= pcsControllerMap[brandList[i].itemList[j].itemId]!.text;
-  //       double? ctnPriceEach=double.tryParse(ctnPrice)??0.0;
-  //       double? pcsEachPrice=double.tryParse(pcsPrice)??0.0;
-  //       double perctnPrice=ctnPriceEach*double.parse(brandList[i].itemList[j].tradePrice)*int.parse(brandList[i].itemList[j].ctnPcsRatio);
-  //       double perPcsPrice =pcsEachPrice*double.parse(brandList[i].itemList[j].tradePrice);
-  //       print("perctnPrice=$perctnPrice");
-  //       print("perPcsPrice=$perPcsPrice");
-  //       eachCount1=perctnPrice+perPcsPrice;
-  //       eachBrandPrice=eachBrandPrice+eachCount1;
-  //      // eachCount +=(double.parse(ctnControllerMap[brandList[i].itemList[j].itemId]!.text ?? "0.0")*double.parse(brandList[i].itemList[j].invoicePrice));  
-  //     }
-  //     totalAmount+=eachBrandPrice;
-     
-  //     setState(() { 
-  //       double newCheckoutValue = totalAmount; // Change this to your actual logic
-  //       //widget.onCheckoutChanged(newCheckoutValue);
-      
-  //       print("total count======$totalAmount");
-  //     });
-  //   }
-  // }
-
 
 String  eachTotalCount(List<BrandList>brandList , String itemId ){
     double total= 0;
@@ -234,7 +200,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                 selectedValue = value;
 
               });
-              machingItem=AllServices().getItemList(value!, skuListData!.brandList);
+              filteredData=AllServices().getItemList(value!, skuListData!.brandList);
      
 
            
@@ -252,7 +218,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
          physics: const AlwaysScrollableScrollPhysics(),
         
             shrinkWrap: true,
-             itemCount: machingItem.length,
+             itemCount: filteredData.length,
              itemBuilder: (BuildContext context, int itemIndex) {
              return Row(
                children: [
@@ -274,24 +240,60 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                            ),
                            child: StatefulBuilder(
                              builder: (BuildContext context, StateSetter setState2) {
-                              Map<String,dynamic> callbackValue={
-                                "pcsCount":"",
-                                "discount":"",
-                                "totalAmount":"",
-                              };
+                              AllItem? allItem ;
+                              int ctn=(int.tryParse(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
+                              int pcs= (int.tryParse(pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
+                              Map<String,dynamic> callbackValue={};
+                              if(ctn>0 || pcs>0){
+                                  int? ctnWisePcs=  ctn* int.parse(filteredData[itemIndex].ctnPcsRatio.toString());
+                                  double? total=(ctnWisePcs*double.parse(filteredData[itemIndex].tradePrice))+pcs;
+                                  int? totalPcs=ctnWisePcs+pcs;
+                                //   Map<String,dynamic> callbackValue={
+                                //   "pcsCount":pcs.toString(),
+                                //   "ctnCount":ctn.toString(),
+                                //   "discount":discountControllerMap[filteredData[itemIndex].itemId]!.text,
+                                //   "totalPcs":totalPcs.toString(),
+                                //   "totalAmount":total.toString(),
+                                //   "addItem":{}
+
+                                //  };
+                                 allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
+                                  itemName: filteredData[itemIndex].itemName, 
+                                  tradePrice: filteredData[itemIndex].tradePrice, 
+                                  pcs: pcs.toString(), 
+                                  ctn: ctn.toString(), totalPrice: total.toString(), discountInput: discountControllerMap[filteredData[itemIndex].itemId]!.text, totalPcs: totalPcs.toString(), ctnPcsRatio: filteredData[itemIndex].ctnPcsRatio, itemAvatar: filteredData[itemIndex].itemAvatar);
+                                
+                                if(savedItemList.isNotEmpty)  {
+                                    savedItemList.removeWhere((element) => element.itemId==filteredData[itemIndex].itemId); 
+                                  }
+                                  savedItemList.add(allItem);
+
+                              }
+                             
+                                  
+         
                                return ShowDialogForItemInput(
-                                itemList:machingItem[itemIndex], callbackValue:callbackValue, 
+                                itemInfo: allItem, 
+                                savedData: savedItemList,
+                                itemList:filteredData[itemIndex],
+                                callbackValue:callbackValue, 
                                 callbackFunction:(value){
-                                pcsControllerMap[machingItem[itemIndex].itemId]!.text= value["pcsCount"].toString();
-                                discountControllerMap[machingItem[itemIndex].itemId]!.text= value["discount"].toString();
-                                addItemList.add(value["addItem"]);
+                                pcsControllerMap[filteredData[itemIndex].itemId]!.text= value["pcsCount"].toString();
+                                ctnControllerMap[filteredData[itemIndex].itemId]!.text= value["ctnCount"].toString();
+                                discountControllerMap[filteredData[itemIndex].itemId]!.text= value["discount"].toString();
+                               if(allItem!=null) {
+                                savedItemList.add(allItem);
+                                }
                                 totalCartAmount=totalCartAmount+double.parse(value["totalAmount"]);
-                                print(addItemList);
+                                print(savedItemList);
                                  setState2;
                                   setState(() {
                                     
                                   });
-                                  } ,
+                                  }, 
+                                  
+                                  
+                               
                                 
                                 );
                      
@@ -309,12 +311,12 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                        child: CachedNetworkImage(
                         width: 45,
                                  height: 100,
-                                     imageUrl:machingItem[itemIndex].itemAvatar,
+                                     imageUrl:filteredData[itemIndex].itemAvatar,
                                      errorWidget: (context, url, error) =>const Icon(Icons.error),
                                    ),
                      ),
-                   title: Text(machingItem[itemIndex].itemName,style:GoogleFonts.inter() ,),
-                   subtitle: Text('Price: ৳${machingItem[itemIndex].tradePrice}',style: GoogleFonts.inter(color:  Color.fromARGB(255, 126, 125, 125)),),
+                   title: Text(filteredData[itemIndex].itemName,style:GoogleFonts.inter() ,),
+                   subtitle: Text('Price: ৳${filteredData[itemIndex].tradePrice}',style: GoogleFonts.inter(color: const Color.fromARGB(255, 126, 125, 125)),),
                                        
                    
                      ),
@@ -324,35 +326,45 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                   
                   child: Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: Row(
+                    child: StatefulBuilder(
+                            builder: (context, setState2) {
+                               AllItem? allItem ;
+                              int ctn=(int.tryParse(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
+                              int pcs= (int.tryParse(pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
+                              Map<String,dynamic> callbackValue={};
+                              if(ctn>0 || pcs>0){
+                                  int? ctnWisePcs=  ctn* int.parse(filteredData[itemIndex].ctnPcsRatio.toString());
+                                  double? total=(ctnWisePcs*double.parse(filteredData[itemIndex].tradePrice))+pcs;
+                                  int? totalPcs=ctnWisePcs+pcs;
+                                //   Map<String,dynamic> callbackValue={
+                                //   "pcsCount":pcs.toString(),
+                                //   "ctnCount":ctn.toString(),
+                                //   "discount":discountControllerMap[filteredData[itemIndex].itemId]!.text,
+                                //   "totalPcs":totalPcs.toString(),
+                                //   "totalAmount":total.toString(),
+                                //   "addItem":{}
+
+                                //  };
+                                 allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
+                                  itemName: filteredData[itemIndex].itemName, 
+                                  tradePrice: filteredData[itemIndex].tradePrice, 
+                                  pcs: pcs.toString(), 
+                                  ctn: ctn.toString(), totalPrice: total.toString(), discountInput: discountControllerMap[filteredData[itemIndex].itemId]!.text, totalPcs: totalPcs.toString(), ctnPcsRatio: filteredData[itemIndex].ctnPcsRatio, itemAvatar: filteredData[itemIndex].itemAvatar);
+                                
+                                if(savedItemList.isNotEmpty)  {
+                                    savedItemList.removeWhere((element) => element.itemId==filteredData[itemIndex].itemId); 
+                                  }
+                                  savedItemList.add(allItem);
+                                
+                              }
+                              return Row(
                       children: [
                         Expanded(
                           child: TextFormFieldCustomWidget(
-                            controller: ctnControllerMap[machingItem[itemIndex].itemId]!,
+                            controller: ctnControllerMap[filteredData[itemIndex].itemId]!,
                              onChnaged: (value) { 
-                              updateTotal(machingItem[itemIndex].itemId,machingItem[itemIndex]);
-                              // for (var element in addItemList) {
-                              //   if(element.itemId!.contains(machingItem[itemIndex].itemId)==true){
-                              //     element.totalPcs=pcsControllerMap[machingItem[itemIndex].itemId]!.text;
-                              //    String eachTotal= AllServices().getCountEachValue(
-                              //                machingItem[itemIndex],"0.0",pcsControllerMap[machingItem[itemIndex].itemId]!.text,element.discountInput!,
-                              //        );
-                              //        totalCartAmount=totalCartAmount+double.parse(eachTotal);
-                              //     }
-                              //     else{
-                              //       String eachTotal= AllServices().getCountEachValue(
-                              //                machingItem[itemIndex],"0.0",pcsControllerMap[machingItem[itemIndex].itemId]!.text,element.discountInput!,
-                              //        );
-                        
-                              //        totalCartAmount=totalCartAmount+double.parse(eachTotal);
-                              //     }
-                              //   }
-                        
-                              //   setState(() {
-                                  
-                              //   });
-                        
-                                   
+                              updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
+                             
                         
                               },
                         
@@ -361,38 +373,49 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                        const SizedBox(width: 6),
                         Expanded(
                           child: TextFormFieldCustomWidget(
-                            controller: pcsControllerMap[machingItem[itemIndex].itemId]!,
+                            controller: pcsControllerMap[filteredData[itemIndex].itemId]!,
                              onChnaged: (value) { 
-                              updateTotal(machingItem[itemIndex].itemId,machingItem[itemIndex]);
-                              // for (var element in addItemList) {
-                              //   if(element.itemId!.contains(machingItem[itemIndex].itemId)==true){
-                              //     element.totalPcs=pcsControllerMap[machingItem[itemIndex].itemId]!.text;
-                              //    String eachTotal= AllServices().getCountEachValue(
-                              //                machingItem[itemIndex],"0.0",pcsControllerMap[machingItem[itemIndex].itemId]!.text,element.discountInput!,
-                              //        );
-                              //        totalCartAmount=totalCartAmount+double.parse(eachTotal);
-                              //     }
-                              //     else{
-                              //       String eachTotal= AllServices().getCountEachValue(
-                              //                machingItem[itemIndex],"0.0",pcsControllerMap[machingItem[itemIndex].itemId]!.text,element.discountInput!,
-                              //        );
-                        
-                              //        totalCartAmount=totalCartAmount+double.parse(eachTotal);
-                              //     }
-                              //   }
-                        
-                              //   setState(() {
-                                  
-                              //   });
-                        
-                                   
+                              updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
+                              
                         
                               },
                         
                           ),
                         ),
                       ],
-                    )
+                    );
+                            },
+                            
+                       
+                          ),
+                    
+                    // child: Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: TextFormFieldCustomWidget(
+                    //         controller: ctnControllerMap[filteredData[itemIndex].itemId]!,
+                    //          onChnaged: (value) { 
+                    //           updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
+                             
+                        
+                    //           },
+                        
+                    //       ),
+                    //     ),
+                    //    const SizedBox(width: 6),
+                    //     Expanded(
+                    //       child: TextFormFieldCustomWidget(
+                    //         controller: pcsControllerMap[filteredData[itemIndex].itemId]!,
+                    //          onChnaged: (value) { 
+                    //           updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
+                              
+                        
+                    //           },
+                        
+                    //       ),
+                    //     ),
+                    //   ],
+                    // )
                   ))
                ],
              );}
@@ -420,10 +443,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                                        print(value);
                                         setState(() {
                                           currentIndex = value;
-                                          // pageController.animateToPage(currentIndex,
-                                          //     duration:
-                                          //         const Duration(milliseconds: 100),
-                                          //     curve: Curves.linear);
+                                         
                                         });
                                       },
                                       items:  [
@@ -436,9 +456,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                                             icon: Image.asset("assets/icons/category1.png",color:Colors.white, height: 0,),label: ""
                                             ),
                                         
-                                      //  BottomNavigationBarItem(
-                                      //       icon: Image.asset("assets/icons/search1.png",color:currentIndex==2?mainColor: Colors.black, height: 30,),label: ""
-                                      //       ),
+                                      
                                       ]),
                                 ),
                               ), 
@@ -450,7 +468,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                                           Navigator.push(
                                                     context,
                                                        (MaterialPageRoute(
-                                                            builder: (context) => OrderConfirmationScreen(chekoutDataModel: CheckoutDataModel(cid: widget.clientInfo.cid, userId: widget.clientInfo.userId ,userPass: "", deviceId: "", clientId: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientId, clientName: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientName, orderDate: widget.clientInfo.visitPlanDate, orderTime: widget.clientInfo.visitPlanDay, deliveryDate: widget.clientInfo.deliveryDate, deliveryTime: widget.clientInfo.deliveryDay, paymentMode: "cash", latitude: "", longitude: "", allItem: addItemList, offer: "", rakList: "", note: ""), clientInfo: widget.clientInfo, outletIndex: widget.outletIndex,))));
+                                                            builder: (context) => OrderConfirmationScreen(chekoutDataModel: CheckoutDataModel(cid: widget.clientInfo.cid, userId: widget.clientInfo.userId ,userPass: "", deviceId: "", clientId: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientId, clientName: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientName, orderDate: widget.clientInfo.visitPlanDate, orderTime: widget.clientInfo.visitPlanDay, deliveryDate: widget.clientInfo.deliveryDate, deliveryTime: widget.clientInfo.deliveryDay, paymentMode: "cash", latitude: "", longitude: "", allItem: savedItemList, offer: "", rakList: "", note: ""), clientInfo: widget.clientInfo, outletIndex: widget.outletIndex,))));
                                           
                                         }),
                                         child: Padding(
@@ -509,48 +527,26 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                                       ),
                                     ),
                                   // : SizedBox.shrink(),
-                              // Expanded(
-                              //   child: BottomNavigationBar(
-                              //       selectedItemColor: Colors.purple,
-                              //       unselectedItemColor: Colors.grey,
-                              //       selectedIconTheme:
-                              //           const IconThemeData(size: 32),
-                              //       currentIndex: currentIndex,
-                              //       onTap: (value) {
-                              //         print(value);
-                              //         setState(() {
-                              //           currentIndex = value;
-                              //           pageController.animateToPage(currentIndex,
-                              //               duration:
-                              //                   const Duration(milliseconds: 100),
-                              //               curve: Curves.linear);
-                              //         });
-                              //       },
-                              //       items: const [
-                              //         BottomNavigationBarItem(
-                              //             icon: Icon(Icons.home), label: "Home"),
-                              //         BottomNavigationBarItem(
-                              //             icon: Icon(Icons.category_outlined),
-                              //             label: "Categories"),
-                              //         BottomNavigationBarItem(
-                              //             icon: Icon(Icons.search),
-                              //             label: "Search"),
-                              //       ]),
-                              // ),
+                           
                             ],
                           ),
-                  ),
-                 
-         
+                  ), 
     
     );
   
   }
 
-
-
   void updateTotal(String itemId,ItemList itemList) {
-    for (var element in addItemList) {
+
+
+
+
+
+    
+
+
+
+    for (var element in savedItemList) {
                           if(element.itemId!.contains(itemId)==true){
                             element.totalPcs=pcsControllerMap[itemId]!.text;
                            String eachTotal= AllServices().getCountEachValue(
@@ -570,12 +566,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                           setState(() {
                             
                           });
-  //   setState(() {
-  // AllServices().getCountEachValue(
-  //       :machingItem[itemIndex],ctnController.text.toString(),pcsController.text.toString(),
-  //       disountController.text.toString(),
-  //     );
-  //   });
+ 
   }
 }
 

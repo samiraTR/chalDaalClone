@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/service/repositories.dart';
-import 'package:tst_app2/ui/oultet_list.dart';
-import 'package:tst_app2/ui/sync_page.dart';
+import 'package:tst_app2/ui/oultet_list_.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 

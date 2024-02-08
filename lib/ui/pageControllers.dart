@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tst_app2/model/Hive_model/check_out_model.dart';
 import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/all_product_list.dart';

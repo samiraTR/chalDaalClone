@@ -1,14 +1,7 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:tst_app2/local_storage/boxes.dart';
-import 'package:tst_app2/ui/all_product_list.dart';
-import 'package:tst_app2/ui/area_list.dart';
-import 'package:tst_app2/ui/homepage.dart';
-import 'package:tst_app2/ui/oultet_list.dart';
 import 'package:tst_app2/ui/login_screen.dart';
-import 'package:tst_app2/ui/pageControllers.dart';
-import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class SplashPage extends StatefulWidget {

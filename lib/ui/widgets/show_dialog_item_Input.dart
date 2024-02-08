@@ -10,11 +10,14 @@ import 'package:tst_app2/ui/widgets/textFormField_custom_order_input.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class ShowDialogForItemInput extends StatefulWidget {
+ List<AllItem> savedData;
+ AllItem? itemInfo;
  final ItemList itemList;
   Map<String,dynamic> callbackValue;
   Function callbackFunction;
 
-  ShowDialogForItemInput({super.key,required this.itemList, required this.callbackValue,required this.callbackFunction});
+  ShowDialogForItemInput({super.key,required this.savedData, required this.itemInfo,
+  required this.itemList, required this.callbackValue,required this.callbackFunction});
 
   @override
   State<ShowDialogForItemInput> createState() => _ShowDialogForItemInputState();
@@ -27,7 +30,20 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
   TextEditingController disountController= TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    if(widget.itemInfo!=null){
+      pcsController.text=widget.itemInfo!.pcs!;
+      ctnController.text=widget.itemInfo!.ctn!;
+      disountController.text=widget.itemInfo!.discountInput!;
+      total=widget.itemInfo!.totalPrice!;
+
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    
     
     return SizedBox(
       child: AlertDialog(
@@ -69,6 +85,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                            child: TextFormFieldCustomOrderInput( 
                                             controller:ctnController,
                                             hintText: "Ctn",
+                                            
                                             borderColor: mainColor, 
                                             validator: (value) { 
                                               updateTotal();
@@ -76,7 +93,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
 
                                            )
                                          )),
-                                                        const  Text(" Ctn"),
+                                       const  Text(" Ctn"),
                                        const SizedBox(width: 20,),
                                         Expanded(child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -85,14 +102,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                         hintText: "Pcs",
                                         borderColor: mainColor, 
                                         validator: (value) {
-                                        //   double? pcs= double.tryParse(pcsController.text)??0.0;
-                                        // double? itemChain=  double.parse(widget.itemList.itemChain)?? 1;
-                                        // print("itemchain=$itemChain");
-                                        //   if(pcs>double.parse(widget.itemList.itemChain)){
-                                            
-                                        //    ctnController.text= (pcs/itemChain).toInt().toString();
-                                        //    pcsController.text=(pcs%itemChain).toInt().toString();
-                                        //    }
+                                      
                                            updateTotal();
                                             },
                                          ),
@@ -104,7 +114,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                           ],
                                         ),
                                         const SizedBox(height: 10,),
-                                         Row(
+                                       Row(
                                            children: [
                                             Expanded(child: Text("Discount ",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
                                            const Text(" :  "),
@@ -112,7 +122,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                               child: Padding(
                                          padding: const EdgeInsets.symmetric(horizontal: 8),
                                          child: TextFormFieldCustomOrderInput(
-                                          hintText: "Discount",borderColor: mainColor, controller: disountController, 
+                                          hintText: "--Discount amount--",borderColor: mainColor, controller: disountController, 
                                           
                                          validator: (value) {
                                           double? dis= double.tryParse(disountController.text)??0.0;
@@ -120,8 +130,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                             AllServices().dynamicToastMessage("Discount must be less than total amount", Colors.red, Colors.white, 16);
                                             
                                           }
-                                     
-                                            updateTotal();
+                                          updateTotal();
 
                                           
 
@@ -160,7 +169,15 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                             },borderColor: mainColor)),
                            const SizedBox(width: 10,),
                            Expanded(child: ConfirmButtonWidget(buttonHeight: 50, fontColor: white, buttonName: "Add", fontSize: 16, onTapFuction: () {
-                             addToCartMethod();
+                            if(ctnController.text.isNotEmpty || pcsController.text.isNotEmpty){
+                              widget.savedData.removeWhere((element) => element.itemId==widget.itemList.itemId);
+                              addToCartMethod();
+
+                            }
+                            else{
+                              AllServices().dynamicToastMessage("Please add something", Colors.red, white, 16);
+                            }
+                             
 
                              },))
                            
@@ -174,20 +191,34 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
   }
 
   void addToCartMethod(){
-    int ctn=((int.tryParse(ctnController.text)??0)* int.parse(widget.itemList.ctnPcsRatio));
+      AllItem? allItem ;
+      Map<String,dynamic> callbackValue={};
+    int ctn=(int.tryParse(ctnController.text)??0);
     int pcs= int.tryParse(pcsController.text)??0;
-    int? totalPcs=ctn+pcs;
-     Map<String,dynamic> callbackValue={
-        "pcsCount":totalPcs.toString(),
+    if(ctn>0 || pcs>0){
+      int? ctnWisePcs=  ctn* int.parse(widget.itemList.ctnPcsRatio.toString());
+      double? total=(ctnWisePcs*double.parse(widget.itemList.tradePrice))+pcs;
+      int? totalPcs=ctnWisePcs+pcs;
+      callbackValue={
+        "pcsCount":pcs.toString(),
+        "ctnCount":ctn.toString(),
         "discount":disountController.text.toString(),
+        "totalPcs":totalPcs.toString(),
         "totalAmount":total.toString(),
-        "addItem":AllItem(itemId: widget.itemList.itemId, 
+        };
+      allItem= AllItem(itemId: widget.itemList.itemId, 
          itemName: widget.itemList.itemName, 
          tradePrice: widget.itemList.tradePrice, 
          pcs: pcs.toString(), 
-         ctn: ctn.toString(), totalPrice: total, discountInput: disountController.text.toString(), totalPcs: totalPcs.toString(), ctnPcsRatio: widget.itemList.ctnPcsRatio, itemAvatar: widget.itemList.itemAvatar)
+         ctn: ctn.toString(), totalPrice: total.toString(), discountInput: disountController.text.toString(), totalPcs: totalPcs.toString(), ctnPcsRatio: widget.itemList.ctnPcsRatio, itemAvatar: widget.itemList.itemAvatar);
+       if(widget.savedData.isNotEmpty) {
+               widget.savedData.removeWhere((element) => element.itemId==widget.itemList.itemId); 
+          }
+        widget.savedData.add(allItem);   
+        widget.itemInfo=allItem;
 
-         };
+       }
+    
 
          widget.callbackValue=callbackValue;
          widget.callbackFunction(widget.callbackValue);

@@ -2,7 +2,6 @@
 //
 //     final unsplashModel = unsplashModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<UnsplashModel> unsplashModelFromJson(String str) =>
