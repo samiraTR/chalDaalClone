@@ -6,7 +6,8 @@ import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/repositories.dart';
-import 'package:tst_app2/ui/area_list.dart';
+
+import 'package:tst_app2/ui/oultet_list_.dart';
 import 'package:tst_app2/ui/widgets/sync_button_widget.dart';
 import 'package:tst_app2/utils/theme.dart';
 
@@ -87,10 +88,14 @@ class _SyncpageState extends State<Syncpage> {
             skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
            outletReturnList = Boxes.getOutletDataForSync().get('syncOutletsList');
            if(skuListData!=null || outletReturnList!=null ){
+            // Navigator.push(
+            //             context,
+            //             (MaterialPageRoute(
+            //                 builder: (context) => AreaListScreen())));
             Navigator.push(
-                        context,
-                        (MaterialPageRoute(
-                            builder: (context) => AreaListScreen())));
+                                context,
+                                (MaterialPageRoute(
+                                    builder: (context) => CutomerListScreen(fromScreenName: 'Home',))));
             
 
            }

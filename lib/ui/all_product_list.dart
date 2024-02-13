@@ -6,6 +6,7 @@ import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
+import 'package:tst_app2/themes/theme.dart';
 import 'package:tst_app2/ui/order_confirmation_screen.dart';
 import 'package:tst_app2/ui/widgets/search_text_form_field_widget.dart';
 import 'package:tst_app2/ui/widgets/show_dialog_item_Input.dart';
@@ -15,14 +16,16 @@ import 'package:tst_app2/utils/theme.dart';
 
 class AllProductListScreen extends StatefulWidget {
  
-   CheckoutDataModel? checkoutDataModel;
+  CheckoutDataModel? checkoutDataModel;
   String routingFrom;
   OutletReturnList clientInfo;
   int outletIndex;
   String total;
+  Client clientDetails;
+  
 
   AllProductListScreen({super.key,required this.checkoutDataModel,
-  required this.routingFrom,required this.total,required this.clientInfo,required this.outletIndex});
+  required this.routingFrom,required this.total,required this.clientInfo,required this.outletIndex,required this.clientDetails});
 
   @override
   State<AllProductListScreen> createState() => _AllProductListScreenState();
@@ -44,17 +47,15 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
   List<BrandList> tempBrand=[];
   List<ItemList> filteredData=[];
   List<AllItem> savedItemList=[];
+  int totalCount=0;
   bool isSearch=false;
     @override
-  void initState() {
+    void initState() {
     super.initState();
     skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
     List<BrandList> brandList=skuListData!.brandList;
     selectedValue=skuListData!.brandList.first.brandName;
     filteredData=AllServices().getItemList(selectedValue!, skuListData!.brandList);
-    //totalCartAmount=0;
-
-
     for(int i=0; i<brandList.length; i++){
       for(int j=0; j<brandList[i].itemList.length;j++){
         ctnControllerMap[skuListData!.brandList[i].itemList[j].itemId] = TextEditingController();
@@ -63,44 +64,9 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
         eachprice[skuListData!.brandList[i].itemList[j].itemId] = TextEditingController(); 
       }
     }
-   
+
 
   }
-
-String  eachTotalCount(List<BrandList>brandList , String itemId ){
-    double total= 0;
-    double eachBrandPrice=0;
-    for(int i=0; i<brandList.length; i++){
-      for(int j=0; j<brandList[i].itemList.length;j++){
-        double eachCount1=0;
-        String? ctnPrice= ctnControllerMap[brandList[i].itemList[j].itemId]!.text;
-        String? pcsPrice= pcsControllerMap[brandList[i].itemList[j].itemId]!.text;
-         String? dicountEach= discountControllerMap[brandList[i].itemList[j].itemId]!.text;
-        double? ctnPriceEach=double.tryParse(ctnPrice)??0.0;
-        double? pcsEachPrice=double.tryParse(pcsPrice)??0.0;
-        double? discountEachPrice=double.tryParse(dicountEach)??0.0;
-        double perctnPrice=ctnPriceEach*double.parse(brandList[i].itemList[j].tradePrice)*int.parse(brandList[i].itemList[j].ctnPcsRatio);
-        double perPcsPrice =pcsEachPrice*double.parse(brandList[i].itemList[j].tradePrice);
-        eachCount1=perctnPrice+perPcsPrice;
-        eachBrandPrice=(eachBrandPrice+eachCount1)-discountEachPrice;
-        total=eachBrandPrice;
-
-        print("itemId=${brandList[i].itemList[j].itemId}");
-       // eachCount +=(double.parse(ctnControllerMap[brandList[i].itemList[j].itemId]!.text ?? "0.0")*double.parse(brandList[i].itemList[j].invoicePrice));  
-      }
-     
-      // setState(() { 
-         
-      //   print("eachBrandPrice======$eachBrandPrice");
-      // });
-     
-    }
-     return total.toString();
-
-  }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -198,15 +164,15 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
              onChanged: (String? value) {
               setState(() {
                 selectedValue = value;
-
               });
+
               filteredData=AllServices().getItemList(value!, skuListData!.brandList);
      
 
            
              },
              
-              underline: Container(), //
+              underline: Container(), 
             
             )
            ),
@@ -223,7 +189,7 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
              return Row(
                children: [
                  Expanded(
-                  flex: 5,
+                  flex: 7,
                    child: ListTile(
                     onTap: (){
                       showDialog(
@@ -243,53 +209,44 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                               AllItem? allItem ;
                               int ctn=(int.tryParse(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
                               int pcs= (int.tryParse(pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
-                              Map<String,dynamic> callbackValue={};
+                              //Map<String,dynamic> callbackValue={};
                               if(ctn>0 || pcs>0){
                                   int? ctnWisePcs=  ctn* int.parse(filteredData[itemIndex].ctnPcsRatio.toString());
-                                  double? total=(ctnWisePcs*double.parse(filteredData[itemIndex].tradePrice))+pcs;
+                                  double? total=(ctnWisePcs*double.parse(filteredData[itemIndex].tradePrice))+pcs*double.parse(filteredData[itemIndex].tradePrice);
                                   int? totalPcs=ctnWisePcs+pcs;
-                                //   Map<String,dynamic> callbackValue={
-                                //   "pcsCount":pcs.toString(),
-                                //   "ctnCount":ctn.toString(),
-                                //   "discount":discountControllerMap[filteredData[itemIndex].itemId]!.text,
-                                //   "totalPcs":totalPcs.toString(),
-                                //   "totalAmount":total.toString(),
-                                //   "addItem":{}
-
-                                //  };
-                                 allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
+                                  print("totalPrice34===$total");
+                                  allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
                                   itemName: filteredData[itemIndex].itemName, 
                                   tradePrice: filteredData[itemIndex].tradePrice, 
                                   pcs: pcs.toString(), 
-                                  ctn: ctn.toString(), totalPrice: total.toString(), discountInput: discountControllerMap[filteredData[itemIndex].itemId]!.text, totalPcs: totalPcs.toString(), ctnPcsRatio: filteredData[itemIndex].ctnPcsRatio, itemAvatar: filteredData[itemIndex].itemAvatar);
+                                  ctn: ctn.toString(), totalPrice: total.toStringAsFixed(2), discountInput: discountControllerMap[filteredData[itemIndex].itemId]!.text, totalPcs: totalPcs.toString(), ctnPcsRatio: filteredData[itemIndex].ctnPcsRatio, itemAvatar: filteredData[itemIndex].itemAvatar);
                                 
                                 if(savedItemList.isNotEmpty)  {
                                     savedItemList.removeWhere((element) => element.itemId==filteredData[itemIndex].itemId); 
                                   }
                                   savedItemList.add(allItem);
+                                  totalCounter();
 
-                              }
-                             
-                                  
+                              } 
          
                                return ShowDialogForItemInput(
                                 itemInfo: allItem, 
                                 savedData: savedItemList,
                                 itemList:filteredData[itemIndex],
-                                callbackValue:callbackValue, 
                                 callbackFunction:(value){
-                                pcsControllerMap[filteredData[itemIndex].itemId]!.text= value["pcsCount"].toString();
-                                ctnControllerMap[filteredData[itemIndex].itemId]!.text= value["ctnCount"].toString();
-                                discountControllerMap[filteredData[itemIndex].itemId]!.text= value["discount"].toString();
+                                pcsControllerMap[filteredData[itemIndex].itemId]!.text= value!.pcs.toString();
+                                ctnControllerMap[filteredData[itemIndex].itemId]!.text= value.ctn.toString();
+                                discountControllerMap[filteredData[itemIndex].itemId]!.text= value.discountInput.toString();
                                if(allItem!=null) {
                                 savedItemList.add(allItem);
-                                }
-                                totalCartAmount=totalCartAmount+double.parse(value["totalAmount"]);
+                               }
+                                totalCounter();
+                                
                                 print(savedItemList);
                                  setState2;
                                   setState(() {
                                     
-                                  });
+                                    });
                                   }, 
                                   
                                   
@@ -322,101 +279,72 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                      ),
                  ),
                  Expanded(
-                    flex: 2,
-                  
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: StatefulBuilder(
-                            builder: (context, setState2) {
-                               AllItem? allItem ;
-                              int ctn=(int.tryParse(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
-                              int pcs= (int.tryParse(pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
-                              Map<String,dynamic> callbackValue={};
-                              if(ctn>0 || pcs>0){
-                                  int? ctnWisePcs=  ctn* int.parse(filteredData[itemIndex].ctnPcsRatio.toString());
-                                  double? total=(ctnWisePcs*double.parse(filteredData[itemIndex].tradePrice))+pcs;
-                                  int? totalPcs=ctnWisePcs+pcs;
-                                //   Map<String,dynamic> callbackValue={
-                                //   "pcsCount":pcs.toString(),
-                                //   "ctnCount":ctn.toString(),
-                                //   "discount":discountControllerMap[filteredData[itemIndex].itemId]!.text,
-                                //   "totalPcs":totalPcs.toString(),
-                                //   "totalAmount":total.toString(),
-                                //   "addItem":{}
-
-                                //  };
-                                 allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
-                                  itemName: filteredData[itemIndex].itemName, 
-                                  tradePrice: filteredData[itemIndex].tradePrice, 
-                                  pcs: pcs.toString(), 
-                                  ctn: ctn.toString(), totalPrice: total.toString(), discountInput: discountControllerMap[filteredData[itemIndex].itemId]!.text, totalPcs: totalPcs.toString(), ctnPcsRatio: filteredData[itemIndex].ctnPcsRatio, itemAvatar: filteredData[itemIndex].itemAvatar);
-                                
-                                if(savedItemList.isNotEmpty)  {
-                                    savedItemList.removeWhere((element) => element.itemId==filteredData[itemIndex].itemId); 
-                                  }
-                                  savedItemList.add(allItem);
-                                
-                              }
-                              return Row(
-                      children: [
-                        Expanded(
-                          child: TextFormFieldCustomWidget(
-                            controller: ctnControllerMap[filteredData[itemIndex].itemId]!,
-                             onChnaged: (value) { 
-                              updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
-                             
-                        
-                              },
-                        
-                          ),
-                        ),
-                       const SizedBox(width: 6),
-                        Expanded(
-                          child: TextFormFieldCustomWidget(
-                            controller: pcsControllerMap[filteredData[itemIndex].itemId]!,
-                             onChnaged: (value) { 
-                              updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
-                              
-                        
-                              },
-                        
-                          ),
-                        ),
-                      ],
-                    );
-                            },
-                            
-                       
-                          ),
-                    
-                    // child: Row(
-                    //   children: [
-                    //     Expanded(
-                    //       child: TextFormFieldCustomWidget(
-                    //         controller: ctnControllerMap[filteredData[itemIndex].itemId]!,
-                    //          onChnaged: (value) { 
-                    //           updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
-                             
-                        
-                    //           },
-                        
-                    //       ),
-                    //     ),
-                    //    const SizedBox(width: 6),
-                    //     Expanded(
-                    //       child: TextFormFieldCustomWidget(
-                    //         controller: pcsControllerMap[filteredData[itemIndex].itemId]!,
-                    //          onChnaged: (value) { 
-                    //           updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
-                              
-                        
-                    //           },
-                        
-                    //       ),
-                    //     ),
-                    //   ],
-                    // )
-                  ))
+  flex: 3,
+  child: Padding(
+    padding: const EdgeInsets.only(right: 10),
+    child: StatefulBuilder(
+      builder: (context, setState2) {
+        AllItem? allItem ;
+        int ctn=(int.tryParse(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
+        int pcs= (int.tryParse(pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
+        if(ctn>0 || pcs>0){
+          int? ctnWisePcs=  ctn* int.parse(filteredData[itemIndex].ctnPcsRatio.toString());
+          int? totalPcs=ctnWisePcs+pcs;
+          double? total =totalPcs* double.parse(filteredData[itemIndex].tradePrice.toString());
+          print("totalPrice1===$total");
+          allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
+                            itemName: filteredData[itemIndex].itemName, 
+                            tradePrice: filteredData[itemIndex].tradePrice, 
+                            pcs: pcs.toString(), 
+                            ctn: ctn.toString(), 
+                            totalPrice: total.toStringAsFixed(1), 
+                            discountInput: discountControllerMap[filteredData[itemIndex].itemId]!.text, 
+                            totalPcs: totalPcs.toString(), 
+                            ctnPcsRatio: filteredData[itemIndex].ctnPcsRatio, 
+                            itemAvatar: filteredData[itemIndex].itemAvatar);
+          
+          if(savedItemList.isNotEmpty)  {
+            savedItemList.removeWhere((element) => element.itemId==filteredData[itemIndex].itemId); 
+          }
+          savedItemList.add(allItem);
+        }
+        if(savedItemList.isNotEmpty){
+          removeDuplicateData();
+          totalCounter();
+        }
+        return Row(
+          children: [
+            Expanded(
+              child: TextFormFieldCustomWidget(
+                controller: ctnControllerMap[filteredData[itemIndex].itemId]!,
+                onChnaged: (value) { 
+                  updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
+                  if(savedItemList.isNotEmpty){
+                    removeDuplicateData();
+                    totalCounter();
+                  }
+                },
+              ),
+            ),
+            const SizedBox(width: 6),
+            Expanded(
+              child: TextFormFieldCustomWidget(
+                controller: pcsControllerMap[filteredData[itemIndex].itemId]!,
+                onChnaged: (value) { 
+                  updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
+                  if(savedItemList.isNotEmpty){
+                    removeDuplicateData();
+                    totalCounter();
+                  }
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    ),
+  ),
+)
                ],
              );}
                ),
@@ -464,66 +392,97 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
                                 flex: 5,
                                       child: GestureDetector(
                                         onTap: (() {
-                                         
                                           Navigator.push(
                                                     context,
                                                        (MaterialPageRoute(
-                                                            builder: (context) => OrderConfirmationScreen(chekoutDataModel: CheckoutDataModel(cid: widget.clientInfo.cid, userId: widget.clientInfo.userId ,userPass: "", deviceId: "", clientId: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientId, clientName: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientName, orderDate: widget.clientInfo.visitPlanDate, orderTime: widget.clientInfo.visitPlanDay, deliveryDate: widget.clientInfo.deliveryDate, deliveryTime: widget.clientInfo.deliveryDay, paymentMode: "cash", latitude: "", longitude: "", allItem: savedItemList, offer: "", rakList: "", note: ""), clientInfo: widget.clientInfo, outletIndex: widget.outletIndex,))));
+                                                            builder: (context) => OrderConfirmationScreen(chekoutDataModel: CheckoutDataModel(cid: widget.clientInfo.cid, userId: widget.clientInfo.userId ,userPass: "", deviceId: "", clientId: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientId, clientName: widget.clientInfo.visitPlan.clients[widget.outletIndex].clientName, orderDate: widget.clientInfo.visitPlanDate, orderTime: widget.clientInfo.visitPlanDay, deliveryDate: widget.clientInfo.deliveryDate, deliveryTime: widget.clientInfo.deliveryDay, paymentMode: "cash", latitude: "", longitude: "", allItem: savedItemList, offer: "", rakList: "", note: ""), clientInfo: widget.clientInfo, outletIndex: widget.outletIndex, clientDetails: widget.clientDetails))));
                                           
                                         }),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(7.0),
-                                          child: Container(
-                                            height: 55,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                    color:const Color.fromARGB(255, 61, 80, 251),
-                                                
-                                                ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Container(
-                                                  height: 35,
-                                                  width: 35,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(50),
-                                                    border: Border.all(
-                                                      color: white,
-                                                      width: 2
-                                                    )
+                                  padding: const EdgeInsets.all(7.0),
+                                  child: Container(
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: const Color.fromARGB(
+                                          255, 61, 80, 251),
+                                    ),
+                                    child: Row(
+                                      
+                                      children: [
+                                        // Expanded(
+                                        //   child: Container(
+                                        //           height: 50,
+                                        //           width: 50,
+                                        //           decoration: BoxDecoration(
+                                        //             borderRadius: BorderRadius.circular(50),
+                                        //             border: Border.all(
+                                        //               color: white,
+                                        //               width: 2
+                                        //             )
+                                        //           ),
+                                        //           child: Center(child: Text(totalCount.toString(),style: GoogleFonts.inter(color: white),)),
+                                        //         ),),
+                                        Expanded(
+                                          flex: 5,
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                    height: 35,
+                                                    width: 35,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(50),
+                                                      border: Border.all(
+                                                        color: white,
+                                                        width: 2
+                                                      )
+                                                    ),
+                                                    child: Center(child: Text(totalCount.toString(),style: GoogleFonts.inter(color: white),)),
                                                   ),
-                                                  child: Center(child: Text("0",style: GoogleFonts.inter(color: white),)),
+                                              ),const SizedBox(width: 10,),
+                                             const Center(
+                                                child:  Text(
+                                                  " Checkout",
+                                                  style: textSTYLEHeadline16,
                                                 ),
-                                                Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                                  child:  Text(
-                                                    "Checkout",
-                                                    style: GoogleFonts.inter(fontSize: 18,color: white,fontWeight: FontWeight.w500),
-                                                  ),
-                                                ),
-                                                
-                                                Card(
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                10)),
-                                                    color: mainColor,
-                                                    child:  Padding(
-                                                      padding:const EdgeInsets.all(8.0),
-                                                      child: FittedBox(
-                                                        child: Text(
-                                                          "    ৳${totalCartAmount.toStringAsFixed(1)}     ",
-                                                          style: GoogleFonts.inter(fontSize: 18,color: white,fontWeight: FontWeight.w400),
-                                                        ),
-                                                      ),
-                                                    ))
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
+                                        Expanded(
+                                          flex:3,
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                color: mainColor,
+                                                child: Padding(
+                                                  padding:const EdgeInsets.all(4.0),
+                                                  child: Center(
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        "  ৳ ${totalCartAmount.toStringAsFixed(1)}",
+                                                        style: textSTYLEHeadline15,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                      
                                       ),
                                     ),
                                   // : SizedBox.shrink(),
@@ -537,36 +496,47 @@ String  eachTotalCount(List<BrandList>brandList , String itemId ){
   }
 
   void updateTotal(String itemId,ItemList itemList) {
-
-
-
-
-
-    
-
-
-
-    for (var element in savedItemList) {
-                          if(element.itemId!.contains(itemId)==true){
-                            element.totalPcs=pcsControllerMap[itemId]!.text;
-                           String eachTotal= AllServices().getCountEachValue(
-                                       itemList,"0.0",pcsControllerMap[itemId]!.text,element.discountInput!,
-                               );
-                               totalCartAmount=totalCartAmount+double.parse(eachTotal);
-                            }
-                            else{
-                              String eachTotal= AllServices().getCountEachValue(
-                                       itemList,"0.0",pcsControllerMap[itemId]!.text,element.discountInput!,
-                               );
-
-                               totalCartAmount=totalCartAmount+double.parse(eachTotal);
-                            }
-                          }
-
-                          setState(() {
-                            
-                          });
+    AllItem? allItem;
+    int ctn=(int.tryParse(ctnControllerMap[itemId]!.text)??0);
+    int pcs= int.tryParse(pcsControllerMap[itemId]!.text)??0;
+    if(ctn>0 || pcs>0){
+      int? ctnWisePcs=  ctn* int.parse(itemList.ctnPcsRatio.toString());
+      double? total=(ctnWisePcs*double.parse(itemList.tradePrice))+(pcs*double.parse(itemList.tradePrice));
+      int? totalPcs=ctnWisePcs+pcs;
+      allItem= AllItem(itemId: itemList.itemId, 
+         itemName: itemList.itemName, 
+         tradePrice:itemList.tradePrice, 
+         pcs: pcs.toString(), 
+         ctn: ctn.toString(), totalPrice: total.toStringAsFixed(1), discountInput: discountControllerMap[itemId]!.text.toString(), totalPcs: totalPcs.toString(), ctnPcsRatio: itemList.ctnPcsRatio, itemAvatar: itemList.itemAvatar);
+       if(savedItemList.isNotEmpty) {
+             savedItemList.removeWhere((element) => element.itemId==itemList.itemId); 
+          }
+        savedItemList.add(allItem);   
+       } 
+       totalCounter();
  
+  }
+  totalCounter(){
+     totalCartAmount=0;
+     totalCount=savedItemList.length;
+     for (var element in savedItemList) {
+      int totalPcs= (int.parse(element.ctn!)*int.parse(element.ctnPcsRatio!))+ int.parse(element.pcs!);
+      double eachPrice= double.parse(element.tradePrice!)*totalPcs;
+      totalCartAmount= totalCartAmount+eachPrice;
+      }
+    
+  }
+
+  removeDuplicateData(){
+    for(var item in savedItemList){
+      if(item.ctn==""&& item.pcs==""){
+         savedItemList.removeWhere((element) => element.itemId==item.itemId);
+        
+      }
+
+     }
+     
+
   }
 }
 

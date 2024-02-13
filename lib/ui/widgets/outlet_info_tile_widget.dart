@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/oulets_model.dart';
+import 'package:tst_app2/ui/all_product_list.dart';
 import 'package:tst_app2/ui/homepage.dart';
 import 'package:tst_app2/utils/theme.dart';
 
@@ -10,9 +11,10 @@ class OutletInfoTileWidget extends StatelessWidget {
   OutletReturnList? outletList;
   List<Client> clientList;
   BuildContext context;
+ List <Client> clientDetails;
 
 
-   OutletInfoTileWidget({super.key,required this.checkoutDataModel,required this.clientList,required this.context,required this.outletList});
+   OutletInfoTileWidget({super.key,required this.checkoutDataModel,required this.clientList,required this.context,required this.outletList,required this.clientDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +25,16 @@ class OutletInfoTileWidget extends StatelessWidget {
           return 
               GestureDetector(
                 onTap: (){
-                
                   Navigator.push(context,
-                   MaterialPageRoute(builder: (_) =>   HomeScreen(
-                    total: "", clientInfo: outletList!,outletIndex:outletIndex, checkoutDataModel: checkoutDataModel,
-                    )));
+                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:outletList!,outletIndex:outletIndex, routingFrom: 'Home', checkoutDataModel: checkoutDataModel,clientDetails: clientList[outletIndex],)));
+
+                  
+                  
+                
+                  // Navigator.push(context,
+                  //  MaterialPageRoute(builder: (_) =>   HomeScreen(
+                  //   total: "", clientInfo: outletList!,outletIndex:outletIndex, checkoutDataModel: checkoutDataModel, clientDetails: clientDetails[outletIndex],
+                  //   )));
                   
 
                 },

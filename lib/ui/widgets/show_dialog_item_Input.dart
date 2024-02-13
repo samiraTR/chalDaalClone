@@ -13,11 +13,11 @@ class ShowDialogForItemInput extends StatefulWidget {
  List<AllItem> savedData;
  AllItem? itemInfo;
  final ItemList itemList;
-  Map<String,dynamic> callbackValue;
-  Function callbackFunction;
+// Map<String,dynamic> callbackValue;
+Function(AllItem?) callbackFunction;
 
   ShowDialogForItemInput({super.key,required this.savedData, required this.itemInfo,
-  required this.itemList, required this.callbackValue,required this.callbackFunction});
+  required this.itemList,required this.callbackFunction});
 
   @override
   State<ShowDialogForItemInput> createState() => _ShowDialogForItemInputState();
@@ -57,7 +57,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                         children: [
                           SizedBox(
                                  child: CachedNetworkImage(
-                                  height: 150,
+                                  height: 120,
                                                imageUrl:widget.itemList.itemAvatar.toString(),
                                                errorWidget: (context, url, error) =>const Icon(Icons.error),
                                              ),
@@ -65,7 +65,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                const SizedBox(height: 20,),
                                          Row(
                                            children: [
-                                                      Expanded(child: Text("Promo Info ",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
+                                                      Expanded(child: Text("Promo Info",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
                                                      const Text(" :  "),
                                                       Expanded(flex: 3,
                                                        child:Text(widget.itemList.itemPromo.toString(),style: GoogleFonts.inter(),))
@@ -116,7 +116,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                         const SizedBox(height: 10,),
                                        Row(
                                            children: [
-                                            Expanded(child: Text("Discount ",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
+                                            Expanded(child: Text("Discount",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
                                            const Text(" :  "),
                                             Expanded(flex: 3,
                                               child: Padding(
@@ -199,13 +199,13 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
       int? ctnWisePcs=  ctn* int.parse(widget.itemList.ctnPcsRatio.toString());
       double? total=(ctnWisePcs*double.parse(widget.itemList.tradePrice))+pcs;
       int? totalPcs=ctnWisePcs+pcs;
-      callbackValue={
-        "pcsCount":pcs.toString(),
-        "ctnCount":ctn.toString(),
-        "discount":disountController.text.toString(),
-        "totalPcs":totalPcs.toString(),
-        "totalAmount":total.toString(),
-        };
+      // callbackValue={
+      //   "pcsCount":pcs.toString(),
+      //   "ctnCount":ctn.toString(),
+      //   "discount":disountController.text.toString(),
+      //   "totalPcs":totalPcs.toString(),
+      //   "totalAmount":total.toString(),
+      //   };
       allItem= AllItem(itemId: widget.itemList.itemId, 
          itemName: widget.itemList.itemName, 
          tradePrice: widget.itemList.tradePrice, 
@@ -216,12 +216,13 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
           }
         widget.savedData.add(allItem);   
         widget.itemInfo=allItem;
+          widget.callbackFunction(widget.itemInfo);
 
        }
-    
+         
 
-         widget.callbackValue=callbackValue;
-         widget.callbackFunction(widget.callbackValue);
+       //  widget.callbackValue=callbackValue;
+         //widget.callbackFunction(widget.itemInfo);
          Navigator.pop(context) ;
 
          
@@ -239,6 +240,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
         widget.itemList,ctnController.text.toString(),pcsController.text.toString(),
         disountController.text.toString(),
       );
+      
     });
   }
 }

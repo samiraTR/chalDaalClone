@@ -1,4 +1,5 @@
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/service/all_services.dart';
@@ -46,18 +47,26 @@ class _ShowDialogForOrderEditState extends State<ShowDialogForOrderEdit> {
                       child: Column(
                         children: [
                          
-                                        //  Row(
-                                        //    children: [
-                                        //              const Expanded(child: Text("Promo Info ",style: TextStyle(fontWeight: FontWeight.bold),)),
-                                        //              const Text(" :  "),
-                                        //               Expanded(flex: 3,
-                                        //                child:Text(widget.itemList.itemPromo.toString(),style:const TextStyle(),))
-                                        //    ],
-                                        //  ),
-                                        // const SizedBox(height: 10,),
+                         SizedBox(
+                                 child: CachedNetworkImage(
+                                  height: 120,
+                                               imageUrl:widget.itemList.itemAvatar.toString(),
+                                               errorWidget: (context, url, error) =>const Icon(Icons.error),
+                                             ),
+                               ),
+                              const SizedBox(height: 10,),
+                                         Row(
+                                           children: [
+                                                     const Expanded(child: Text("Promo Info",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                                     const Text(" :  "),
+                                                      Expanded(flex: 3,
+                                                       child:Text(widget.itemList.itemPromo==null?"":widget.itemList.itemPromo.toString(),style:const TextStyle(),))
+                                           ],
+                                         ),
+                                        const SizedBox(height: 10,),
                                         Row(
                                           children: [
-                                          const  Expanded(child: Text("Orders  ",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                          const  Expanded(child: Text("Orders",style: TextStyle(fontWeight: FontWeight.bold),)),
                                                     const Text(" :  "),
                                                      Expanded(flex: 3,
                                                       child: Row(
@@ -98,7 +107,7 @@ class _ShowDialogForOrderEditState extends State<ShowDialogForOrderEdit> {
                                         const SizedBox(height: 10,),
                                          Row(
                                            children: [
-                                           const Expanded(child: Text("Discount ",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                           const Expanded(child: Text("Discount",style: TextStyle(fontWeight: FontWeight.bold),)),
                                            const Text(" :  "),
                                             Expanded(flex: 3,
                                               child: Padding(
@@ -127,7 +136,7 @@ class _ShowDialogForOrderEditState extends State<ShowDialogForOrderEdit> {
                                          const SizedBox(height: 20,),
                                           Row(
                                             children: [
-                                                     const Expanded(child: Text("Value ",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                                     const Expanded(child: Text("Value",style: TextStyle(fontWeight: FontWeight.bold),)),
                                                      const Text(" :  "),
                                                        Expanded(flex: 3,
                                                         child: Text(total.toString()),

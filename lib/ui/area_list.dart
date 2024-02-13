@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/service/repositories.dart';
 import 'package:tst_app2/ui/oultet_list_.dart';
+import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 
@@ -19,6 +20,7 @@ class _AreaListScreenState extends State<AreaListScreen> {
   @override
   void initState() {
     super.initState();
+   // allSynchronization();
     homeColorNav = mainColor;
   }
 
@@ -37,6 +39,19 @@ class _AreaListScreenState extends State<AreaListScreen> {
         print("Found: $location");
       }
     }
+
+
+    
+
+
+
+    // for (String location in areaList) {
+     
+    //   if (location.startsWith(beatId)) {
+    //     checklist[location] = true;
+    //     print("Found: $location");
+    //   }
+    // }
   }
 
   @override
@@ -86,11 +101,16 @@ class _AreaListScreenState extends State<AreaListScreen> {
                                     child: CheckboxListTile(
                                       checkColor: white,
                                       activeColor: mainColor,
-                                      title: Text(areaList[index]
-                                          .toString()
-                                          .substring(
-                                              areaList[index].toString().indexOf("|") +
-                                                  1)),
+                                      title: Row(
+                                        children: [
+                                          Text(areaList[index]
+                                              .toString()
+                                              .substring(
+                                                  areaList[index].toString().indexOf("|") +
+                                                      1)),const SizedBox(width: 25,),
+                                                      Text("Monday",style: TextStyle(color: Colors.grey),)
+                                        ],
+                                      ),
                                       value: checklist[areaList[index]],
                                       onChanged: (value) {
                                         setState(() {
@@ -171,10 +191,15 @@ class _AreaListScreenState extends State<AreaListScreen> {
           child: Text("Start",style: TextStyle(color: white),),
         ),
         onPressed: (){
-        Navigator.push(
+          Navigator.push(
                                 context,
                                 (MaterialPageRoute(
-                                    builder: (context) => CutomerListScreen(fromScreenName: 'Home',))));
+                                    builder: (context) => Syncpage())));
+          
+        // Navigator.push(
+        //                         context,
+        //                         (MaterialPageRoute(
+        //                             builder: (context) => CutomerListScreen(fromScreenName: 'Home',))));
         }) ,
     );
   }

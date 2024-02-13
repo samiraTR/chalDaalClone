@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tst_app2/ui/area_list.dart';
-import 'package:tst_app2/ui/sync_page.dart';
 import 'package:tst_app2/ui/widgets/login_text_form_field.dart';
-import 'package:tst_app2/ui/widgets/search_text_form_field_widget.dart';
-import 'package:tst_app2/ui/widgets/textFormField_custom_order_input.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -188,11 +185,14 @@ class _LoginPageState extends State<LoginPage> {
                       //Login Button
                       InkWell(
                         onTap: () async {
+
                             Navigator.push(
                             context,
                             (MaterialPageRoute(
-                                builder: (context) => Syncpage()
+                                builder: (context) =>const AreaListScreen()
                                      )));
+
+                                     
                         
                           // if (_formKey.currentState!.validate()) {
                           //   Boxes.getUserData().clear();

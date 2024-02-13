@@ -22,6 +22,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
                                   child:  TextFormField(
                                     textAlign: TextAlign.center,
                                     controller:controller ,
+                                     keyboardType: TextInputType.number,
                                     decoration:const  InputDecoration( 
                                       fillColor: Colors.transparent,
                                       filled: true,

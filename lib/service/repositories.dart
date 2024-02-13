@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/Hive_model/stock_model.dart';
 import 'package:tst_app2/model/oulets_model.dart';
@@ -8,6 +10,7 @@ import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/data_providers.dart';
 import 'package:tst_app2/utils/constants.dart';
+import 'package:tst_app2/utils/theme.dart';
 
 class Repositories {
   Future getImageRepo(pageNumber) async {
@@ -33,13 +36,11 @@ class Repositories {
     try {
       final http.Response response = await DataProviders().getSKUDP(skUurl, cid, userId, userPass, planDate);
       Map<String, dynamic> responseBody = json.decode(response.body);
-      //  repositoryListModelData = skuListModelFromJson(json.encode(data));
-      //     AllServices().modelWiseDataSaveToHive(Boxes.getSkuListDataForSync(),"syncSkuList", repositoryListModelData.retStr,"SKU Synchronization Successfully Done");
       if (response.statusCode == 200 && responseBody["status"]==200) {
         repositoryListModelData = skuListModelFromJson(response.body);
-        if(messageChecker==""){
-          AllServices().modelWiseDataSaveToHive(Boxes.getSkuListDataForSync(),"syncSkuList", repositoryListModelData.retStr,"SKU Synchronization Successfully Done");
-
+         putSKUData(repositoryListModelData.retStr);
+        if(messageChecker==""){ 
+          AllServices().dynamicToastMessage("Sku List Succesfully Sync done",Colors.green, white, 16);
         } 
          return repositoryListModelData;
       } else {
@@ -57,28 +58,29 @@ class Repositories {
 
    //====================================== Get Outlets from Sync =============================
   Future<OutletsListModel?> getOuletsList(String messageChecker,String outletsUrl,String cid, String userId,String userPass,String planDate,String appVersion,String syncCode) async {
-    OutletsListModel? ouletsListModelData;
+    OutletsListModel? outletsListModelData;
     try {
       final http.Response response = await DataProviders().getOutletsDP(outletsUrl, cid, userId, userPass, planDate, appVersion, syncCode);
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody["status"]==200) {
-        ouletsListModelData = outletsListModelFromJson(response.body);
-        if(messageChecker==""){
-            AllServices().modelWiseDataSaveToHive(Boxes.getOutletDataForSync(),"syncOutletsList", ouletsListModelData.outletReturnList,"Outlet Synchronization Successfully Done");
+        outletsListModelData = outletsListModelFromJson(response.body);
+        putOutletData(outletsListModelData.outletReturnList);
 
+        if(messageChecker==""){
+          AllServices().dynamicToastMessage("Outlet sync succesfully done", Colors.green, white, 16);
+          
         } 
-      
-        return ouletsListModelData;
+        return outletsListModelData;
       } else {
          AllServices().dynamicToastMessage(responseBody["message"].toString(),
                         Colors.red, Colors.white, 14); 
-        return ouletsListModelData;
+        return outletsListModelData;
       }
     } catch (e) {
       AllServices().dynamicToastMessage("$e", Colors.red, Colors.white, 14);
      
     }
-    return ouletsListModelData;
+    return outletsListModelData;
   }
 //================================= areList Selection=====================
    Future<Map<String,dynamic>> getAReWiseList(String outletsUrl,String cid, String userId,String userPass,String planDate,String syncCode, String appVersion) async {
@@ -136,10 +138,10 @@ class Repositories {
       Map<String, dynamic> responseBody = json.decode(response.body);
       if (response.statusCode == 200 && responseBody["status"]==200) {
         stockModel = stockModelFromJson(response.body);
-        // if(messageChecker==""){
+        putOputStockData(stockModel.stockReturnList);
+        if(messageChecker==""){
             AllServices().modelWiseDataSaveToHive(Boxes.getStockForSync(),"syncStock", stockModel.stockReturnList,"Stock Synchronization Successfully Done");
-
-       // } 
+       } 
       
         return stockModel;
       } else {
@@ -153,5 +155,21 @@ class Repositories {
     }
     return stockModel;
   }
+
+
+  Future putSKUData(RetStr skuListModeldata) async {
+    final skuListBox = Boxes.getSkuListDataForSync();
+    skuListBox.put("syncSkuList", skuListModeldata);
+  }
+  Future putOutletData(OutletReturnList outletReturnList) async {
+    final outletListBox = Boxes.getOutletDataForSync();
+    outletListBox.put("syncOutletsList", outletReturnList);
+  }
+  Future putOputStockData(StockReturnList stockListData) async {
+    final stockListtBox = Boxes.getStockForSync();
+    stockListtBox.put("syncStock", stockListData);
+  }
+
+  
 
 }

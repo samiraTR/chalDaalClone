@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/local_storage/hive_adapters.dart';
-
 import 'package:tst_app2/ui/splash_screen.dart';
-
-import 'package:tst_app2/ui/home_page.dart';
 import 'package:tst_app2/ui/search_product.dart';
 
 

@@ -14,8 +14,9 @@ class OrderConfirmationScreen extends StatefulWidget {
   CheckoutDataModel chekoutDataModel;
    OutletReturnList clientInfo;
    int outletIndex;
+   Client clientDetails;
   
-   OrderConfirmationScreen({Key? key,required this.chekoutDataModel,required this.clientInfo,required this.outletIndex}) : super(key: key);
+   OrderConfirmationScreen({Key? key,required this.chekoutDataModel,required this.clientInfo,required this.outletIndex,required this.clientDetails}) : super(key: key);
 
   @override
   State<OrderConfirmationScreen> createState() =>
@@ -29,16 +30,17 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
    @override
   void initState() {
     getTotalData();
-    // TODO: implement initState
+    
     super.initState();
   }
     
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainColor,
       appBar: AppBar(
         elevation: 0,
-        title: Text("Sales Confirmation",style: GoogleFonts.inter(fontWeight: FontWeight.bold),),
+        title: Text("Orders",style: GoogleFonts.inter(fontWeight: FontWeight.bold),),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -47,87 +49,206 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           children: [
             Container(
               color: mainColor,
-              //height: MediaQuery.of(context).size.height,
-              height: 1200,
+                height: 15000,
+             
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 8),
-                child: Row(
+                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 8),
+                child: Column(
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                         // const SizedBox(height: 10),
-                          Center(
-                            child: Image.asset(
-                           "assets/icons/shops.png",
-                           color: white,
-                              
-                              height: 45,
-                              width: 45,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 13),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Text(
-                                widget.chekoutDataModel.clientName.toString(),
-                                style: TextStyle(color: white, fontSize: 19),
-                              ),
-                            ],
-                          ),
-                       const   Row(
-                            children: [
-                              Text(
-                                "Mohammadpur, Dhaka",
-                                style: TextStyle(
-                                    color: Colors.white70, fontSize: 14),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CutomerListScreen(
-                                    fromScreenName: 'order_confirm',
+                    Container(
+                      decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,color: white
+                ),borderRadius: BorderRadius.circular(15)
+
+              ),
+                      child: Padding(
+                       padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 6),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: Align(alignment: Alignment.centerLeft,
+                                    child: Text("Shop Name",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),)),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(":",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),),
+                                ),
+                              //  const SizedBox(width: 13),
+                                Expanded(
+                                  flex: 5,
+                                  child: Text(
+                                    widget.clientDetails.clientName,
+                                    style: TextStyle(color: white, fontSize: 15),
                                   ),
                                 ),
-                              );
-                            },
-                            icon: Icon(Icons.edit, color: white),
-                          ),
-                        ],
+                                Expanded(
+                                  child: 
+                                      
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => CutomerListScreen(
+                                                fromScreenName: 'order_confirm',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(Icons.edit, color: white),
+                                      ),
+                                    
+                                )
+                              ],
+                            ),
+                            Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Align(alignment: Alignment.centerLeft,
+                                child: Text("Owner Name",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),)),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(":",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),),
+                            ),
+                          //  const SizedBox(width: 13),
+                            Expanded(
+                              flex: 5,
+                              child: Text(
+                                widget.clientDetails.ownerName.toString(),
+                                style: TextStyle(color: white, fontSize: 15),
+                              ),
+                            ),
+                          const  Expanded(
+                              child: Text("")
+                                  
+                                  // IconButton(
+                                  //   onPressed: () {
+                                  //     Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //         builder: (context) => CutomerListScreen(
+                                  //           fromScreenName: 'order_confirm',
+                                  //         ),
+                                  //       ),
+                                  //     );
+                                  //   },
+                                  //   icon: Icon(Icons.edit, color: white),
+                                  // ),
+                                
+                            )
+                          ],
+                        ),
+                                           const SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Align(alignment: Alignment.centerLeft,
+                                child: Text("Mobile No",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),)),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(":",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),),
+                            ),
+                          //  const SizedBox(width: 13),
+                            Expanded(
+                              flex: 5,
+                              child: Text(
+                                widget.clientDetails.contactNo1,
+                                style: TextStyle(color: white, fontSize: 15),
+                              ),
+                            ),
+                           const Expanded(
+                              child: Text("")
+                                  
+                                  
+                                
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Align(alignment: Alignment.centerLeft,
+                                child: Text("Last 3 sales",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),)),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(":",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),),
+                            ),
+                          //  const SizedBox(width: 13),
+                            Expanded(
+                              flex: 5,
+                              child: Text(
+                                "1,20,00,00",
+                                style: TextStyle(color: white, fontSize: 15),
+                              ),
+                            ),
+                           const Expanded(
+                              child: Text("")
+                                  
+                                  
+                                
+                            )
+                          ],
+                        ),
+                         const SizedBox(height: 10,),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: Align(alignment: Alignment.centerLeft,
+                                child: Text("Gross Rate",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),)),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(":",style: TextStyle(fontWeight: FontWeight.bold,color: white,fontSize: 16),),
+                            ),
+                          //  const SizedBox(width: 13),
+                            Expanded(
+                              flex: 5,
+                              child: Text(
+                                "90%",
+                                style: TextStyle(color: white, fontSize: 15),
+                              ),
+                            ),
+                           const Expanded(
+                              child: Text("")
+                                  
+                                  
+                                
+                            )
+                          ],
+                        ),
+                       // SizedBox(height: 4,)
+                          ],
+                        ),
                       ),
-                    )
+                    ),
+                     SizedBox(height: 4,)
+              
+                    
+                    
                   ],
                 ),
               ),
             ),
             Positioned(
-                top: 90,
+                top: 190,
               child: SingleChildScrollView(
                 physics:const BouncingScrollPhysics(),
                 
                 child: Container(
-                       height: 1200,
+                 // height: MediaQuery.of(context).size.height,
+                    height: 15000,
                   // height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   decoration: const BoxDecoration(
@@ -266,8 +387,10 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                             child: Text(widget.chekoutDataModel.allItem[index].itemName.toString(),style: TextStyle(fontSize: 15,color: blackColor),)),
                             Expanded(flex: 2,
                               child: Center(child: Text("${widget.chekoutDataModel.allItem[index].totalPcs} pc",style: TextStyle(fontSize: 14,color: blackColor),))),
-                            Expanded(flex: 2,
-                              child: Center(child: Text("TK ${widget.chekoutDataModel.allItem[index].totalPrice}",style: TextStyle(fontSize: 14,color: blackColor),))),
+                            Expanded(flex: 3,
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("TK ${widget.chekoutDataModel.allItem[index].totalPrice}",style: TextStyle(fontSize: 14,color: blackColor),))),
                         ],
                       ),
                     ),
@@ -285,10 +408,12 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     padding: const EdgeInsets.only(top: 0),
                     child: Row(
                       children: [
-                        Expanded(flex: 12,
+                        Expanded(flex: 9,
                           child: Text("Subtotal",style: TextStyle(fontSize: 16,color: blackColor),)),
                           Expanded(flex: 3,
-                            child: Text("  TK ${totalAmount.toString()} ",style: TextStyle(fontSize: 14,color: blackColor),)),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text("TK ${totalAmount.toString()}",style: TextStyle(fontSize: 14,color: blackColor),))),
                       ],
                     ),
                     ),
@@ -299,7 +424,9 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         Expanded(flex: 12,
                           child: Text("Discount",style: TextStyle(fontSize: 16,color: blackColor),)),
                           Expanded(flex: 3,
-                            child: Text("   TK $discountTotal",style: TextStyle(fontSize: 14,color: blackColor),)),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text("TK $discountTotal",style: TextStyle(fontSize: 14,color: blackColor),))),
                       ],
                     ),
                     ),
@@ -311,10 +438,11 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     padding: const EdgeInsets.only(top: 0),
                     child: Row(
                       children: [
-                        Expanded(flex: 13,
+                        Expanded(flex: 9,
                           child: Text("Total",style: TextStyle(fontSize: 16,color: blackColor,fontWeight: FontWeight.bold),)),
                           Expanded(flex: 3,
-                            child: Text("TK $totalAmount ",style: TextStyle(fontSize: 14,color: blackColor,fontWeight: FontWeight.bold),)),
+                            child: Align(alignment: Alignment.centerRight,
+                              child: Text("TK ${totalAmount.toString()} ",style: TextStyle(fontSize: 14,color: blackColor,fontWeight: FontWeight.bold),))),
                       ],
                     ),
                     ),
@@ -353,8 +481,9 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                             child: Text(widget.chekoutDataModel.allItem[index].itemName.toString(),style: TextStyle(fontSize: 15,color: blackColor),)),
                             Expanded(flex: 2,
                               child: Center(child: Text("${widget.chekoutDataModel.allItem[index].totalPcs} pc",style: TextStyle(fontSize: 14,color: blackColor),))),
-                            Expanded(flex: 2,
-                              child: Center(child: Text("TK ${widget.chekoutDataModel.allItem[index].totalPrice}",style: TextStyle(fontSize: 14,color: blackColor),))),
+                            Expanded(flex: 3,
+                              child: Align(alignment: Alignment.centerRight,
+                                child: Text("TK ${widget.chekoutDataModel.allItem[index].totalPrice}",style: TextStyle(fontSize: 14,color: blackColor),))),
                         ],
                       ),
                     ),
@@ -372,24 +501,28 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     padding: const EdgeInsets.only(top: 0),
                     child: Row(
                       children: [
-                        Expanded(flex: 13,
+                        Expanded(flex: 9,
                           child: Text("Subtotal",style: TextStyle(fontSize: 16,color: blackColor),)),
-                          Expanded(flex: 2,
-                            child: Text("TK 290 ",style: TextStyle(fontSize: 14,color: blackColor),)),
+                          Expanded(flex: 3,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text("TK ${totalAmount} ",style: TextStyle(fontSize: 14,color: blackColor),))),
                       ],
                     ),
                     ),
-                    Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(flex: 13,
-                          child: Text("Discount",style: TextStyle(fontSize: 16,color: blackColor),)),
-                          Expanded(flex: 2,
-                            child: Text(" TK 20 ",style: TextStyle(fontSize: 14,color: blackColor),)),
-                      ],
-                    ),
-                    ),
+                    // Padding(
+                    // padding: const EdgeInsets.only(top: 10),
+                    // child: Row(
+                    //   children: [
+                    //     Expanded(flex: 9,
+                    //       child: Text("Discount",style: TextStyle(fontSize: 16,color: blackColor),)),
+                    //       Expanded(flex: 3,
+                    //         child: Align(
+                    //           alignment: Alignment.centerRight,
+                    //           child: Text(" TK 20 ",style: TextStyle(fontSize: 14,color: blackColor),))),
+                    //   ],
+                    // ),
+                   // ),
                      const Padding(
                     padding: EdgeInsets.only(top: 10,bottom: 10),
                     child: Divider(thickness: 2,),
@@ -398,10 +531,12 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     padding: const EdgeInsets.only(top: 0),
                     child: Row(
                       children: [
-                        Expanded(flex: 13,
+                        Expanded(flex: 9,
                           child: Text("Total",style: TextStyle(fontSize: 16,color: blackColor,fontWeight: FontWeight.bold),)),
-                          Expanded(flex: 2,
-                            child: Text("TK 270 ",style: TextStyle(fontSize: 14,color: blackColor,fontWeight: FontWeight.bold),)),
+                          Expanded(flex: 3,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text("TK ${totalAmount}",style: TextStyle(fontSize: 14,color: blackColor,fontWeight: FontWeight.bold),))),
                       ],
                     ),
                     ),
@@ -430,7 +565,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(7.0),
-                                  child: CancelButtonWidget(buttonHeight: 50, fontColor: mainColor, buttonName: " POSM " , fontSize: 14, onTapFuction: (){
+                                  child: CancelButtonWidget(buttonHeight: 50, fontColor: mainColor, buttonName: "POSM" , fontSize: 14, onTapFuction: (){
                                     Navigator.push(
                     context,
                     (MaterialPageRoute(
@@ -441,7 +576,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(7.0),
-                                  child: CancelButtonWidget(buttonHeight: 50, fontColor: mainColor, buttonName: "    MP    ", fontSize: 14, onTapFuction: (){
+                                  child: CancelButtonWidget(buttonHeight: 50, fontColor: mainColor, buttonName: " MR ", fontSize: 14, onTapFuction: (){
                                     Navigator.push(
                     context,
                     (MaterialPageRoute(
@@ -502,21 +637,39 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                     child: Row(
                                       
                                       children: [
-                                        const Text(
-                                          "   Checkout                ",
-                                          style: textSTYLEHeadline16,
-                                        ),
-                                        Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                      const  Expanded(
+                                          flex: 6,
+                                          child: Center(
+                                            child:  Text(
+                                              " Checkout",
+                                              style: textSTYLEHeadline16,
+                                            ),
                                           ),
-                                          color: mainColor,
-                                          child:const Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Text(
-                                              "    ৳1230   ",
-                                              style: textSTYLEHeadline15,
+                                        ),
+                                        Expanded(
+                                          flex:3,
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                color: mainColor,
+                                                child: Padding(
+                                                  padding:const EdgeInsets.all(4.0),
+                                                  child: Center(
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        "  ৳${totalAmount}",
+                                                        style: textSTYLEHeadline15,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         )

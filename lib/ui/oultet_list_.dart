@@ -56,7 +56,7 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
       backgroundColor: white,
        appBar: AppBar(
          backgroundColor: mainColor,
-        title: Text("Oultets",style:GoogleFonts.inter(color: white,fontSize: 18,fontWeight: FontWeight.bold),),
+        title: Text("Retail List",style:GoogleFonts.inter(color: white,fontSize: 18,fontWeight: FontWeight.bold),),
         centerTitle: true,
         shape:const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -118,7 +118,7 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
        yetToVisitList.isEmpty? Expanded(child: Center(child: SizedBox(
         height: 200,width: 300,
         child: Image.asset("assets/icons/no_data1.jpg",fit: BoxFit.cover,)))):  Expanded(
-          child: OutletInfoTileWidget(clientList: yetToVisitList, context: context, outletList: outletList, checkoutDataModel: null,)
+          child: OutletInfoTileWidget(clientList: yetToVisitList, context: context, outletList: outletList, checkoutDataModel: null, clientDetails:outletList!.visitPlan.clients,)
         ),
       ],
     ),
@@ -128,7 +128,7 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
        orderedList.isEmpty? Expanded(child: Center(child: SizedBox(
         height: 200,width: 300,
         child: Image.asset("assets/icons/no_data1.jpg",fit: BoxFit.cover,)))):  Expanded(
-           child: OutletInfoTileWidget(clientList: orderedList, context: context, outletList: outletList, checkoutDataModel: null,)
+           child: OutletInfoTileWidget(clientList: orderedList, context: context, outletList: outletList, checkoutDataModel: null,clientDetails:outletList!.visitPlan.clients)
          
         ),
       ],
@@ -138,7 +138,7 @@ class _CutomerListScreenState extends State<CutomerListScreen> with SingleTicker
        notOrderList.isEmpty? Expanded(child: Center(child: SizedBox(
         height: 200,width: 300,
         child: Image.asset("assets/icons/no_data1.jpg",fit: BoxFit.cover,)))):  Expanded(
-          child: OutletInfoTileWidget(clientList: notOrderList, context: context, outletList: outletList, checkoutDataModel: null,)
+          child: OutletInfoTileWidget(clientList: notOrderList, context: context, outletList: outletList, checkoutDataModel: null,clientDetails:outletList!.visitPlan.clients)
         
         ),
       ],

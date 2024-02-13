@@ -11,8 +11,9 @@ class HomeScreen extends StatefulWidget {
   OutletReturnList clientInfo;
   int outletIndex;
     String total;
+    Client clientDetails;
   
-   HomeScreen({super.key,required this.clientInfo,required this.outletIndex,required this.total,required this.checkoutDataModel});
+   HomeScreen({super.key,required this.clientInfo,required this.outletIndex,required this.total,required this.checkoutDataModel,required this.clientDetails});
 
   //const HomeScreen({super.key});
 
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // await getSkuAndSave();
                       Navigator.push(context,
                    MaterialPageRoute(builder: (_) =>   AllProductListScreen(
-                    total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel ,)));
+                    total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel ,clientDetails: widget.clientDetails,)));
                       })
                     ),
                    const SizedBox(width: 
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child:HomeButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20,image: "assets/icons/post_order.gif", imageHeight: 90, imagewidth: 70, buttonName: "Post Order", textColor: mainColor, onpressedFuc: ()async{
                        //await getOuletsAndSave();
                        Navigator.push(context,
-                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel,)));
+                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel,clientDetails: widget.clientDetails,)));
                       })
                     ),
     
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.symmetric(horizontal:70),
                         child: HomeButtonWidget(buttonbackgroudColor: Color(0xffF3F6FF), buttonRadiousMea: 20,image: "assets/icons/purchase-order.gif", imageHeight: 90, imagewidth: 60, buttonName: "Order", textColor: mainColor, onpressedFuc: ()async{
                           Navigator.push(context,
-                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel,)));
+                   MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:widget.clientInfo ,outletIndex:widget.outletIndex, routingFrom: 'Home', checkoutDataModel: widget.checkoutDataModel,clientDetails: widget.clientDetails,)));
                   
                          // await getStockAndSave();
                         }),
