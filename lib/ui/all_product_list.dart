@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
@@ -34,6 +35,7 @@ class AllProductListScreen extends StatefulWidget {
 class _AllProductListScreenState extends State<AllProductListScreen> {
   RetStr? skuListData;
   TextEditingController searchController= TextEditingController();
+   final brandSelectedController = TextEditingController();
   Map<String, TextEditingController> ctnControllerMap = {};
   Map<String, TextEditingController> pcsControllerMap = {};
   Map<String, TextEditingController> discountControllerMap = {};
@@ -121,7 +123,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
         actions: [
          
            Padding(
-             padding: const EdgeInsets.all(8.0),
+             padding:  EdgeInsets.all(8.0),
              child: Container(
               width: 125, 
               height: 80,
@@ -130,51 +132,180 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                 color: mainColor,
                 borderRadius: BorderRadius.circular(5),
               ),
+              child: 
+                                                                  DropdownButtonHideUnderline(
+                                                                    child:
+                                                                        DropdownButton2(
+                                                                      isExpanded:
+                                                                          true,
+                                                                      iconEnabledColor:
+                                                                          white,
+                                                                      hint:
+                                                                          Text(
+                                                                        'Select Brand',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                              color: white
+                                                                          
+                                                                        ),
+                                                                      ),
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                              color: white
+                                                                          
+                                                                        ),
+                                                                      items: skuListData!.brandList
+                                                                          .map((BrandList brand) => DropdownMenuItem<String>(
+                                                                                value: brand.brandName,
+                                                                                child: Padding(
+                                                                                  padding: const EdgeInsets.only(left: 8),
+                                                                                  child: Text(
+                                                                                    brand.brandName,
+                                                                                    style:  GoogleFonts.inter(color: blackColor),
+                                                                                  ),
+                                                                                ),
+                                                                              ))
+                                                                          .toList(),
+                                                                      value:
+                                                                          selectedValue,
+                                                                      onChanged:
+                                                                          (value) {
+                                                                        // setState2(
+                                                                        //     () {
+                                                                          
+                                                                        // });
+                                                                        selectedValue =
+                                                                              value;
+                                                                        filteredData=AllServices().getItemList(value!, skuListData!.brandList);
+                                                                        setState(() {
+                                                                          
+                                                                        });
+                                                                      },
+                                                                      buttonHeight:
+                                                                          50,
+                                                                      buttonWidth:
+                                                                          MediaQuery.of(context).size.width /
+                                                                              1.5,
+                                                                      itemHeight:
+                                                                          40,
+                                                                      dropdownMaxHeight:
+                                                                          252,
+                                                                      searchController:
+                                                                          brandSelectedController,
+                                                                      searchInnerWidgetHeight:
+                                                                          50,
+                                                                      searchInnerWidget:
+                                                                          Container(
+                                                                        height:
+                                                                            50,
+                                                                        padding:
+                                                                            const EdgeInsets.only(
+                                                                          top:
+                                                                              8,
+                                                                          bottom:
+                                                                              4,
+                                                                          right:
+                                                                              8,
+                                                                          left:
+                                                                              8,
+                                                                        ),
+                                                                        child:
+                                                                            TextFormField(
+                                                                              
+                                                                          expands:
+                                                                              true,
+                                                                          maxLines:
+                                                                              null,
+                                                                          controller:
+                                                                              brandSelectedController,
+                                                                          decoration:
+                                                                              InputDecoration(
+                                                                                fillColor: white,
+                                                                                filled: true,
+                                                                            isDense:
+                                                                                true,
+                                                                            contentPadding:
+                                                                                const EdgeInsets.symmetric(
+                                                                              horizontal: 6,
+                                                                              vertical: 8,
+                                                                            ),
+                                                                            hintText:
+                                                                                'Search Brand here...',
+                                                                            hintStyle:
+                                                                                const TextStyle(fontSize: 14),
+                                                                            border:
+                                                                                OutlineInputBorder(
+                                                                              borderRadius: BorderRadius.circular(8),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      searchMatchFn:
+                                                                          (item,
+                                                                              searchValue) {
+                                                                        return (item
+                                                                            .value
+                                                                            .toString().toUpperCase()
+                                                                            .startsWith(searchValue.toUpperCase()));
+                                                                      },
+                                                                      onMenuStateChange:
+                                                                          (isOpen) {
+                                                                        if (!isOpen) {
+                                                                          brandSelectedController
+                                                                              .clear();
+                                                                        }
+                                                                      },
+                                                                    ),
+                                                                  )
+                                                               
               
-               child:DropdownButton<String>(
-               value: selectedValue,
-                selectedItemBuilder: (BuildContext context) {
-              return skuListData!.brandList.map((BrandList brand) {
-                 return Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Center(child: Text(brand.brandName,style: GoogleFonts.inter(color: white),)),
-                );
-               }).toList();
-              },
+            //    child:DropdownButton<String>(
+            //    value: selectedValue,
+            //     selectedItemBuilder: (BuildContext context) {
+            //   return skuListData!.brandList.map((BrandList brand) {
+            //      return Padding(
+            //       padding: const EdgeInsets.only(left: 8),
+            //       child: Center(child: Text(brand.brandName,style: GoogleFonts.inter(color: white),)),
+            //     );
+            //    }).toList();
+            //   },
              
-                hint: Padding(
-                  padding: const EdgeInsets.only(left: 0),
-                  child: Text('Select Brand',style: GoogleFonts.inter(color: white)),
-                ),
+            //     hint: Padding(
+            //       padding: const EdgeInsets.only(left: 0),
+            //       child: Text('Select Brand',style: GoogleFonts.inter(color: white)),
+            //     ),
             
-                  icon:const Icon(Icons.arrow_drop_down),
-                  iconSize: 20, 
-                  iconEnabledColor: Colors.white,
+            //       icon:const Icon(Icons.arrow_drop_down),
+            //       iconSize: 20, 
+            //       iconEnabledColor: Colors.white,
               
-               items: skuListData!.brandList.map((BrandList brand) {
-               return DropdownMenuItem<String>(
-                 value: brand.brandName,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(brand.brandName,style: GoogleFonts.inter(color: blackColor),),
-                ), 
+            //    items: skuListData!.brandList.map((BrandList brand) {
+            //    return DropdownMenuItem<String>(
+            //      value: brand.brandName,
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(left: 8),
+            //       child: Text(brand.brandName,style: GoogleFonts.inter(color: blackColor),),
+            //     ), 
                 
-               );
-             }).toList(),
-             onChanged: (String? value) {
-              setState(() {
-                selectedValue = value;
-              });
+            //    );
+            //  }).toList(),
+            //  onChanged: (String? value) {
+            //   setState(() {
+            //     selectedValue = value;
+            //   });
 
-              filteredData=AllServices().getItemList(value!, skuListData!.brandList);
+            //   filteredData=AllServices().getItemList(value!, skuListData!.brandList);
      
 
            
-             },
+            //  },
              
-              underline: Container(), 
+            //   underline: Container(), 
             
-            )
+            // )
            ),
          )
         ],

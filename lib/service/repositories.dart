@@ -1,25 +1,20 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/Hive_model/stock_model.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/model/sku_list_model.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/service/data_providers.dart';
-import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class Repositories {
   Future getImageRepo(pageNumber) async {
-    // Map imageList = {};
-
+  
     try {
       final http.Response response =
           await DataProviders().getImageDP(pageNumber);
-      // List<UnsplashModel> imageList = unsplashModelFromJson(response.body);
       List imageList = jsonDecode(response.body);
 
       print("imageList ${imageList.length}");
@@ -29,6 +24,7 @@ class Repositories {
       print(e);
     }
   }
+
 
   //====================================== Get SKU from Sync =============================
   Future<SkuListModel?> getSKUList(String messageChecker,String skUurl,String cid, String userId,String userPass,String planDate) async {
@@ -54,6 +50,7 @@ class Repositories {
     }
     return repositoryListModelData;
   }
+
 
 
    //====================================== Get Outlets from Sync =============================
@@ -82,6 +79,8 @@ class Repositories {
     }
     return outletsListModelData;
   }
+
+
 //================================= areList Selection=====================
    Future<Map<String,dynamic>> getAReWiseList(String outletsUrl,String cid, String userId,String userPass,String planDate,String syncCode, String appVersion) async {
     Map<String,dynamic> dateWiseOutlet={};
@@ -156,7 +155,7 @@ class Repositories {
     return stockModel;
   }
 
-
+ //============================== save method ========================
   Future putSKUData(RetStr skuListModeldata) async {
     final skuListBox = Boxes.getSkuListDataForSync();
     skuListBox.put("syncSkuList", skuListModeldata);
