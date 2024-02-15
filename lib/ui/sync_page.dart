@@ -28,21 +28,20 @@ class _SyncpageState extends State<Syncpage> {
         setState(() {  
         }); 
   }
-//===================================== Get Outlets and Save to Hive ===================================
   getOuletsAndSave() async{
          await Repositories().getOuletsList("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29","v1.0-20240203-1","6269");
          setState(() {
            
          });       
   }
-  //===================================== Get Stock and Save to Hive ===================================
+  
   getStockAndSave() async{
          await Repositories().getStock("","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29");
          setState(() {
            
          });       
   }
-  //================================== all Synchronization ====================================
+ 
   allSynchronization()async{
     SkuListModel? skuList = await Repositories().getSKUList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-28");
     OutletsListModel? outletsList = await Repositories().getOuletsList("All","https://my.transcombd.com/smart_api","SMART", "IT22", "1234", "2024-01-29","v1.0-20240203-1","6269");

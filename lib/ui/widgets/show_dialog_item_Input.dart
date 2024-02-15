@@ -25,6 +25,7 @@ Function(AllItem?) callbackFunction;
 
 class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
   String total="";
+  bool isUpdate=false;
   TextEditingController ctnController=TextEditingController();
   TextEditingController pcsController=TextEditingController();
   TextEditingController disountController= TextEditingController();
@@ -37,6 +38,7 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
       ctnController.text=widget.itemInfo!.ctn!;
       disountController.text=widget.itemInfo!.discountInput!;
       total=widget.itemInfo!.totalPrice!;
+      isUpdate=true;
 
     }
   }
@@ -49,12 +51,14 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
       child: AlertDialog(
         insetPadding:const EdgeInsets.all(20),
          contentPadding: EdgeInsets.zero,
-                  title:  Text(widget.itemList.itemName.toString(),style: GoogleFonts.inter(color: blackColor,fontWeight: FontWeight.bold),),
                   content: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                    child: Stack(
+                      children: [
+                        Padding(
+                      padding: const EdgeInsets.all(15.0),
                       child: Column(
                         children: [
+                       const   SizedBox(height: 50,),
                           SizedBox(
                                  child: CachedNetworkImage(
                                   height: 120,
@@ -62,105 +66,147 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                                                errorWidget: (context, url, error) =>const Icon(Icons.error),
                                              ),
                                ),
-                               const SizedBox(height: 20,),
-                                         Row(
+                               const SizedBox(height: 10,),
+                               Row(
                                            children: [
-                                                      Expanded(child: Text("Promo Info",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
-                                                     const Text(" :  "),
-                                                      Expanded(flex: 3,
-                                                       child:Text(widget.itemList.itemPromo.toString(),style: GoogleFonts.inter(),))
+                                                     
+                                                      Expanded(
+                                                       child:Center(child: Text(widget.itemList.itemName.toString(),style: GoogleFonts.inter(fontWeight: FontWeight.bold,fontSize: 16),)))
                                            ],
                                          ),
-                                        const SizedBox(height: 10,),
-                                        Row(
-                                          children: [
-                                            Expanded(child: Text("Orders  ",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
-                                                    const Text(" :  "),
-                                                     Expanded(flex: 3,
-                                                      child: Row(
-                                                        children: [
-                                        Expanded(
-                                         child: Padding(
-                                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                                           child: TextFormFieldCustomOrderInput( 
-                                            controller:ctnController,
-                                            hintText: "Ctn",
+                                          const SizedBox(height: 10,),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: mainShadeColorNowMore
                                             
-                                            borderColor: mainColor, 
-                                            validator: (value) { 
-                                              updateTotal();
-                                                   }, 
-
-                                           )
-                                         )),
-                                       const  Text(" Ctn"),
-                                       const SizedBox(width: 20,),
-                                        Expanded(child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                                        child: TextFormFieldCustomOrderInput(
-                                        controller: pcsController,
-                                        hintText: "Pcs",
-                                        borderColor: mainColor, 
-                                        validator: (value) {
-                                      
-                                           updateTotal();
-                                            },
-                                         ),
-                                      
                                           ),
-                                         ),
-                                        ],
-                                                      ))
-                                          ],
-                                        ),
-                                        const SizedBox(height: 10,),
-                                       Row(
-                                           children: [
-                                            Expanded(child: Text("Discount",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
-                                           const Text(" :  "),
-                                            Expanded(flex: 3,
-                                              child: Padding(
-                                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                                         child: TextFormFieldCustomOrderInput(
-                                          hintText: "--Discount amount--",borderColor: mainColor, controller: disountController, 
-                                          
-                                         validator: (value) {
-                                          double? dis= double.tryParse(disountController.text)??0.0;
-                                          if((total=="")||(dis>double.parse(total))){
-                                            AllServices().dynamicToastMessage("Discount must be less than total amount", Colors.red, Colors.white, 16);
-                                            
-                                          }
-                                          updateTotal();
-
-                                          
-
-                                                   
-                                      },
-
-                                         ),
-                                        
-                                        ),
-                                        ),
-                                           ],
-                                         ),
-                                         const SizedBox(height: 20,),
-                                          Row(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                                            child: Column(
+                                              children: [
+                                                const SizedBox(height: 10,),
+                                                                                   Row(
+                                             children: [
+                                                        Expanded(child: Text("Promo Info",style: GoogleFonts.inter(fontWeight: FontWeight.bold,fontSize: 14),)),
+                                                       const Text(" :  "),
+                                                        Expanded(flex: 3,
+                                                         child:Text(widget.itemList.itemPromo.toString(),style: GoogleFonts.inter(),))
+                                             ],
+                                                                                   ),
+                                                                                  const SizedBox(height: 10,),
+                                                                                  Row(
                                             children: [
-                                                      Expanded(child: Text("Value ",style: GoogleFonts.inter(fontWeight: FontWeight.bold),)),
-                                                     const Text(" :  "),
+                                              Expanded(child: Text("Orders  ",style: GoogleFonts.inter(fontWeight: FontWeight.bold,fontSize: 14),)),
+                                                      const Text(" :  "),
                                                        Expanded(flex: 3,
-                                                        child: Text(total.toString()),
-                                                      
-                                                        )
+                                                        child: Row(
+                                                          children: [
+                                                                                  Expanded(
+                                                                                   child: Padding(
+                                             padding: const EdgeInsets.symmetric(horizontal: 8),
+                                             child: TextFormFieldCustomOrderInput( 
+                                              controller:ctnController,
+                                              hintText: "Ctn",
+                                              
+                                              
+                                              borderColor: mainColor, 
+                                              validator: (value) { 
+                                                updateTotal();
+                                                     }, 
+                                          
+                                             )
+                                                                                   )),
+                                                                                   Text(" Ctn",style: GoogleFonts.inter(fontSize: 14),),
+                                                                                 const SizedBox(width: 20,),
+                                                                                  Expanded(child: Padding(
+                                                                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                                                                  child: TextFormFieldCustomOrderInput(
+                                                                                  controller: pcsController,
+                                                                                  hintText: "Pcs",
+                                                                                  borderColor: mainColor, 
+                                                                                  validator: (value) {
+                                                                                
+                                             updateTotal();
+                                              },
+                                                                                   ),
+                                                                                
+                                            ),
+                                                                                   ),
+                                                                                  ],
+                                                        ))
                                             ],
+                                                                                  ),
+                                                                                  const SizedBox(height: 10,),
+                                                                                 Row(
+                                             children: [
+                                              Expanded(child: Text("Discount",style: GoogleFonts.inter(fontWeight: FontWeight.bold,fontSize: 14),)),
+                                             const Text(" :  "),
+                                              Expanded(flex: 3,
+                                                child: Padding(
+                                                                                   padding: const EdgeInsets.symmetric(horizontal: 8),
+                                                                                   child: TextFormFieldCustomOrderInput(
+                                            hintText: "--Discount amount--",borderColor: mainColor, controller: disountController,
+                                             
+                                            
+                                                                                   validator: (value) {
+                                            double? dis= double.tryParse(disountController.text)??0.0;
+                                            if((total=="")||(dis>double.parse(total))){
+                                              AllServices().dynamicToastMessage("Discount must be less than total amount", Colors.red, Colors.white, 16);
+                                              
+                                            }
+                                            updateTotal();
+                                          
+                                            
+                                          
+                                                     
+                                                                                },
+                                          
+                                                                                   ),
+                                                                                  
+                                                                                  ),
+                                                                                  ),
+                                             ],
+                                                                                   ),
+                                                                                   const SizedBox(height: 20,),
+                                            Row(
+                                              children: [
+                                                        Expanded(child: Text("Value ",style: GoogleFonts.inter(fontWeight: FontWeight.bold,fontSize: 14),)),
+                                                       const Text(" :  "),
+                                                         Expanded(flex: 3,
+                                                          child: Text(total,style: GoogleFonts.inter(fontWeight: FontWeight.bold,fontSize: 14),),
+                                                        
+                                                          )
+                                              ],
+                                            ),
+                                              const SizedBox(height: 10,),
+                                              ],
+                                            ),
                                           ),
+                                        )
                         ],
                       ),
+                    ),
+                Positioned(
+                      top: 17,
+                      child: Container(
+                        height: 35,
+                        width: 160,
+                        decoration: BoxDecoration(
+                           color: widget.itemList.stockQty=="0"?const Color.fromARGB(255, 231, 36, 22): mainColor,
+                          borderRadius:const BorderRadius.only(topRight: Radius.circular(20),bottomRight: Radius.circular(20),),
+                        ),
+                        child:Center(child:  Text("Stock : ${widget.itemList.stockQty}",style: GoogleFonts.inter(color: white,fontSize: 13,fontWeight: FontWeight.bold),)),
+                      ),
                     )
+
+                      ],
+                    ),
+                    
                   ),
                   actions: [
                    Padding(
-                     padding: const EdgeInsets.symmetric(horizontal:20,vertical: 10 ),
+                     padding: const EdgeInsets.symmetric(horizontal:10,vertical: 10 ),
                      child: Row(
                           children: [
                             Expanded(child: CancelButtonWidget(buttonHeight: 50, fontColor: mainColor, buttonName: "Cancel", fontSize: 16, onTapFuction:  () { 
@@ -168,7 +214,19 @@ class _ShowDialogForItemInputState extends State<ShowDialogForItemInput> {
                               
                             },borderColor: mainColor)),
                            const SizedBox(width: 10,),
-                           Expanded(child: ConfirmButtonWidget(buttonHeight: 50, fontColor: white, buttonName: "Add", fontSize: 16, onTapFuction: () {
+                         widget.itemInfo!=null ? Expanded(child: ConfirmButtonWidget(buttonHeight: 50, fontColor: white, buttonName: "update", fontSize: 16, onTapFuction: () {
+                            if(ctnController.text.isNotEmpty || pcsController.text.isNotEmpty){
+                              widget.savedData.removeWhere((element) => element.itemId==widget.itemList.itemId);
+                              addToCartMethod();
+
+                            }
+                            else{
+                              AllServices().dynamicToastMessage("Please add something", Colors.red, white, 16);
+                            }
+                             
+
+                             },))
+                         : Expanded(child: ConfirmButtonWidget(buttonHeight: 50, fontColor: white, buttonName: "Add", fontSize: 16, onTapFuction: () {
                             if(ctnController.text.isNotEmpty || pcsController.text.isNotEmpty){
                               widget.savedData.removeWhere((element) => element.itemId==widget.itemList.itemId);
                               addToCartMethod();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/ui/all_product_list.dart';
-import 'package:tst_app2/ui/homepage.dart';
 import 'package:tst_app2/utils/theme.dart';
 
 class OutletInfoTileWidget extends StatelessWidget {
@@ -25,16 +25,12 @@ class OutletInfoTileWidget extends StatelessWidget {
           return 
               GestureDetector(
                 onTap: (){
+                  final orderSavedData = Boxes.outletWiseItemSaved();
+                  final eachCheckoutData=  CheckoutDataModel(cid: "", userId: "", userPass: "IT", deviceId: "", clientId:clientDetails[outletIndex].clientId, clientName: clientDetails[outletIndex].clientName, orderDate: "", orderTime: "", deliveryDate: "", deliveryTime: "", paymentMode: "CASH", latitude: "", longitude: "", allItem: [], offer: "", rakList: "", note: "");
+                  orderSavedData.put(clientDetails[outletIndex].clientId, eachCheckoutData);
                   Navigator.push(context,
                    MaterialPageRoute(builder: (_) =>   AllProductListScreen(total: "", clientInfo:outletList!,outletIndex:outletIndex, routingFrom: 'Home', checkoutDataModel: checkoutDataModel,clientDetails: clientList[outletIndex],)));
 
-                  
-                  
-                
-                  // Navigator.push(context,
-                  //  MaterialPageRoute(builder: (_) =>   HomeScreen(
-                  //   total: "", clientInfo: outletList!,outletIndex:outletIndex, checkoutDataModel: checkoutDataModel, clientDetails: clientDetails[outletIndex],
-                  //   )));
                   
 
                 },

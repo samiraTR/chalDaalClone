@@ -222,4 +222,35 @@ String updateItemAmount(AllItem itemList,String ctnValue,String pcsValue,String 
   print(total);
   return total.toString(); 
  }
+
+
+ //================================== add Item ==========================
+ addItemToHiveModel(String ctnControllerValue, String pcsControllerValue,String discountValue,List<AllItem> savedItemList, ItemList givenData ){
+  AllItem? allItem ;
+        int ctn=(int.tryParse(ctnControllerValue)??0);
+        int pcs= (int.tryParse(pcsControllerValue)??0);
+        int dis= (int.tryParse(discountValue)??0);
+        int? ctnWisePcs=  ctn* int.parse(givenData.ctnPcsRatio.toString());
+        int? totalPcs=ctnWisePcs+pcs;
+        double? total =totalPcs* double.parse(givenData.tradePrice.toString());
+        allItem=  AllItem(itemId: givenData.itemId, 
+                            itemName: givenData.itemName, 
+                            tradePrice: givenData.tradePrice, 
+                            pcs: pcs.toString(), 
+                            ctn: ctn.toString(), 
+                            totalPrice: total.toStringAsFixed(1), 
+                            discountInput: dis.toString(), 
+                            totalPcs: totalPcs.toString(), 
+                            ctnPcsRatio: givenData.ctnPcsRatio, 
+                            itemAvatar: givenData.itemAvatar);
+          
+          if(savedItemList.isNotEmpty)  {
+            savedItemList.removeWhere((element) => element.itemId==givenData.itemId); 
+          }
+          savedItemList.add(allItem);   
+       }
+//=================================== item count =============================
+     
+
+ 
 }

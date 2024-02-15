@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:tst_app2/utils/theme.dart';
 
@@ -27,6 +28,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
                                       fillColor: Colors.transparent,
                                       filled: true,
                                       hintText: '',
+                                    //  hintStyle: GoogleFonts(),
                                       border: InputBorder.none,
                             
                                     ),

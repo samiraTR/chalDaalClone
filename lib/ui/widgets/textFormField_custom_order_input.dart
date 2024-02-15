@@ -18,7 +18,7 @@ class TextFormFieldCustomOrderInput extends StatelessWidget {
                                                 filled: true,
                                            fillColor: Colors.transparent,
                                            hintText: hintText,
-                                           hintStyle: GoogleFonts.inter(),
+                                           hintStyle: GoogleFonts.inter(fontSize: 14),
                                            enabledBorder: UnderlineInputBorder(
                                            borderSide: BorderSide(
                                            width: 1, 
@@ -29,7 +29,7 @@ class TextFormFieldCustomOrderInput extends StatelessWidget {
                                               
                                              controller:  controller,
                                              textAlign: TextAlign.left,
-                                             style: GoogleFonts.inter(),
+                                             style: GoogleFonts.inter(fontSize: 14),
                                              keyboardType: TextInputType.number,
                                              onChanged: validator
                                          

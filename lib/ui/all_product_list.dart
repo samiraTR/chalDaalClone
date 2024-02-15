@@ -24,6 +24,7 @@ class AllProductListScreen extends StatefulWidget {
   String total;
   Client clientDetails;
   
+  
 
   AllProductListScreen({super.key,required this.checkoutDataModel,
   required this.routingFrom,required this.total,required this.clientInfo,required this.outletIndex,required this.clientDetails});
@@ -49,12 +50,14 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
   List<BrandList> tempBrand=[];
   List<ItemList> filteredData=[];
   List<AllItem> savedItemList=[];
+  
   int totalCount=0;
   bool isSearch=false;
     @override
     void initState() {
     super.initState();
     skuListData = Boxes.getSkuListDataForSync().get('syncSkuList');
+    getAllItemfromBox();
     List<BrandList> brandList=skuListData!.brandList;
     selectedValue=skuListData!.brandList.first.brandName;
     filteredData=AllServices().getItemList(selectedValue!, skuListData!.brandList);
@@ -67,8 +70,25 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
       }
     }
 
+  }
+  getAllItemfromBox(){
+    final orderSavedData = Boxes.outletWiseItemSaved();
+    if(orderSavedData.isNotEmpty){
+      orderSavedData.toMap().values.forEach((element) {
+        if(element.clientId== widget.clientDetails.clientId)  {
+          savedItemList=savedItemList;  
+          setState(() {
+            
+          });
+        }
+      }); 
+    }
+   print("savedList=$savedItemList");
 
   }
+  
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -121,9 +141,8 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
   ),
         
         actions: [
-         
            Padding(
-             padding:  EdgeInsets.all(8.0),
+             padding: const EdgeInsets.all(8.0),
              child: Container(
               width: 125, 
               height: 80,
@@ -132,180 +151,96 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                 color: mainColor,
                 borderRadius: BorderRadius.circular(5),
               ),
-              child: 
-                                                                  DropdownButtonHideUnderline(
-                                                                    child:
-                                                                        DropdownButton2(
-                                                                      isExpanded:
-                                                                          true,
-                                                                      iconEnabledColor:
-                                                                          white,
-                                                                      hint:
-                                                                          Text(
-                                                                        'Select Brand',
-                                                                        style:
-                                                                            TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                              color: white
-                                                                          
-                                                                        ),
-                                                                      ),
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              14,
-                                                                              color: white
-                                                                          
-                                                                        ),
-                                                                      items: skuListData!.brandList
-                                                                          .map((BrandList brand) => DropdownMenuItem<String>(
-                                                                                value: brand.brandName,
-                                                                                child: Padding(
-                                                                                  padding: const EdgeInsets.only(left: 8),
-                                                                                  child: Text(
-                                                                                    brand.brandName,
-                                                                                    style:  GoogleFonts.inter(color: blackColor),
-                                                                                  ),
-                                                                                ),
-                                                                              ))
-                                                                          .toList(),
-                                                                      value:
-                                                                          selectedValue,
-                                                                      onChanged:
-                                                                          (value) {
-                                                                        // setState2(
-                                                                        //     () {
-                                                                          
-                                                                        // });
-                                                                        selectedValue =
-                                                                              value;
-                                                                        filteredData=AllServices().getItemList(value!, skuListData!.brandList);
-                                                                        setState(() {
-                                                                          
-                                                                        });
-                                                                      },
-                                                                      buttonHeight:
-                                                                          50,
-                                                                      buttonWidth:
-                                                                          MediaQuery.of(context).size.width /
-                                                                              1.5,
-                                                                      itemHeight:
-                                                                          40,
-                                                                      dropdownMaxHeight:
-                                                                          252,
-                                                                      searchController:
-                                                                          brandSelectedController,
-                                                                      searchInnerWidgetHeight:
-                                                                          50,
-                                                                      searchInnerWidget:
-                                                                          Container(
-                                                                        height:
-                                                                            50,
-                                                                        padding:
-                                                                            const EdgeInsets.only(
-                                                                          top:
-                                                                              8,
-                                                                          bottom:
-                                                                              4,
-                                                                          right:
-                                                                              8,
-                                                                          left:
-                                                                              8,
-                                                                        ),
-                                                                        child:
-                                                                            TextFormField(
-                                                                              
-                                                                          expands:
-                                                                              true,
-                                                                          maxLines:
-                                                                              null,
-                                                                          controller:
-                                                                              brandSelectedController,
-                                                                          decoration:
-                                                                              InputDecoration(
-                                                                                fillColor: white,
-                                                                                filled: true,
-                                                                            isDense:
-                                                                                true,
-                                                                            contentPadding:
-                                                                                const EdgeInsets.symmetric(
-                                                                              horizontal: 6,
-                                                                              vertical: 8,
-                                                                            ),
-                                                                            hintText:
-                                                                                'Search Brand here...',
-                                                                            hintStyle:
-                                                                                const TextStyle(fontSize: 14),
-                                                                            border:
-                                                                                OutlineInputBorder(
-                                                                              borderRadius: BorderRadius.circular(8),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      searchMatchFn:
-                                                                          (item,
-                                                                              searchValue) {
-                                                                        return (item
-                                                                            .value
-                                                                            .toString().toUpperCase()
-                                                                            .startsWith(searchValue.toUpperCase()));
-                                                                      },
-                                                                      onMenuStateChange:
-                                                                          (isOpen) {
-                                                                        if (!isOpen) {
-                                                                          brandSelectedController
-                                                                              .clear();
-                                                                        }
-                                                                      },
-                                                                    ),
-                                                                  )
+              child:   DropdownButtonHideUnderline(
+  child: DropdownButton2(
+    isExpanded: true,
+    iconEnabledColor: Colors.white,
+    hint: Text(
+      'Select Brand',
+      style: GoogleFonts.inter(
+        fontSize: 14,
+        color: Colors.white,
+      ),
+    ),
+    items: skuListData!.brandList.map((BrandList brand) => DropdownMenuItem<String>(
+      value: brand.brandName,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: Text(
+          brand.brandName,
+          style: GoogleFonts.inter(
+            color: Colors.black, 
+            fontSize: 14,
+          ),
+        ),
+      ),
+    )).toList(),
+    value: selectedValue,
+    onChanged: (value) {
+      selectedValue = value;
+      filteredData = AllServices().getItemList(value!, skuListData!.brandList);
+      setState(() {});
+    },
+    buttonHeight: 50,
+    buttonWidth: MediaQuery.of(context).size.width / 1.5,
+    itemHeight: 40,
+    dropdownMaxHeight: 252,
+    searchController: brandSelectedController,
+    searchInnerWidgetHeight: 50,
+    searchInnerWidget: Container(
+      height: 50,
+      padding: const EdgeInsets.only(
+        top: 8,
+        bottom: 4,
+        right: 8,
+        left: 8,
+      ),
+      child: TextFormField(
+        expands: true,
+        maxLines: null,
+        controller: brandSelectedController,
+        decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 6,
+            vertical: 8,
+          ),
+          hintText: 'Search Brand here...',
+          hintStyle: const TextStyle(fontSize: 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+    ),
+    searchMatchFn: (item, searchValue) {
+      return (item.value.toString().toUpperCase().startsWith(searchValue.toUpperCase()));
+    },
+    onMenuStateChange: (isOpen) {
+      if (!isOpen) {
+        brandSelectedController.clear();
+      }
+    },
+    
+    selectedItemBuilder: (BuildContext context) {
+      return skuListData!.brandList.map<Widget>((BrandList brand) {
+        return Center(
+          child: Text(
+            brand.brandName,
+            style:const TextStyle(
+              color: Colors.white,
+              fontSize: 15
+            ),
+          ),
+        );
+      }).toList();
+    },
+  ),
+)
                                                                
-              
-            //    child:DropdownButton<String>(
-            //    value: selectedValue,
-            //     selectedItemBuilder: (BuildContext context) {
-            //   return skuListData!.brandList.map((BrandList brand) {
-            //      return Padding(
-            //       padding: const EdgeInsets.only(left: 8),
-            //       child: Center(child: Text(brand.brandName,style: GoogleFonts.inter(color: white),)),
-            //     );
-            //    }).toList();
-            //   },
-             
-            //     hint: Padding(
-            //       padding: const EdgeInsets.only(left: 0),
-            //       child: Text('Select Brand',style: GoogleFonts.inter(color: white)),
-            //     ),
-            
-            //       icon:const Icon(Icons.arrow_drop_down),
-            //       iconSize: 20, 
-            //       iconEnabledColor: Colors.white,
-              
-            //    items: skuListData!.brandList.map((BrandList brand) {
-            //    return DropdownMenuItem<String>(
-            //      value: brand.brandName,
-            //     child: Padding(
-            //       padding: const EdgeInsets.only(left: 8),
-            //       child: Text(brand.brandName,style: GoogleFonts.inter(color: blackColor),),
-            //     ), 
-                
-            //    );
-            //  }).toList(),
-            //  onChanged: (String? value) {
-            //   setState(() {
-            //     selectedValue = value;
-            //   });
-
-            //   filteredData=AllServices().getItemList(value!, skuListData!.brandList);
-     
-
-           
-            //  },
-             
-            //   underline: Container(), 
-            
-            // )
+      
            ),
          )
         ],
@@ -340,12 +275,11 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                               AllItem? allItem ;
                               int ctn=(int.tryParse(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
                               int pcs= (int.tryParse(pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
-                              //Map<String,dynamic> callbackValue={};
+                             
                               if(ctn>0 || pcs>0){
                                   int? ctnWisePcs=  ctn* int.parse(filteredData[itemIndex].ctnPcsRatio.toString());
                                   double? total=(ctnWisePcs*double.parse(filteredData[itemIndex].tradePrice))+pcs*double.parse(filteredData[itemIndex].tradePrice);
                                   int? totalPcs=ctnWisePcs+pcs;
-                                  print("totalPrice34===$total");
                                   allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
                                   itemName: filteredData[itemIndex].itemName, 
                                   tradePrice: filteredData[itemIndex].tradePrice, 
@@ -372,12 +306,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                                 savedItemList.add(allItem);
                                }
                                 totalCounter();
-                                
-                                print(savedItemList);
                                  setState2;
-                                  setState(() {
-                                    
-                                    });
                                   }, 
                                   
                                   
@@ -403,8 +332,8 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                                      errorWidget: (context, url, error) =>const Icon(Icons.error),
                                    ),
                      ),
-                   title: Text(filteredData[itemIndex].itemName,style:GoogleFonts.inter() ,),
-                   subtitle: Text('Price: ৳${filteredData[itemIndex].tradePrice}',style: GoogleFonts.inter(color: const Color.fromARGB(255, 126, 125, 125)),),
+                   title: Text(filteredData[itemIndex].itemName,style:GoogleFonts.inter(fontSize: 14,fontWeight: FontWeight.w400) ,),
+                   subtitle: Text('Price: ৳${filteredData[itemIndex].tradePrice}',style: GoogleFonts.inter(color: const Color.fromARGB(255, 105, 105, 105),fontSize: 12),),
                                        
                    
                      ),
@@ -415,45 +344,30 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
     padding: const EdgeInsets.only(right: 10),
     child: StatefulBuilder(
       builder: (context, setState2) {
-        AllItem? allItem ;
-        int ctn=(int.tryParse(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
-        int pcs= (int.tryParse(pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString())??0);
-        if(ctn>0 || pcs>0){
-          int? ctnWisePcs=  ctn* int.parse(filteredData[itemIndex].ctnPcsRatio.toString());
-          int? totalPcs=ctnWisePcs+pcs;
-          double? total =totalPcs* double.parse(filteredData[itemIndex].tradePrice.toString());
-          print("totalPrice1===$total");
-          allItem=  AllItem(itemId: filteredData[itemIndex].itemId, 
-                            itemName: filteredData[itemIndex].itemName, 
-                            tradePrice: filteredData[itemIndex].tradePrice, 
-                            pcs: pcs.toString(), 
-                            ctn: ctn.toString(), 
-                            totalPrice: total.toStringAsFixed(1), 
-                            discountInput: discountControllerMap[filteredData[itemIndex].itemId]!.text, 
-                            totalPcs: totalPcs.toString(), 
-                            ctnPcsRatio: filteredData[itemIndex].ctnPcsRatio, 
-                            itemAvatar: filteredData[itemIndex].itemAvatar);
-          
+        if(ctnControllerMap[filteredData[itemIndex].itemId]!.text=="" && pcsControllerMap[filteredData[itemIndex].itemId]!.text==""){
+          ctnControllerMap[filteredData[itemIndex].itemId]!.clear();
+          pcsControllerMap[filteredData[itemIndex].itemId]!.clear();
           if(savedItemList.isNotEmpty)  {
-            savedItemList.removeWhere((element) => element.itemId==filteredData[itemIndex].itemId); 
+            savedItemList.removeWhere((element) => element.itemId==filteredData[itemIndex].itemId);  
           }
-          savedItemList.add(allItem);
         }
-        if(savedItemList.isNotEmpty){
-          removeDuplicateData();
-          totalCounter();
+        else{
+          AllServices().addItemToHiveModel(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString(), pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString(),discountControllerMap[filteredData[itemIndex].itemId]!.text.toString(), savedItemList, filteredData[itemIndex]);
+
         }
+       setState2(() {
+       totalCounter();
+          
+        },);
         return Row(
           children: [
             Expanded(
               child: TextFormFieldCustomWidget(
                 controller: ctnControllerMap[filteredData[itemIndex].itemId]!,
                 onChnaged: (value) { 
-                  updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
-                  if(savedItemList.isNotEmpty){
-                    removeDuplicateData();
+                   AllServices().addItemToHiveModel(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString(), pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString(),discountControllerMap[filteredData[itemIndex].itemId]!.text.toString(), savedItemList, filteredData[itemIndex]);
                     totalCounter();
-                  }
+                
                 },
               ),
             ),
@@ -462,11 +376,9 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
               child: TextFormFieldCustomWidget(
                 controller: pcsControllerMap[filteredData[itemIndex].itemId]!,
                 onChnaged: (value) { 
-                  updateTotal(filteredData[itemIndex].itemId,filteredData[itemIndex]);
-                  if(savedItemList.isNotEmpty){
-                    removeDuplicateData();
+                   AllServices().addItemToHiveModel(ctnControllerMap[filteredData[itemIndex].itemId]!.text.toString(), pcsControllerMap[filteredData[itemIndex].itemId]!.text.toString(),discountControllerMap[filteredData[itemIndex].itemId]!.text.toString(), savedItemList, filteredData[itemIndex]);
                     totalCounter();
-                  }
+                
                 },
               ),
             ),
@@ -523,6 +435,11 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                                 flex: 5,
                                       child: GestureDetector(
                                         onTap: (() {
+
+                                           
+                                       setState(() {
+                                         
+                                       });
                                           Navigator.push(
                                                     context,
                                                        (MaterialPageRoute(
@@ -541,24 +458,11 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                                     child: Row(
                                       
                                       children: [
-                                        // Expanded(
-                                        //   child: Container(
-                                        //           height: 50,
-                                        //           width: 50,
-                                        //           decoration: BoxDecoration(
-                                        //             borderRadius: BorderRadius.circular(50),
-                                        //             border: Border.all(
-                                        //               color: white,
-                                        //               width: 2
-                                        //             )
-                                        //           ),
-                                        //           child: Center(child: Text(totalCount.toString(),style: GoogleFonts.inter(color: white),)),
-                                        //         ),),
                                         Expanded(
                                           flex: 5,
                                           child: Row(
                                             children: [
-                                              Padding(
+                                              totalCount>0?   Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Container(
                                                     height: 35,
@@ -572,7 +476,12 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                                                     ),
                                                     child: Center(child: Text(totalCount.toString(),style: GoogleFonts.inter(color: white),)),
                                                   ),
-                                              ),const SizedBox(width: 10,),
+                                              ): SizedBox(
+                                                    height: 35,
+                                                    width: 35,
+                                                   
+                                                    child: Center(child: Text("",style: GoogleFonts.inter(color: white),)),
+                                                  ),const SizedBox(width: 10,),
                                              const Center(
                                                 child:  Text(
                                                   " Checkout",
@@ -616,7 +525,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
                                       
                                       ),
                                     ),
-                                  // : SizedBox.shrink(),
+                                  
                            
                             ],
                           ),
@@ -626,27 +535,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
   
   }
 
-  void updateTotal(String itemId,ItemList itemList) {
-    AllItem? allItem;
-    int ctn=(int.tryParse(ctnControllerMap[itemId]!.text)??0);
-    int pcs= int.tryParse(pcsControllerMap[itemId]!.text)??0;
-    if(ctn>0 || pcs>0){
-      int? ctnWisePcs=  ctn* int.parse(itemList.ctnPcsRatio.toString());
-      double? total=(ctnWisePcs*double.parse(itemList.tradePrice))+(pcs*double.parse(itemList.tradePrice));
-      int? totalPcs=ctnWisePcs+pcs;
-      allItem= AllItem(itemId: itemList.itemId, 
-         itemName: itemList.itemName, 
-         tradePrice:itemList.tradePrice, 
-         pcs: pcs.toString(), 
-         ctn: ctn.toString(), totalPrice: total.toStringAsFixed(1), discountInput: discountControllerMap[itemId]!.text.toString(), totalPcs: totalPcs.toString(), ctnPcsRatio: itemList.ctnPcsRatio, itemAvatar: itemList.itemAvatar);
-       if(savedItemList.isNotEmpty) {
-             savedItemList.removeWhere((element) => element.itemId==itemList.itemId); 
-          }
-        savedItemList.add(allItem);   
-       } 
-       totalCounter();
  
-  }
   totalCounter(){
      totalCartAmount=0;
      totalCount=savedItemList.length;
@@ -658,17 +547,7 @@ class _AllProductListScreenState extends State<AllProductListScreen> {
     
   }
 
-  removeDuplicateData(){
-    for(var item in savedItemList){
-      if(item.ctn==""&& item.pcs==""){
-         savedItemList.removeWhere((element) => element.itemId==item.itemId);
-        
-      }
-
-     }
-     
-
-  }
+  
 }
 
 

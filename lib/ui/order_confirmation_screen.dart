@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tst_app2/local_storage/boxes.dart';
 import 'package:tst_app2/model/Hive_model/checkout_data.dart';
 import 'package:tst_app2/model/oulets_model.dart';
 import 'package:tst_app2/ui/market_return_screen_new.dart';
@@ -29,10 +30,21 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   double discountTotal=0;
    @override
   void initState() {
+    // getAllItemfromBox();
     getTotalData();
-    
     super.initState();
   }
+  //  getAllItemfromBox(){
+  //   final orderSavedData = Boxes.outletWiseItemSaved();
+  //   orderSavedData.toMap().values.forEach((element) {
+  //       if(element.clientId== widget.clientDetails.clientId)  {}
+     
+
+  //   });
+    
+
+
+  // }
     
   @override
   Widget build(BuildContext context) {
@@ -105,7 +117,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                                 )
                               ],
                             ),
-                            Row(
+                        Row(
                           children: [
                             Expanded(
                               flex: 3,
@@ -125,22 +137,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                               ),
                             ),
                           const  Expanded(
-                              child: Text("")
-                                  
-                                  // IconButton(
-                                  //   onPressed: () {
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) => CutomerListScreen(
-                                  //           fromScreenName: 'order_confirm',
-                                  //         ),
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  //   icon: Icon(Icons.edit, color: white),
-                                  // ),
-                                
+                              child: Text("") 
                             )
                           ],
                         ),
