@@ -1,16 +1,9 @@
-// To parse this JSON data, do
-//
-//     final unsplashModel = unsplashModelFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<UnsplashModel> unsplashModelFromJson(String str) =>
-    List<UnsplashModel>.from(
-        json.decode(str).map((x) => UnsplashModel.fromJson(x)));
+    List<UnsplashModel>.from(json.decode(str).map((x) => UnsplashModel.fromJson(x)));
 
-String unsplashModelToJson(List<UnsplashModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String unsplashModelToJson(List<UnsplashModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UnsplashModel {
   final String id;
@@ -68,8 +61,7 @@ class UnsplashModel {
         links: UnsplashModelLinks.fromJson(json["links"]),
         likes: json["likes"],
         likedByUser: json["liked_by_user"],
-        currentUserCollections:
-            List<dynamic>.from(json["current_user_collections"].map((x) => x)),
+        currentUserCollections: List<dynamic>.from(json["current_user_collections"].map((x) => x)),
         sponsorship: json["sponsorship"],
         topicSubmissions: TopicSubmissions.fromJson(json["topic_submissions"]),
         user: User.fromJson(json["user"]),
@@ -90,8 +82,7 @@ class UnsplashModel {
         "links": links.toJson(),
         "likes": likes,
         "liked_by_user": likedByUser,
-        "current_user_collections":
-            List<dynamic>.from(currentUserCollections.map((x) => x)),
+        "current_user_collections": List<dynamic>.from(currentUserCollections.map((x) => x)),
         "sponsorship": sponsorship,
         "topic_submissions": topicSubmissions.toJson(),
         "user": user.toJson(),
@@ -111,8 +102,7 @@ class UnsplashModelLinks {
     required this.downloadLocation,
   });
 
-  factory UnsplashModelLinks.fromJson(Map<String, dynamic> json) =>
-      UnsplashModelLinks(
+  factory UnsplashModelLinks.fromJson(Map<String, dynamic> json) => UnsplashModelLinks(
         self: json["self"],
         html: json["html"],
         download: json["download"],
@@ -144,8 +134,7 @@ class TopicSubmissions {
     required this.travel,
   });
 
-  factory TopicSubmissions.fromJson(Map<String, dynamic> json) =>
-      TopicSubmissions(
+  factory TopicSubmissions.fromJson(Map<String, dynamic> json) => TopicSubmissions(
         streetPhotography: The3DRenders.fromJson(json["street-photography"]),
         greenerCities: The3DRenders.fromJson(json["greener-cities"]),
         wallpapers: The3DRenders.fromJson(json["wallpapers"]),

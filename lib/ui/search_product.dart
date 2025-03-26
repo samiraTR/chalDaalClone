@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tst_app2/main.dart';
 import 'package:tst_app2/utils/constants.dart';
-import 'package:tst_app2/ui/all_categories.dart';
-import 'package:tst_app2/ui/home_page.dart';
 
 class SearchproductScreen extends StatefulWidget {
   const SearchproductScreen({super.key});
@@ -29,15 +27,13 @@ class _SearchproductScreenState extends State<SearchproductScreen> {
     final box = await Hive.box("imageList");
     var a = box.get("imageData");
     // unsplashData = box.toMap().values.toList();
+    if (a == null) return;
     for (var ele in a) {
-      if (ele == null) {
-        ele = "No Data";
-      }
+      ele ??= "No Data";
       unsplashData.add(ele);
       setState(() {});
 
-      print(
-          "if null aaaaaaaaaaas ${unsplashData.any((element) => element == null)}");
+      print("if null aaaaaaaaaaas ${unsplashData.any((element) => element == null)}");
     }
     // unsplashData.where((element) {
     //   return element == null ? element = "No result" : element;
@@ -64,24 +60,15 @@ class _SearchproductScreenState extends State<SearchproductScreen> {
       print("results.length1 ${results.length}");
 
       if (results.any((element) => element != null)) {
-        var starts = results
-            .where((s) => s["user"]["name"]
-                .toLowerCase()
-                .startsWith(enteredKeyword.toLowerCase()))
-            .toList();
+        var starts =
+            results.where((s) => s["user"]["name"].toLowerCase().startsWith(enteredKeyword.toLowerCase())).toList();
 
         var contains = results
             .where((s) =>
-                s["user"]["name"]
-                    .toLowerCase()
-                    .contains(enteredKeyword.toLowerCase()) &&
-                !s["user"]["name"]
-                    .toLowerCase()
-                    .startsWith(enteredKeyword.toLowerCase()))
+                s["user"]["name"].toLowerCase().contains(enteredKeyword.toLowerCase()) &&
+                !s["user"]["name"].toLowerCase().startsWith(enteredKeyword.toLowerCase()))
             .toList()
-          ..sort((a, b) => a["user"]["name"]
-              .toLowerCase()
-              .compareTo(b["user"]["name"].toLowerCase()));
+          ..sort((a, b) => a["user"]["name"].toLowerCase().compareTo(b["user"]["name"].toLowerCase()));
 
         results = [...starts, ...contains];
       } else {
@@ -98,14 +85,12 @@ class _SearchproductScreenState extends State<SearchproductScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    InputDecorationTheme inputDecoration =
-        Theme.of(context).inputDecorationTheme;
+    InputDecorationTheme inputDecoration = Theme.of(context).inputDecorationTheme;
 
     return WillPopScope(
       onWillPop: () async {
         setState(() {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyApp()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));
           bottomNavRes = false;
         });
         return false;
@@ -146,16 +131,14 @@ class _SearchproductScreenState extends State<SearchproductScreen> {
                                 softWrap: true,
 
                                 // textAlign: TextAlign.justify,
-                                style: textTheme.bodyMedium?.copyWith(
-                                    color: Colors.purple,
-                                    fontWeight: FontWeight.w700),
+                                style:
+                                    textTheme.bodyMedium?.copyWith(color: Colors.purple, fontWeight: FontWeight.w700),
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
                               Text(
-                                unsplashData[index]["alt_description"] ??
-                                    "No Description",
+                                unsplashData[index]["alt_description"] ?? "No Description",
                               ),
                             ],
                           ),
@@ -183,20 +166,20 @@ class _SearchproductScreenState extends State<SearchproductScreen> {
                           });
                           Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
-                              builder: (context) => MyApp(),
+                              builder: (context) => const MyApp(),
                             ),
                           );
 
                           // Navigator.of(context).pop();
                         },
-                        icon: Icon(Icons.keyboard_backspace_rounded)),
+                        icon: const Icon(Icons.keyboard_backspace_rounded)),
                     SizedBox(
                       width: 300,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: TextField(
                           autofocus: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             fillColor: Color.fromARGB(255, 235, 227, 227),
                           ),
                           controller: searchController,
@@ -211,7 +194,7 @@ class _SearchproductScreenState extends State<SearchproductScreen> {
                   ],
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ),
     );
   }

@@ -37,12 +37,10 @@ class AllServices {
     }
 
     if (permission == geo.LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
 
-    return await geo.Geolocator.getCurrentPosition(
-        desiredAccuracy: geo.LocationAccuracy.high);
+    return await geo.Geolocator.getCurrentPosition(desiredAccuracy: geo.LocationAccuracy.high);
   }
 
   getLatLong() {
@@ -65,6 +63,6 @@ class AllServices {
   getAddress(lat, long) async {
     List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
 
-    address = placemarks[0].street! + " " + placemarks[0].country!;
+    address = "${placemarks[0].street!} ${placemarks[0].country!}";
   }
 }

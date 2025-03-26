@@ -13,33 +13,32 @@ class SideBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    InputDecorationTheme inputDecoration =
-        Theme.of(context).inputDecorationTheme;
+    InputDecorationTheme inputDecoration = Theme.of(context).inputDecorationTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 10),
       child: Container(
-        height: 60,
-        width: 140,
+        height: 50,
+        width: 130,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 238, 232, 232),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: const Color.fromARGB(255, 209, 204, 204),
-          ),
-        ),
+            color: const Color.fromARGB(255, 238, 232, 232),
+            borderRadius: BorderRadius.circular(10),
+            // border: Border.all(
+            //   color: const Color.fromARGB(255, 209, 204, 204),
+            // ),
+            boxShadow: [const BoxShadow(color: Colors.white)]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: 23,
+              radius: 17,
               backgroundColor: Colors.white,
               child: CircleAvatar(
-                radius: 15,
+                radius: 13,
                 backgroundColor: Colors.green,
                 child: Image.asset(
                   image,
-                  height: 25,
-                  width: 25,
+                  height: 20,
+                  width: 20,
                 ),
               ),
             ),

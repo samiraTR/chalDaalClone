@@ -11,7 +11,7 @@ class _AllCitiesState extends State<AllCities> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Select Your City")),
+      appBar: AppBar(title: const Text("Select Your City")),
       body: Column(
         children: [
           Padding(
@@ -20,8 +20,7 @@ class _AllCitiesState extends State<AllCities> {
               height: 280,
               width: 160,
               // decoration: inputDecoration,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(15)),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -35,7 +34,7 @@ class _AllCitiesState extends State<AllCities> {
                     padding: EdgeInsets.all(10.0),
                     child: Text(
                       "dealsname",
-                      style: const TextStyle(color: Colors.white, fontSize: 17),
+                      style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   )
                 ],

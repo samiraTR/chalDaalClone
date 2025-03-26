@@ -1,17 +1,12 @@
 import 'dart:async';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:tst_app2/bloc/theme_bloc.dart';
 import 'package:tst_app2/service/all_services.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
-import 'package:tst_app2/ui/cash_image.dart';
 import 'package:tst_app2/ui/city_selection.dart';
 import 'package:tst_app2/ui/product_details.dart';
-import 'package:tst_app2/ui/search_product.dart';
 import 'package:tst_app2/ui/themes/theme.dart';
 import 'package:tst_app2/ui/widgets/card_item_widgets.dart';
 import 'package:tst_app2/ui/widgets/deals_bar_widget.dart';
@@ -43,10 +38,10 @@ class _HomePageState extends State<HomePage> {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     TextTheme textTheme = Theme.of(context).textTheme;
-    InputDecorationTheme inputDecoration =
-        Theme.of(context).inputDecorationTheme;
+    InputDecorationTheme inputDecoration = Theme.of(context).inputDecorationTheme;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
           title: InkWell(
         onTap: () {
@@ -56,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                 return SizedBox(
                   height: 180,
                   child: ListView(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     children: [
                       ListTile(
                         contentPadding: const EdgeInsets.all(8),
@@ -79,10 +74,9 @@ class _HomePageState extends State<HomePage> {
                                       }
                                     });
 
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: const [
+                                    return const Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
                                         Center(
                                           child: Padding(
                                             padding: EdgeInsets.all(80),
@@ -105,8 +99,7 @@ class _HomePageState extends State<HomePage> {
                           width: 70,
                           child: Card(
                             color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
                             elevation: 3,
                             child: const Icon(
                               Icons.location_searching,
@@ -130,8 +123,7 @@ class _HomePageState extends State<HomePage> {
                           width: 70,
                           child: Card(
                             color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
                             elevation: 3,
                             child: const Icon(
                               Icons.location_city,
@@ -140,8 +132,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => AllCities()));
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => const AllCities()));
                         },
                         title: const Text(
                           "Change City",
@@ -157,8 +148,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               height: 40,
-              decoration: const BoxDecoration(
-                  color: Colors.purple, shape: BoxShape.circle),
+              decoration: const BoxDecoration(color: Colors.purple, shape: BoxShape.circle),
               child: IconButton(
                 icon: const Icon(
                   Icons.location_on_outlined,
@@ -178,8 +168,8 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               width: 5,
             ),
-            Column(
-              children: const [
+            const Column(
+              children: [
                 Text("Gulshan"),
                 Text(
                   "Dhaka",
@@ -219,11 +209,9 @@ class _HomePageState extends State<HomePage> {
                           newValue = value;
 
                           if (newValue) {
-                            BlocProvider.of<ThemeBloc>(context)
-                                .add(const ThemeChanged(theme: AppTheme.light));
+                            BlocProvider.of<ThemeBloc>(context).add(const ThemeChanged(theme: AppTheme.light));
                           } else {
-                            BlocProvider.of<ThemeBloc>(context)
-                                .add(const ThemeChanged(theme: AppTheme.dark));
+                            BlocProvider.of<ThemeBloc>(context).add(const ThemeChanged(theme: AppTheme.dark));
                           }
                         });
                       }),
@@ -236,8 +224,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               decoration: BoxDecoration(
-                  border: Border.all(width: 0.5, color: Colors.grey),
-                  borderRadius: BorderRadius.circular(15)),
+                  border: Border.all(width: 0.5, color: Colors.grey), borderRadius: BorderRadius.circular(15)),
               child: ListTile(
                 leading: Image.asset(
                   "assets/icons/football-club.png",
@@ -383,26 +370,20 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               const Text(
                                 "Daily Deals",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18),
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                               ),
                               Container(
                                   height: 30,
                                   width: 140,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      border: Border.all(
-                                          color: const Color.fromARGB(
-                                              255, 149, 172, 184),
-                                          width: 1),
+                                      border: Border.all(color: const Color.fromARGB(255, 149, 172, 184), width: 1),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                     child: Text(
                                       "10H:57M:32S",
-                                      style: textTheme.bodyMedium!.merge(
-                                          const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black)),
+                                      style: textTheme.bodyMedium!
+                                          .merge(const TextStyle(fontSize: 18, color: Colors.black)),
 
                                       // TextStyle(
                                       //     fontWeight: FontWeight.w500,
@@ -431,10 +412,7 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   itemCount: categories.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: 1.6),
+                      crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 1.8),
                   itemBuilder: (BuildContext context, int index) {
                     return CategoriesBarWidget(
                       categoryname: 'Ramadan',
@@ -444,31 +422,21 @@ class _HomePageState extends State<HomePage> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        (MaterialPageRoute(
-                            builder: (context) =>
-                                const AllCategoriesScreen())));
+                    Navigator.push(context, (MaterialPageRoute(builder: (context) => const AllCategoriesScreen())));
                   },
                   child: const Text("All Categories")),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Popular",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                     Text(
                       "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                   ],
                 ),
@@ -508,24 +476,18 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 20,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Flash Sales",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                     Text(
                       "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                   ],
                 ),
@@ -573,14 +535,9 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     const Text(
                       "Fresh Vegetables",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
-                    Text("View more >",
-                        style: textTheme.titleMedium
-                            ?.merge(const TextStyle(color: Colors.purple))),
+                    Text("View more >", style: textTheme.titleMedium?.merge(const TextStyle(color: Colors.purple))),
                   ],
                 ),
               ),
@@ -619,24 +576,18 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Biscuits",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                     Text(
                       "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                   ],
                 ),
@@ -676,24 +627,18 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Salt & Sugar",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                     Text(
                       "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                   ],
                 ),
@@ -733,24 +678,18 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Fresh Fruits",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                     Text(
                       "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                   ],
                 ),
@@ -790,24 +729,18 @@ class _HomePageState extends State<HomePage> {
               // const SizedBox(
               //   height: 30,
               // ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Noodles",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                     Text(
                       "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                   ],
                 ),
@@ -846,24 +779,18 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 15,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Oil",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                     Text(
                       "View more >",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Colors.purple),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.purple),
                     ),
                   ],
                 ),
@@ -905,9 +832,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Container(
                 height: 120,
-                color: newValue
-                    ? const Color.fromARGB(255, 235, 229, 229)
-                    : const Color.fromARGB(255, 116, 113, 113),
+                color: newValue ? const Color.fromARGB(255, 235, 229, 229) : const Color.fromARGB(255, 116, 113, 113),
                 child: Padding(
                   padding: const EdgeInsets.all(6.0),
                   child: Column(
@@ -920,9 +845,9 @@ class _HomePageState extends State<HomePage> {
                           style: textTheme.headlineSmall,
                         ),
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
+                        children: [
                           Chip(
                             backgroundColor: Colors.white,
                             elevation: 3,
@@ -1099,20 +1024,15 @@ class CategoriesBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    InputDecorationTheme inputDecoration =
-        Theme.of(context).inputDecorationTheme;
+    InputDecorationTheme inputDecoration = Theme.of(context).inputDecorationTheme;
     return Container(
-      height: 140,
-      width: 200,
+      // height: 100,
+      // width: 180,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: const Color.fromARGB(255, 197, 217, 236),
           boxShadow: [
-            BoxShadow(
-                offset: Offset.fromDirection(1),
-                blurRadius: 2,
-                spreadRadius: 0.5,
-                color: Colors.grey)
+            BoxShadow(offset: Offset.fromDirection(1), blurRadius: 2, spreadRadius: 0.5, color: Colors.grey)
           ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,

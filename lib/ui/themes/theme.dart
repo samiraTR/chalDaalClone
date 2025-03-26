@@ -28,25 +28,16 @@ const cOLORRed1 = Color(0xffC62C2C);
 const cOLORRed2 = Color(0xff7D3E3E);
 const cOLORLightPurple = Color(0xff6251A2);
 
-const textSTYLEHeadline4 =
-    TextStyle(color: cOLORWhite, fontWeight: FontWeight.w400, fontSize: 34);
-const textSTYLEHeadline5 =
-    TextStyle(color: cOLORWhite, fontWeight: FontWeight.w400, fontSize: 24);
-const textSTYLEHeadline6 =
-    TextStyle(color: cOLORWhite, fontWeight: FontWeight.w500, fontSize: 20);
-const textSTYLEHeadline18 =
-    TextStyle(color: cOLORWhite, fontWeight: FontWeight.w400, fontSize: 18);
-const textSTYLEHeadline18Black =
-    TextStyle(color: cOLORBlack, fontWeight: FontWeight.w400, fontSize: 18);
+const textSTYLEHeadline4 = TextStyle(color: cOLORWhite, fontWeight: FontWeight.w400, fontSize: 34);
+const textSTYLEHeadline5 = TextStyle(color: cOLORWhite, fontWeight: FontWeight.w400, fontSize: 24);
+const textSTYLEHeadline6 = TextStyle(color: cOLORWhite, fontWeight: FontWeight.w500, fontSize: 20);
+const textSTYLEHeadline18 = TextStyle(color: cOLORWhite, fontWeight: FontWeight.w400, fontSize: 18);
+const textSTYLEHeadline18Black = TextStyle(color: cOLORBlack, fontWeight: FontWeight.w400, fontSize: 18);
 
-const textSTYLEHeadline13 =
-    TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 13);
-const textSTYLEHeadline15 =
-    TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 14);
-const textSTYLEHeadline14 =
-    TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 15);
-const textSTYLEHeadline16 =
-    TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16);
+const textSTYLEHeadline13 = TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 13);
+const textSTYLEHeadline15 = TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 14);
+const textSTYLEHeadline14 = TextStyle(color: Colors.black, fontWeight: FontWeight.w400, fontSize: 15);
+const textSTYLEHeadline16 = TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16);
 
 DateTime getCurrentDateTime(String time) {
   return DateTime.parse(time);
@@ -148,7 +139,7 @@ final defaultTheme = {
     primaryColor: const Color(0xFF6A75EB),
     primarySwatch: Colors.blueGrey,
     appBarTheme: AppBarTheme(
-        backgroundColor: Color.fromARGB(255, 35, 42, 61).withOpacity(.5),
+        backgroundColor: const Color.fromARGB(255, 35, 42, 61).withOpacity(.5),
         iconTheme: const IconThemeData(color: Colors.white),
         titleTextStyle: const TextStyle(color: Colors.white)),
     textTheme: const TextTheme(
