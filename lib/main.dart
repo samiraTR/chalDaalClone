@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tst_app2/bloc/theme_bloc.dart';
+import 'package:tst_app2/service/repositories.dart';
 import 'package:tst_app2/utils/constants.dart';
 import 'package:tst_app2/ui/all_categories.dart';
 import 'package:tst_app2/ui/home_page.dart';
@@ -32,29 +33,29 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // apicall();
+    apicall();
 
     super.initState();
   }
 
-  // apicall() async {
-  //   int pageNumber = 1;
-  //   final box = await Hive.box("imageList");
-  //   var a = box.get("imageData");
+  apicall() async {
+    int pageNumber = 1;
+    final box = await Hive.box("imageList");
+    var a = box.get("imageData");
 
-  //   print("x  ${unsplashData.length} $pageNumber");
-  //   for (int i = pageNumber; i < 20; i++) {
-  //     List x = await Repositories().getImageRepo(pageNumber);
+    print("x  ${unsplashData.length} $pageNumber");
+    for (int i = pageNumber; i < 20; i++) {
+      List x = await Repositories().getImageRepo(pageNumber);
 
-  //     for (var a in x) {
-  //       unsplashData.add(a);
-  //     }
+      for (var a in x) {
+        unsplashData.add(a);
+      }
 
-  //     box.put("imageData", unsplashData);
+      box.put("imageData", unsplashData);
 
-  //     pageNumber++;
-  //   }
-  // }
+      pageNumber++;
+    }
+  }
 
   @override
   void dispose() {
